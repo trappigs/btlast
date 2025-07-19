@@ -1,0 +1,605 @@
+/* Hero Slider Styles */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #89b3a8, #7ba05b);
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Slides */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(137, 179, 168, 0.3) 0%,
+        rgba(123, 160, 91, 0.4) 50%,
+        rgba(255, 215, 0, 0.2) 100%
+    );
+    z-index: 1;
+}
+
+/* Slide Content */
+.slide-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    padding: 0 5%;
+    transform: translateY(-15%);
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+}
+
+/* Typography */
+.slide-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #2c3e2d;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    animation: slideInUp 1s ease-out 0.3s both;
+}
+
+.slide-title .highlight {
+    color: #7ba05b;
+    position: relative;
+}
+
+.slide-title .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #7ba05b, #89b3a8);
+    border-radius: 2px;
+}
+
+.slide-title .subtitle {
+    font-size: 0.7em;
+    font-weight: 600;
+    color: #5a6c5a;
+}
+
+/* Buttons */
+.slide-actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    animation: slideInUp 1s ease-out 0.6s both;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #7ba05b, #89b3a8);
+    color: white;
+    box-shadow: 0 4px 15px rgba(123, 160, 91, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(123, 160, 91, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.9);
+    color: #2c3e2d;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Location Pin - REMOVED */
+/* All location pin styles removed as requested */
+
+/* Floating Elements - REMOVED */
+/* .floating-elements styles removed as requested */
+
+/* Navigation */
+.slider-navigation {
+    position: absolute;
+    bottom: 250px;
+    right: 350px;
+    display: flex;
+    gap: 1rem;
+    z-index: 10;
+}
+
+.nav-btn {
+    width: 72px;
+    height: 72px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    color: #2c3e2d;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: visible;
+}
+
+.nav-btn svg {
+    width: 28px;
+    height: 28px;
+}
+
+.nav-btn:hover {
+    background: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+/* Navigation Preview */
+.nav-preview {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 180px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 15;
+    border: 3px solid #7ba05b;
+}
+
+.nav-btn:hover .nav-preview {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.prev-preview {
+    left: 50%;
+}
+
+.next-preview {
+    left: 50%;
+}
+
+.preview-image {
+    width: 100%;
+    height: 65%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.preview-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(137, 179, 168, 0.3) 0%,
+        rgba(123, 160, 91, 0.4) 100%
+    );
+}
+
+.preview-content {
+    padding: 12px 16px;
+    height: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.preview-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #2c3e2d;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.preview-subtitle {
+    font-size: 0.75rem;
+    color: #7ba05b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Preview Arrow */
+.nav-preview::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-top: 8px solid #7ba05b;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+}
+
+/* Animation for preview appearance */
+@keyframes slideInPreview {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-10px) scale(1);
+    }
+}
+
+.nav-btn:hover .nav-preview {
+    animation: slideInPreview 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Pagination */
+.slider-pagination {
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.pagination-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.pagination-dot.active {
+    background: white;
+    border-color: #7ba05b;
+    transform: scale(1.2);
+}
+
+.pagination-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 90px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    z-index: 10;
+    animation: fadeIn 1s ease-out 1.5s both;
+}
+
+.scroll-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.scroll-arrow {
+    animation: bounce 2s infinite;
+}
+
+/* Progress Bar */
+.slide-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    z-index: 10;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #7ba05b, #89b3a8);
+    width: 0%;
+    transition: width 5s linear;
+}
+
+/* Animations */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40%, 43% {
+        transform: translateY(-8px);
+    }
+    70% {
+        transform: translateY(-4px);
+    }
+    90% {
+        transform: translateY(-2px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .slider-navigation {
+        right: 280px;
+        bottom: 220px;
+    }
+    
+    .nav-btn {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .nav-btn svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .nav-preview {
+        width: 250px;
+        height: 150px;
+        bottom: 70px;
+    }
+    
+    .preview-title {
+        font-size: 0.8rem;
+    }
+    
+    .preview-subtitle {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .slide-content {
+        padding: 0 3%;
+        transform: translateY(-10%);
+    }
+    
+    .slide-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Hide navigation on mobile */
+    .slider-navigation {
+        display: none;
+    }
+    
+    .scroll-indicator {
+        display: none;
+    }
+    
+    .slider-pagination {
+        bottom: 90px;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide-title {
+        font-size: clamp(2rem, 10vw, 3.5rem);
+        margin-bottom: 1.5rem;
+    }
+    
+    .slide-actions {
+        margin-top: 1.5rem;
+    }
+    
+    .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+    }
+    
+    .slide-content {
+        transform: translateY(-8%);
+    }
+    
+    .slider-pagination {
+        bottom: 70px;
+    }
+    
+    /* Keep navigation hidden on small mobile */
+    .slider-navigation {
+        display: none;
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .slide {
+        background-attachment: scroll;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .slide,
+    .btn,
+    .nav-btn,
+    .pagination-dot,
+    .floating-card img {
+        transition: none;
+    }
+    
+    .location-pin,
+    .floating-card,
+    .scroll-arrow {
+        animation: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .hero-slider {
+        height: auto;
+        page-break-inside: avoid;
+    }
+    
+    .slider-navigation,
+    .slider-pagination,
+    .scroll-indicator,
+    .slide-progress {
+        display: none;
+    }
+    
+    .slide {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        height: auto;
+        padding: 2rem;
+    }
+    
+    .slide-title {
+        color: black;
+        font-size: 2rem;
+    }
+    
+    .btn {
+        display: none;
+    }
+}

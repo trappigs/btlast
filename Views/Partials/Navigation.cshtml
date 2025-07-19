@@ -1,0 +1,170 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    var rootNode = Model.Root();
+    var children = rootNode.Children().Where(x => x.IsVisible());
+}
+
+<link rel="stylesheet" href="/css/navigation.css">
+
+<nav class="modern-nav">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="/" class="logo-link">
+                <span class="logo-text">BEREKETLİ TOPRAKLAR</span>
+            </a>
+        </div>
+
+        <div class="nav-menu">
+            <a href="@rootNode.Url()" class="nav-item @(Model.Id == rootNode.Id ? "active" : "")">
+                ANA SAYFA
+            </a>
+
+            @foreach (var child in children)
+            {
+                var navTitle = child.HasValue("navigationTitle") ? child.Value("navigationTitle").ToString() : child.Name;
+                var isActive = child.Id == Model.Id ? "active" : "";
+                
+                <a href="@child.Url()" class="nav-item @isActive">
+                    @navTitle.ToUpper()
+                </a>
+            }
+        </div>
+
+        <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay"></div>
+</nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+    const overlay = document.querySelector('.mobile-menu-overlay');
+    const navbar = document.querySelector('.modern-nav');
+    const body = document.body;
+    
+    // Scroll Detection Variables
+    let lastScrollTop = 0;
+    let scrollThreshold = 10; // Minimum scroll distance to trigger
+    let navHeight = navbar.offsetHeight;
+    
+    function openMobileMenu() {
+        navMenu.classList.add('active');
+        overlay.classList.add('active');
+        body.style.overflow = 'hidden';
+        
+        // Hamburger animation
+        const spans = mobileMenuBtn.querySelectorAll('span');
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+    }
+    
+    function closeMobileMenu() {
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        body.style.overflow = 'auto';
+        
+        // Reset hamburger
+        const spans = mobileMenuBtn.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    }
+    
+    // Show/Hide Navigation on Scroll
+    function handleNavScroll() {
+        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Don't do anything if mobile menu is open
+        if (navMenu.classList.contains('active')) {
+            return;
+        }
+        
+        // If at the top of the page, always show nav
+        if (currentScrollTop <= navHeight) {
+            navbar.classList.remove('nav-hidden');
+            navbar.classList.add('nav-visible');
+            lastScrollTop = currentScrollTop;
+            return;
+        }
+        
+        // Check scroll direction
+        if (Math.abs(lastScrollTop - currentScrollTop) <= scrollThreshold) {
+            return; // Ignore small scroll movements
+        }
+        
+        if (currentScrollTop > lastScrollTop) {
+            // Scrolling down - hide navbar
+            navbar.classList.add('nav-hidden');
+            navbar.classList.remove('nav-visible');
+        } else {
+            // Scrolling up - show navbar
+            navbar.classList.remove('nav-hidden');
+            navbar.classList.add('nav-visible');
+        }
+        
+        lastScrollTop = currentScrollTop;
+    }
+    
+    // Throttle scroll events for performance
+    let scrollTimer = null;
+    function throttledScroll() {
+        if (scrollTimer !== null) {
+            clearTimeout(scrollTimer);
+        }
+        scrollTimer = setTimeout(handleNavScroll, 10);
+    }
+    
+    // Add scroll listener
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    
+    // Add body padding to compensate for fixed navbar
+    body.style.paddingTop = navHeight + 'px';
+    
+    // Recalculate navbar height on resize
+    window.addEventListener('resize', function() {
+        navHeight = navbar.offsetHeight;
+        body.style.paddingTop = navHeight + 'px';
+        
+        if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+    
+    if (mobileMenuBtn && navMenu) {
+        // Toggle menu on button click
+        mobileMenuBtn.addEventListener('click', function() {
+            if (navMenu.classList.contains('active')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+        
+        // Close menu on overlay click
+        overlay.addEventListener('click', closeMobileMenu);
+        
+        // Close menu on menu item click
+        const navItems = navMenu.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', closeMobileMenu);
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+    }
+});
+</script>

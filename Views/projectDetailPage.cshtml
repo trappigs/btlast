@@ -1,0 +1,345 @@
+﻿@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Models
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = Model.Value("projectName");
+    
+    // Hero background image
+    var heroBackground = "";
+    if (Model.HasValue("heroBackground"))
+    {
+        var heroBgImage = Model.Value<IPublishedContent>("heroBackground");
+        heroBackground = heroBgImage.Url();
+    }
+}
+<link rel="stylesheet" href="/css/projectDetail.css">
+
+<!-- Hero Section with Breadcrumb -->
+<div class="project-hero" style="@(string.IsNullOrEmpty(heroBackground) ? "" : $"background-image: url('{heroBackground}');")">
+    <div class="hero-content">
+        <h1 class="hero-title">@Model.Value("projectName")</h1>
+        <p class="hero-subtitle">@Model.Value("projectLocation")</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="project-detail-wrapper">
+    <div class="container">
+        <!-- Project Header Info -->
+        <div class="project-header-info">
+            <div class="project-title-section ">
+                <!-- <span class="project-category">@Model.Value("projectLocation")'in Tarihi ve Doğasıyla Bütünleşen Yatırım</span>
+                <h1 class="main-title">@Model.Value("projectName")</h1> -->
+
+                <div class="row text-center">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <h4>İmarlı</h4>
+                <p>Alt Yapısı Tamamlanmış</p>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-3">
+                <h4>Müstakil Tapulu</h4>
+                <p>Bağımsız Mülkiyet</p>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-3">
+                <h4>Hemen Teslim</h4>
+                <p>Anında Teslim</p>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-3">
+                <h4>24 Aya Varan Taksit</h4>
+                <p>Esnek Ödeme Planı</p>
+            </div>
+        </div>
+
+
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Left: Image -->
+            <div class="image-section">
+                @{
+                    IPublishedContent  mainMediaItem = null;
+                    var isMainVideo = false;
+                    
+                    // Önce video ara
+                    if (Model.HasValue("projectGallery"))
+                    {
+                        var galleryItems = Model.Value<IEnumerable<IPublishedContent>>("projectGallery").Take(10).ToList();
+                        if (galleryItems.Any())
+                        {
+                            // İlk video'yu bul
+                            var firstVideo = galleryItems.FirstOrDefault(item => 
+                                item.ContentType.Alias == "video" || 
+                                item.Url().EndsWith(".mp4") || 
+                                item.Url().EndsWith(".webm") || 
+                                item.Url().EndsWith(".ogg") ||
+                                item.Url().EndsWith(".mov") ||
+                                item.Url().EndsWith(".avi"));
+                            
+                            if (firstVideo != null)
+                            {
+                                mainMediaItem = firstVideo;
+                                isMainVideo = true;
+                            }
+                            else
+                            {
+                                // Video yoksa ilk resmi al
+                                mainMediaItem = galleryItems.First();
+                                isMainVideo = false;
+                            }
+                        }
+                    }
+                    
+                    // Eğer gallery'de hiçbir şey yoksa, projectImage'i kullan
+                    if (mainMediaItem == null && Model.HasValue("projectImage"))
+                    {
+                        mainMediaItem = Model.Value<IPublishedContent>("projectImage");
+                        isMainVideo = false;
+                    }
+                }
+                
+                @if (mainMediaItem != null)
+                {
+                    if (isMainVideo)
+                    {
+                        <video src="@mainMediaItem.Url()" 
+                               class="main-project-media" 
+                               id="mainProjectMedia" 
+                               onclick="openLightbox()" 
+                               controls 
+                               autoplay 
+                               muted 
+                               playsinline>
+                        </video>
+                    }
+                    else
+                    {
+                        <img src="@mainMediaItem.Url()" 
+                             alt="@Model.Value("projectName")" 
+                             class="main-project-media" 
+                             id="mainProjectMedia" 
+                             onclick="openLightbox()">
+                    }
+                }
+                
+                <!-- Gallery Section -->
+                @if (Model.HasValue("projectGallery"))
+                {
+                    <div class="gallery-section">
+                        <div class="gallery-grid">
+                            @{
+                                var allGalleryItems = Model.Value<IEnumerable<IPublishedContent>>("projectGallery").Take(10).ToList();
+                                var currentIndex = 0;
+                                
+                                // Video'ları önce, resimleri sonra sırala
+                                var sortedItems = allGalleryItems
+                                    .OrderByDescending(item => 
+                                        item.ContentType.Alias == "video" || 
+                                        item.Url().EndsWith(".mp4") || 
+                                        item.Url().EndsWith(".webm") || 
+                                        item.Url().EndsWith(".ogg") ||
+                                        item.Url().EndsWith(".mov") ||
+                                        item.Url().EndsWith(".avi"))
+                                    .ToList();
+                            }
+                            
+                            @foreach (var item in sortedItems)
+                            {
+                                var isVideo = item.ContentType.Alias == "video" || 
+                                             item.Url().EndsWith(".mp4") || 
+                                             item.Url().EndsWith(".webm") || 
+                                             item.Url().EndsWith(".ogg") ||
+                                             item.Url().EndsWith(".mov") ||
+                                             item.Url().EndsWith(".avi");
+                                
+                                if (isVideo)
+                                {
+                                    <div class="gallery-item video-item" onclick="changeMainMedia('@item.Url()', '@Model.Value("projectName")', @currentIndex, true)">
+                                        <video class="gallery-video" muted>
+                                            <source src="@item.Url()" type="video/mp4">
+                                        </video>
+                                        <div class="video-overlay">
+                                            <div class="play-icon">▶</div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="gallery-item" onclick="changeMainMedia('@item.Url()', '@Model.Value("projectName")', @currentIndex, false)">
+                                        <img src="@item.Url()" alt="@Model.Value("projectName")" class="gallery-image">
+                                    </div>
+                                }
+                                currentIndex++;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Right: Details -->
+            <div class="details-section">
+                <div class="project-description">
+                    <span class="project-category">@Model.Value("projectLocation")'in Tarihi ve Doğasıyla Bütünleşen Yatırım</span>
+                    <h1 class="hero-title tax2">@Model.Value("projectName")</h1>
+                    <p>@Model.Value("projectDescription")</p>
+                    
+                    <p>Şehrin karmaşasından uzak, ancak ulaşım açısından avantajlı bir konumda yer alan proje, doğayla iç içe yaşamak isteyenlere ilham veriyor. Taş ev konsepti ve geniş yeşil alanlarıyla hem yaşam hem yatırım açısından güçlü bir alternatif sunuyor.</p>
+                </div>
+
+                <!-- Project Stats -->
+                <div class="project-stats">
+                    <!-- <div class="stat-item">
+                        <div class="stat-number">107</div>
+                        <div class="stat-label">Bağımsız Bölüm</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">62.000m²</div>
+                        <div class="stat-label">Proje Alanı</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">106.000m²</div>
+                        <div class="stat-label">Toplam Alan</div>
+                    </div> -->
+                    <a href="#contact-sec" class="btn btn-outline-success btn-lg px-5 py-3 call-us-pulse">
+                    Sizi Arayalım
+                </a>
+
+                </div>
+
+                <!-- Expandable Sections -->
+                <div class="expandable-sections">
+                    
+                    <div class="expandable-item">
+                        <div class="expandable-header">
+                            <span>Proje Konumu</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="expandable-content">
+                            <div class="map-container">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.8567676392077!2d28.97707!3d41.058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDAzJzI4LjgiTiAyOMKwNTgnMzcuNCJF!5e0!3m2!1str!2str!4v1234567890"
+                                    width="100%" 
+                                    height="350" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy" 
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form Section -->
+        <div class="contact-section" id="contact-sec">
+            <div class="contact-header">
+                <h2>Satış Ofisimiz ile <span class="highlight">İletişime Geçin</span></h2>
+                <p>Fırsatları Kaçırmayın! Tüm projelerimiz hakkında detaylı bilgi sahibi olmak için formu doldurun.</p>
+            </div>
+
+            <form class="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="E-Mail Adresiniz" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="tel" placeholder="Gsm No" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Konu" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <textarea placeholder="Mesajınız" rows="4"></textarea>
+                </div>
+
+                <div class="form-checkboxes">
+
+    <div class="checkbox-wrapper">
+        <input type="checkbox" id="aydinlatma-onay" name="aydinlatma-onay" required>
+        <label for="aydinlatma-onay">
+            Sitenizde yer alan <a href="/kvkk-aydinlatma-metni" target="_blank" class="highlight-link">Aydınlatma Metni'ni</a> okudum ve kabul ediyorum.
+        </label>
+    </div>
+
+    <div class="checkbox-wrapper">
+        <input type="checkbox" id="kampanya-izin" name="kampanya-izin">
+        <label for="kampanya-izin">Kampanyalardan haberdar olmak için elektronik ileti almak istiyorum.</label>
+    </div>
+
+</div>
+
+                <style>
+                    .checkbox-wrapper {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 10px;
+                    }
+                    .checkbox-wrapper input[type="checkbox"] {
+                        margin-right: 8px;
+                    }
+                    .highlight-link {
+                        color: #007bff;
+                        text-decoration: none;
+                    }
+                    .highlight-link:hover {
+                        text-decoration: underline;
+                    }
+                </style>
+
+                <button type="submit" class="submit-btn">Formu Gönder</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Lightbox Modal -->
+<div id="lightboxModal" class="lightbox-modal">
+    <div class="lightbox-content">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        
+        <div class="lightbox-container">
+            <!-- Navigation arrows -->
+            <button class="lightbox-prev" onclick="changeSlide(-1)">❮</button>
+            <button class="lightbox-next" onclick="changeSlide(1)">❯</button>
+            
+            <!-- Main media -->
+            <div class="lightbox-image-wrapper">
+                <img id="lightboxImage" src="" alt="" class="lightbox-image" style="display: none;">
+                <video id="lightboxVideo" class="lightbox-video" controls style="display: none;">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Image counter -->
+            <div class="lightbox-counter">
+                <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+            </div>
+            
+            <!-- Thumbnail navigation -->
+            <div class="lightbox-thumbnails-container">
+                <button class="thumbnail-nav-btn thumbnail-prev" onclick="scrollThumbnails(-1)">‹</button>
+                <div class="lightbox-thumbnails" id="lightboxThumbnails">
+                    <!-- Thumbnails will be generated by JavaScript -->
+                </div>
+                <button class="thumbnail-nav-btn thumbnail-next" onclick="scrollThumbnails(1)">›</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/Scripts/projectDetail.js"></script>

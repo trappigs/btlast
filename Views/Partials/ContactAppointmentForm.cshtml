@@ -1,0 +1,161 @@
+﻿@{
+    // Partial view parametreleri
+    var formTitle = ViewBag.FormTitle ?? "Satış Ofisimiz ile İletişime Geçin";
+    var formDescription = ViewBag.FormDescription ?? "Fırsatları Kaçırmayın! Tüm projelerimiz hakkında detaylı bilgi sahibi olmak için formu doldurun.";
+    var showAppointment = ViewBag.ShowAppointment ?? true;
+    var formId = ViewBag.FormId ?? "contact-form-" + Guid.NewGuid().ToString("N")[..8];
+}
+<link rel="stylesheet" href="/css/contact-appointment-form.css">
+
+<div class="contact-section" id="contact-sec">
+    <div class="contact-header">
+        <h2>@formTitle <span class="highlight">İletişime Geçin</span></h2>
+        <p>@formDescription</p>
+    </div>
+
+    <!-- Form Type Selector -->
+    @if (showAppointment)
+    {
+        <div class="form-type-selector">
+            <div class="selector-buttons">
+                <button type="button" class="selector-btn active" data-form-type="contact">
+                    <i class="icon-message"></i>
+                    İletişim Formu
+                </button>
+                <button type="button" class="selector-btn" data-form-type="appointment">
+                    <i class="icon-calendar"></i>
+                    Randevu Al
+                </button>
+            </div>
+        </div>
+    }
+
+    <form class="contact-form" id="@formId" data-form-type="contact">
+        <!-- Contact Form Fields -->
+        <div class="form-content contact-form-content active">
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="text" name="fullName" placeholder="Adınız Soyadınız" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="E-Mail Adresiniz" required>
+                </div>
+            </div>
+           
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="tel" name="phone" placeholder="Gsm No" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="subject" placeholder="Konu" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <textarea name="message" placeholder="Mesajınız" rows="4"></textarea>
+            </div>
+        </div>
+
+        <!-- Appointment Form Fields -->
+        @if (showAppointment)
+        {
+            <div class="form-content appointment-form-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="fullName" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="E-Mail Adresiniz" required>
+                    </div>
+                </div>
+               
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Gsm No" required>
+                    </div>
+                    <div class="form-group">
+                        <select name="appointmentType" required>
+                            <option value="">Randevu Türü Seçin</option>
+                            <option value="phone">Telefon Randevusu</option>
+                            <option value="online">Online Görüşme</option>
+                            <option value="face-to-face">Yüz Yüze Görüşme</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="date" name="appointmentDate" required min="" id="appointmentDate">
+                        <label class="floating-label">Randevu Tarihi</label>
+                    </div>
+                    <div class="form-group">
+                        <select name="appointmentTime" required>
+                            <option value="">Saat Seçin</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                            <option value="17:30">17:30</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <textarea name="appointmentNotes" placeholder="Randevu ile ilgili notlarınız (isteğe bağlı)" rows="3"></textarea>
+                </div>
+            </div>
+        }
+
+        <!-- Checkboxes -->
+        <div class="form-checkboxes">
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="aydinlatma-onay-@formId" name="aydinlatma-onay" required>
+                <label for="aydinlatma-onay-@formId">
+                    Sitenizde yer alan <a href="/kvkk-aydinlatma-metni" target="_blank" class="highlight-link">Aydınlatma Metni'ni</a> okudum ve kabul ediyorum.
+                </label>
+            </div>
+
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="kampanya-izin-@formId" name="kampanya-izin">
+                <label for="kampanya-izin-@formId">Kampanyalardan haberdar olmak için elektronik ileti almak istiyorum.</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-submit">
+            <button type="submit" class="submit-btn">
+                <span class="btn-text contact-btn-text">Mesaj Gönder</span>
+                <span class="btn-text appointment-btn-text">Randevu Al</span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+
+        <!-- Success/Error Messages -->
+        <div class="form-messages">
+            <div class="success-message" style="display: none;">
+                <i class="icon-check"></i>
+                <span class="contact-success-text">Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.</span>
+                <span class="appointment-success-text">Randevunuz başarıyla alındı. Size onay mesajı göndereceğiz.</span>
+            </div>
+            <div class="error-message" style="display: none;">
+                <i class="icon-error"></i>
+                <span>Bir hata oluştu. Lütfen tekrar deneyin.</span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/Scripts/contact-appointment-form.js"></script>

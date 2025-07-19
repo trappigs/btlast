@@ -1,0 +1,311 @@
+﻿@* FAQ Section Partial View *@
+@* Views/Partials/FAQ.cshtml *@
+
+<section class="faq-section bg-beige">
+    <div class="faq-container">
+        <!-- Section Header -->
+        <div class="faq-header">
+            <h2 class="faq-title">Sık Sorulan Sorular</h2>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="faq-list">
+            <!-- FAQ Item 1 -->
+            <div class="faq-item">
+                <button class="faq-question" data-faq="1">
+                    <span class="faq-icon">+</span>
+                    <span class="question-text">Yatırım yapmak için neden Bereketli Topraklar'ı tercih etmeliyim?</span>
+                </button>
+                <div class="faq-answer" id="faq-1">
+                    <div class="answer-content">
+                        <p>Bereketli Topraklar olarak 15 yıllık sektör deneyimimiz, kaliteli hizmet anlayışımız ve müşteri memnuniyetini ön planda tutan yaklaşımımızla öne çıkıyoruz. İmarlı, altyapısı tamamlanmış projelerimiz ve esnek ödeme planlarımızla güvenli yatırım fırsatları sunuyoruz.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="faq-item">
+                <button class="faq-question" data-faq="2">
+                    <span class="faq-icon">+</span>
+                    <span class="question-text">Taksitli satış yapıyor musunuz?</span>
+                </button>
+                <div class="faq-answer" id="faq-2">
+                    <div class="answer-content">
+                        <p>Evet, 24 aya varan esnek taksit seçenekleri sunuyoruz. Peşin ödeme yapanlara özel indirimler de mevcuttur. Detaylı ödeme planları için satış danışmanlarımızla iletişime geçebilirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="faq-item active">
+                <button class="faq-question" data-faq="3">
+                    <span class="faq-icon">−</span>
+                    <span class="question-text">Proje geliştirme desteği sağlıyor musunuz?</span>
+                </button>
+                <div class="faq-answer show" id="faq-3">
+                    <div class="answer-content">
+                        <p>Evet, Bereketli Topraklar olarak yatırımcılarımıza arsa satışı sonrası proje geliştirme ve inşaat süreçlerinde danışmanlık hizmetleri sunmaktayız. Bu, planlama aşamasından başlayarak inşaatın tamamlanmasına kadar devam eden bir destektir.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="faq-item">
+                <button class="faq-question" data-faq="4">
+                    <span class="faq-icon">+</span>
+                    <span class="question-text">Emlakçılık mı yapıyorsunuz?</span>
+                </button>
+                <div class="faq-answer" id="faq-4">
+                    <div class="answer-content">
+                        <p>Hayır, biz emlakçı değiliz. Bereketli Topraklar, kendi projelerini geliştiren ve satan bir inşaat firmasıdır. Tüm arsalarımız kendi mülkümüzdür ve doğrudan mal sahibinden satış yapılmaktadır.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div class="faq-item">
+                <button class="faq-question" data-faq="5">
+                    <span class="faq-icon">+</span>
+                    <span class="question-text">Arsalarınızın altyapı durumu nedir?</span>
+                </button>
+                <div class="faq-answer" id="faq-5">
+                    <div class="answer-content">
+                        <p>Tüm projelerimizde elektrik, su, doğalgaz ve yol altyapısı tamamlanmıştır. İmar planına uygun olarak hazırlanmış parsellerde anında yapı ruhsatı alabilir ve inşaata başlayabilirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 6 -->
+            <div class="faq-item">
+                <button class="faq-question" data-faq="6">
+                    <span class="faq-icon">+</span>
+                    <span class="question-text">Bereketli Topraklar hangi tür arsaları sunmaktadır?</span>
+                </button>
+                <div class="faq-answer" id="faq-6">
+                    <div class="answer-content">
+                        <p>Konut, villa, tatil evi ve yatırım amaçlı imarlı arsalar sunmaktayız. Bursa ve çevresinde deniz manzaralı, doğa içinde ve şehir merkezine yakın lokasyonlarda çeşitli seçeneklerimiz bulunmaktadır.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* FAQ Section Styles */
+.faq-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.faq-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faq-title {
+    font-size: 2.5rem;
+    color: #045129;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* FAQ List */
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* FAQ Items */
+.faq-item {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.faq-item.active {
+    background: #045129;
+}
+
+/* FAQ Questions */
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 25px 30px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.faq-item.active .faq-question {
+    color: white;
+}
+
+.faq-question:hover {
+    background: rgba(4, 81, 41, 0.05);
+}
+
+.faq-item.active .faq-question:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* FAQ Icons */
+.faq-icon {
+    width: 30px;
+    height: 30px;
+    background: #045129;
+    color: white;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    font-family: monospace;
+}
+
+.faq-item.active .faq-icon {
+    background: white;
+    color: #045129;
+}
+
+/* Question Text */
+.question-text {
+    flex: 1;
+    line-height: 1.4;
+}
+
+/* FAQ Answers */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.faq-answer.show {
+    max-height: 200px;
+}
+
+.answer-content {
+    padding: 0 30px 25px 80px;
+    color: white;
+}
+
+.answer-content p {
+    margin: 0;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@@media (max-width: 768px) {
+    .faq-section {
+        padding: 60px 0;
+    }
+    
+    .faq-container {
+        padding: 0 15px;
+    }
+    
+    .faq-title {
+        font-size: 2rem;
+    }
+    
+    .faq-question {
+        padding: 20px 20px;
+        gap: 15px;
+        font-size: 1rem;
+    }
+    
+    .faq-icon {
+        width: 25px;
+        height: 25px;
+        font-size: 1rem;
+        font-family: monospace;
+    }
+    
+    .answer-content {
+        padding: 0 20px 20px 65px;
+        font-size: 0.9rem;
+    }
+}
+
+@@media (max-width: 480px) {
+    .faq-title {
+        font-size: 1.8rem;
+    }
+    
+    .faq-question {
+        padding: 18px 15px;
+        gap: 12px;
+        font-size: 0.95rem;
+    }
+    
+    .answer-content {
+        padding: 0 15px 18px 55px;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // FAQ Toggle Functionality
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const faqId = this.getAttribute('data-faq');
+            const faqItem = this.closest('.faq-item');
+            const faqAnswer = document.getElementById(`faq-${faqId}`);
+            const faqIcon = this.querySelector('.faq-icon');
+            
+            // Close all other FAQ items
+            faqQuestions.forEach(otherQuestion => {
+                if (otherQuestion !== this) {
+                    const otherFaqId = otherQuestion.getAttribute('data-faq');
+                    const otherFaqItem = otherQuestion.closest('.faq-item');
+                    const otherFaqAnswer = document.getElementById(`faq-${otherFaqId}`);
+                    const otherFaqIcon = otherQuestion.querySelector('.faq-icon');
+                    
+                    otherFaqItem.classList.remove('active');
+                    otherFaqAnswer.classList.remove('show');
+                    otherFaqIcon.textContent = '+';
+                }
+            });
+            
+            // Toggle current FAQ item
+            if (faqItem.classList.contains('active')) {
+                faqItem.classList.remove('active');
+                faqAnswer.classList.remove('show');
+                faqIcon.textContent = '+';
+            } else {
+                faqItem.classList.add('active');
+                faqAnswer.classList.add('show');
+                faqIcon.textContent = '−';
+            }
+        });
+    });
+});
+</script>

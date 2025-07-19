@@ -1,0 +1,11 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<HomePage>
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = Model.Name;
+}
+
+@await Html.PartialAsync("HeroSlider")
+@await Html.PartialAsync("ProjectCards")
+@await Html.PartialAsync("FAQ")
+@await Html.PartialAsync("fontTry")
