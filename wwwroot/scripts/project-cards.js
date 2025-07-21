@@ -1,334 +1,113 @@
-// Project Cards JavaScript
+// wwwroot/scripts/project-cards.js
 (function() {
     'use strict';
 
-    console.log('Project cards script loaded');
-
-    // DOM Elements
-    let projectCards = null;
-    let projectButtons = null;
-
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeProjectCards);
-    } else {
-        initializeProjectCards();
-    }
-
     function initializeProjectCards() {
-        console.log('Initializing project cards');
+        const projectCards = document.querySelectorAll('.project-card');
+        if (!projectCards.length) return;
 
-        // Get DOM elements
-        projectCards = document.querySelectorAll('.project-card');
-        projectButtons = document.querySelectorAll('.project-card .btn');
-
-        if (!projectCards.length) {
-            console.log('No project cards found');
-            return;
-        }
-
-        console.log(`Found ${projectCards.length} project cards`);
-
-        // Setup event listeners
-        setupEventListeners();
-
-        // Setup intersection observer for animations
-        setupIntersectionObserver();
-
-        console.log('Project cards initialization complete');
+        setupEventListeners(projectCards);
+        setupIntersectionObserver(projectCards);
     }
 
-    function setupEventListeners() {
-        console.log('Setting up project cards event listeners');
-
-        // Card hover events
-        projectCards.forEach((card, index) => {
-            const location = card.getAttribute('data-location');
-            
-            // Mouse enter
-            card.addEventListener('mouseenter', () => {
-                console.log(`Card hover: ${location}`);
-                handleCardHover(card, true);
-            });
-
-            // Mouse leave
-            card.addEventListener('mouseleave', () => {
-                console.log(`Card unhover: ${location}`);
-                handleCardHover(card, false);
-            });
-
-            // Card click (mobile fallback)
-            card.addEventListener('click', (e) => {
-                // Only handle card click if it's not a button click
-                if (!e.target.closest('.btn')) {
-                    console.log(`Card clicked: ${location}`);
-                    handleCardClick(card);
-                }
-            });
-        });
-
-        // Button events
-        projectButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const card = button.closest('.project-card');
-                const location = card.getAttribute('data-location');
-                const buttonType = button.classList.contains('btn-primary') ? 'explore' : 'form';
-                
-                console.log(`Button clicked: ${buttonType} for ${location}`);
-                handleButtonClick(button, buttonType, location);
-            });
-        });
-
-        // Keyboard accessibility
+    function setupEventListeners(projectCards) {
+        // --- YENİ VE DÜZELTİLMİŞ KOD ---
         projectCards.forEach(card => {
-            card.setAttribute('tabindex', '0');
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
+            // "Form Doldur" butonlarını ayrıca ele alalım
+            const formButton = card.querySelector('.btn-secondary');
+            if (formButton) {
+                formButton.addEventListener('click', (e) => {
+                    e.preventDefault(); // Sadece bu butonun linke gitmesini engelle
+                    e.stopPropagation();
+                    const location = card.getAttribute('data-location');
+                    openProjectForm(location);
+                });
+            }
+
+            // Kartın kendisine tıklandığında (mobil için)
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('a')) { // Eğer bir linke tıklanmadıysa
                     handleCardClick(card);
                 }
             });
         });
-    }
-
-    function handleCardHover(card, isHovering) {
-        const overlay = card.querySelector('.card-overlay');
-        const image = card.querySelector('.card-image img');
-        
-        if (isHovering) {
-            // Add custom hover effects if needed
-            card.style.zIndex = '10';
-        } else {
-            // Remove custom effects
-            card.style.zIndex = '1';
-        }
     }
 
     function handleCardClick(card) {
-        const location = card.getAttribute('data-location');
-        
-        // Mobile: Toggle overlay visibility
+        // Mobil: Overlay'i aç/kapat
         if (window.innerWidth <= 768) {
             const overlay = card.querySelector('.card-overlay');
             const isVisible = overlay.style.opacity === '1';
+
+            // Önce diğer tüm açık overlay'leri kapat
+            document.querySelectorAll('.project-card .card-overlay').forEach(ov => {
+                ov.style.opacity = '0';
+                ov.style.visibility = 'hidden';
+            });
             
-            if (isVisible) {
-                overlay.style.opacity = '0';
-                overlay.style.visibility = 'hidden';
-            } else {
-                // Hide other overlays first
-                projectCards.forEach(otherCard => {
-                    if (otherCard !== card) {
-                        const otherOverlay = otherCard.querySelector('.card-overlay');
-                        otherOverlay.style.opacity = '0';
-                        otherOverlay.style.visibility = 'hidden';
-                    }
-                });
-                
+            // Tıklanan kartın overlay'ini aç
+            if (!isVisible) {
                 overlay.style.opacity = '1';
                 overlay.style.visibility = 'visible';
             }
         }
     }
 
-    function handleButtonClick(button, buttonType, location) {
-        // Add loading state
-        const originalText = button.textContent;
-        button.style.pointerEvents = 'none';
-        button.innerHTML = '<span style="opacity: 0.7;">Yükleniyor...</span>';
-
-        setTimeout(() => {
-            button.style.pointerEvents = '';
-            button.textContent = originalText;
-        }, 1500);
-
-        // Handle different button types
-        if (buttonType === 'explore') {
-            console.log(`Exploring project: ${location}`);
-            // Redirect to project detail page
-            // window.location.href = `/projeler/${encodeURIComponent(location.toLowerCase().replace(/\s+/g, '-'))}`;
-            
-            // For demo purposes, show alert
-            showNotification(`${location} projesi detayları yükleniyor...`, 'info');
-            
-        } else if (buttonType === 'form') {
-            console.log(`Opening form for: ${location}`);
-            // Open contact form or redirect to form page
-            openProjectForm(location);
-        }
-
-        // Track event (for analytics)
-        trackEvent('project_card_click', {
-            action: buttonType,
-            location: location,
-            timestamp: new Date().toISOString()
-        });
-    }
-
     function openProjectForm(location) {
-        // Option 1: Open modal form
-        showNotification(`${location} için iletişim formu açılıyor...`, 'success');
-        
-        // Option 2: Scroll to contact form and pre-fill location
-        const contactForm = document.querySelector('#contactFormContainer');
-        if (contactForm) {
-            // Pre-fill form with project location
-            const projectField = contactForm.querySelector('[name="Subject"]');
-            if (projectField) {
-                projectField.value = `${location} Projesi Hakkında Bilgi`;
+        // Bu fonksiyon, form doldur butonuna basıldığında
+        // ana sayfadaki iletişim formunu bulup oraya kaydırır.
+        const contactFormSection = document.getElementById('contactFormContainer');
+        if (contactFormSection) {
+            showNotification(`${location} için iletişim formu açılıyor...`, 'info');
+            const subjectField = contactFormSection.querySelector('[name="Subject"]');
+            if (subjectField) {
+                subjectField.value = `${location} Projesi Hakkında Bilgi`;
             }
-            
-            // Scroll to form
-            contactForm.scrollIntoView({ behavior: 'smooth' });
+            contactFormSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            // Alternatif olarak, eğer form yoksa /iletisim sayfasına yönlendirilebilir.
+            // window.location.href = `/iletisim?proje=${encodeURIComponent(location)}`;
+            showNotification('İletişim formu bulunamadı.', 'error');
         }
-        
-        // Option 3: Redirect to dedicated form page
-        // window.location.href = `/iletisim?proje=${encodeURIComponent(location)}`;
     }
 
-    function showNotification(message, type = 'info') {
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.innerHTML = `
-            <div class="notification-content">
-                <span class="notification-message">${message}</span>
-                <button class="notification-close">&times;</button>
-            </div>
-        `;
-        
-        // Add styles
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${type === 'success' ? '#4CAF50' : type === 'info' ? '#2196F3' : '#FF9800'};
-            color: white;
-            padding: 16px 24px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 10000;
-            animation: slideIn 0.3s ease;
-            max-width: 350px;
-        `;
-        
-        // Add to page
-        document.body.appendChild(notification);
-        
-        // Auto remove after 3 seconds
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-            }, 300);
-        }, 3000);
-        
-        // Close button
-        const closeBtn = notification.querySelector('.notification-close');
-        closeBtn.addEventListener('click', () => {
-            notification.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-            }, 300);
-        });
-    }
+    // --- Diğer Yardımcı Fonksiyonlar (Aynı Kalabilir) ---
 
-    function setupIntersectionObserver() {
+    function setupIntersectionObserver(projectCards) {
         if (!window.IntersectionObserver) return;
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
                 }
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '50px'
-        });
-
-        projectCards.forEach(card => {
-            observer.observe(card);
-        });
+        }, { threshold: 0.1 });
+        projectCards.forEach(card => observer.observe(card));
+    }
+    
+    function showNotification(message, type = 'info') {
+        // Bildirim oluşturma mantığı... (Mevcut kodunuzdaki gibi kalabilir)
+        // Eğer bu fonksiyon yoksa, aşağıdaki basit versiyonu kullanabilirsiniz
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed; top: 20px; right: 20px; padding: 15px 25px; 
+            background-color: ${type === 'info' ? '#007bff' : '#dc3545'}; 
+            color: white; border-radius: 8px; z-index: 1001;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: opacity 0.3s;
+        `;
+        document.body.appendChild(notification);
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
     }
 
-    function trackEvent(eventName, data) {
-        // Analytics tracking
-        if (typeof gtag !== 'undefined') {
-            gtag('event', eventName, data);
-        }
-        
-        // Custom analytics
-        console.log('Event tracked:', eventName, data);
-        
-        // Send to analytics service
-        // analyticsService.track(eventName, data);
+    // Script'i başlat
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeProjectCards);
+    } else {
+        initializeProjectCards();
     }
-
-    // Public API
-    window.ProjectCards = {
-        // Method to programmatically trigger card actions
-        openProject: function(location) {
-            const card = Array.from(projectCards).find(card => 
-                card.getAttribute('data-location') === location
-            );
-            if (card) {
-                handleCardClick(card);
-            }
-        },
-        
-        // Method to show specific project form
-        showProjectForm: function(location) {
-            openProjectForm(location);
-        },
-        
-        // Method to get all project locations
-        getProjects: function() {
-            return Array.from(projectCards).map(card => 
-                card.getAttribute('data-location')
-            );
-        }
-    };
-
-    // Add CSS animations
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-        
-        .notification-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-        
-        .notification-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 0;
-            line-height: 1;
-        }
-    `;
-    document.head.appendChild(style);
-
-    console.log('Project cards script fully loaded and ready');
-
 })();

@@ -162,9 +162,9 @@
 }
 
 .btn-sm {
-    padding: 8px 16px;
-    font-size: 0.85rem;
-    min-width: 110px;
+    padding: 6px 14px;   /* Dolguyu küçülttük */
+    font-size: 0.75rem;  /* Yazı tipini küçülttük */
+    min-width: 100px;
 }
 
 .btn-primary {
