@@ -58,62 +58,67 @@
                 }
             }
 
-            // --- 2. MOBİL MENÜ FONKSİYONLARI (GÜNCELLENDİ) ---
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
-
-            // Masaüstü menüsünü mobil menüye doğru class'larla kopyala
-            function cloneMenuForMobile() {
-                const desktopMenu = document.querySelector('.nav-menu');
-                if (desktopMenu && mobileMenu) {
-                    const clonedMenu = desktopMenu.cloneNode(true); // Menüyü klonla
-                    
-                    // Klonlanan menüdeki tüm linklere ve dropdown'lara mobil class'larını ata
-                    clonedMenu.querySelectorAll('.nav-item').forEach(item => {
-                        item.classList.remove('nav-item');
-                        item.classList.add('mobile-nav-item');
-                    });
-                    
-                    clonedMenu.querySelectorAll('.nav-dropdown').forEach(dropdown => {
-                        dropdown.classList.remove('nav-dropdown');
-                        dropdown.classList.add('mobile-dropdown');
-
-                        const toggle = dropdown.querySelector('.mobile-nav-item');
-                        if(toggle) {
-                            toggle.addEventListener('click', (e) => {
-                                if (toggle.getAttribute('href') === '#') {
-                                    e.preventDefault();
-                                    dropdown.classList.toggle('open');
-                                }
-                            });
-                        }
-                    });
-                    
-                    mobileMenu.innerHTML = ''; // İçini temizle
-                    mobileMenu.appendChild(clonedMenu); // Klonlanmış ve düzeltilmiş menüyü ekle
-                }
+             document.addEventListener('DOMContentLoaded', function() {
+        // --- 1. NAVBAR BOŞLUK DÜZELTMESİ ---
+        function adjustMainContentPadding() {
+            const navbar = document.querySelector('.modern-nav');
+            const mainContent = document.querySelector('.main-content');
+            if (navbar && mainContent) {
+                const navHeight = navbar.offsetHeight;
+                mainContent.style.paddingTop = navHeight + 'px';
             }
+        }
 
-            // Mobil menüyü aç/kapat
-            function toggleMobileMenu() {
-                mobileMenu.classList.toggle('active');
-                mobileMenuOverlay.classList.toggle('active');
-                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        // --- 2. MOBİL MENÜ FONKSİYONLARI ---
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+
+        // Masaüstü menüsünü mobil menüye kopyala
+        function cloneMenuForMobile() {
+            const desktopMenu = document.querySelector('.nav-menu');
+            if (desktopMenu && mobileMenu) {
+                const clonedMenu = desktopMenu.cloneNode(true); // Menüyü klonla
+                
+                // Klonlanan menüdeki class'ları mobile uygun hale getir
+                clonedMenu.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.add('mobile-nav-item');
+                });
+                clonedMenu.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('mobile-dropdown');
+                    const toggle = dropdown.querySelector('.mobile-nav-item');
+                     if(toggle) {
+                        toggle.addEventListener('click', (e) => {
+                            if (toggle.getAttribute('href') === '#') {
+                                 e.preventDefault();
+                                dropdown.classList.toggle('open');
+                            }
+                         });
+                    }
+                });
+                mobileMenu.innerHTML = '';
+                mobileMenu.appendChild(clonedMenu); // Klonlanmış menüyü ekle
             }
+        }
 
-            // Olay dinleyicilerini ata
-            if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-                mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
-            }
+        // Mobil menüyü aç/kapat
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
 
-            // --- Kodları Başlat ---
-            adjustMainContentPadding();
-            cloneMenuForMobile(); // Düzeltilmiş kopyalama fonksiyonunu çağır
-            window.addEventListener('resize', adjustMainContentPadding);
+        // Olay dinleyicilerini ata
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+        }
 
-        });
+        // Kodları Başlat
+        adjustMainContentPadding();
+        cloneMenuForMobile();
+        window.addEventListener('resize', adjustMainContentPadding);
+    });
     </script>
 
 
