@@ -603,3 +603,39 @@
         display: none;
     }
 }
+
+
+/* --- HERO SLIDER MOBİL UYUMLULUK --- */
+
+@media (max-width: 768px) {
+    .slide-content {
+        justify-content: center;
+        text-align: center;
+        padding: 0 5%;
+        transform: translateY(0);
+    }
+
+    .slide-title {
+        font-size: clamp(2.5rem, 10vw, 3.5rem); /* Yazı boyutunu küçült */
+    }
+
+    .slide-actions {
+        flex-direction: column; /* Butonları alt alta sırala */
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px; /* Butonların çok geniş olmasını engelle */
+    }
+    
+    /* Mobilde gereksiz okları ve scroll göstergesini gizle */
+    .slider-navigation, .scroll-indicator {
+        display: none;
+    }
+
+    .slider-pagination {
+        bottom: 20px; /* Noktaları aşağıya al */
+    }
+}

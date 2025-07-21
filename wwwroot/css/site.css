@@ -1269,3 +1269,39 @@ h1:hover,
     /* Hover durumunda animasyon durur, kendi gölgesi devreye girer */
     animation: none;
 }
+
+
+/* --- MOBİL UYUMLULUK (RESPONSIVE) AYARLARI --- */
+
+/* TABLET GÖRÜNÜMÜ (1024px ve altı) */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 90%; /* İçerik alanını biraz daha genişlet */
+    }
+}
+
+/* KÜÇÜK TABLET VE BÜYÜK TELEFON GÖRÜNÜMÜ (768px ve altı) */
+@media (max-width: 768px) {
+    body {
+        padding: 0; /* Sayfa kenarlarındaki genel boşluğu kaldır */
+    }
+
+    /* Sol sosyal medya barını ve "Sizi Arayalım" butonunu mobilde gizle */
+    .fixed-social, .fixed-call-btn {
+        display: none;
+    }
+
+    /* WhatsApp butonunu mobilde biraz yukarı al (sosyal bar ile çakışmasın) */
+    .fixed-whatsapp-btn {
+        bottom: 20px;
+        left: 20px;
+    }
+}
+
+/* KÜÇÜK TELEFON GÖRÜNÜMÜ (480px ve altı) */
+@media (max-width: 480px) {
+    .container {
+        max-width: 100%;
+        padding: 0 1rem; /* Kenarlarda daha az boşluk bırak */
+    }
+}

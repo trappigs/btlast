@@ -45,23 +45,78 @@
 
     <!-- Bootstrap 5.3.7 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <script>
-        function adjustMainContentPadding() {
-            const navbar = document.querySelector('.modern-nav');
-            const mainContent = document.querySelector('.main-content');
-            
-            if (navbar && mainContent) {
-                const navHeight = navbar.offsetHeight;
-                // Ana içeriğin üstüne, navigasyon barının yüksekliği kadar boşluk ekle
-                mainContent.style.paddingTop = navHeight + 'px';
-            }
-        }
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-        // Bu fonksiyonu hem sayfa ilk yüklendiğinde
-        document.addEventListener('DOMContentLoaded', adjustMainContentPadding);
-        
-        // hem de pencere boyutu değiştiğinde (mobil/desktop geçişleri için) çalıştır
-        window.addEventListener('resize', adjustMainContentPadding);
+            // --- 1. NAVBAR BOŞLUK DÜZELTMESİ (Aynı kalıyor) ---
+            function adjustMainContentPadding() {
+                const navbar = document.querySelector('.modern-nav');
+                const mainContent = document.querySelector('.main-content');
+                if (navbar && mainContent) {
+                    const navHeight = navbar.offsetHeight;
+                    mainContent.style.paddingTop = navHeight + 'px';
+                }
+            }
+
+            // --- 2. MOBİL MENÜ FONKSİYONLARI (GÜNCELLENDİ) ---
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+
+            // Masaüstü menüsünü mobil menüye doğru class'larla kopyala
+            function cloneMenuForMobile() {
+                const desktopMenu = document.querySelector('.nav-menu');
+                if (desktopMenu && mobileMenu) {
+                    const clonedMenu = desktopMenu.cloneNode(true); // Menüyü klonla
+                    
+                    // Klonlanan menüdeki tüm linklere ve dropdown'lara mobil class'larını ata
+                    clonedMenu.querySelectorAll('.nav-item').forEach(item => {
+                        item.classList.remove('nav-item');
+                        item.classList.add('mobile-nav-item');
+                    });
+                    
+                    clonedMenu.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('nav-dropdown');
+                        dropdown.classList.add('mobile-dropdown');
+
+                        const toggle = dropdown.querySelector('.mobile-nav-item');
+                        if(toggle) {
+                            toggle.addEventListener('click', (e) => {
+                                if (toggle.getAttribute('href') === '#') {
+                                    e.preventDefault();
+                                    dropdown.classList.toggle('open');
+                                }
+                            });
+                        }
+                    });
+                    
+                    mobileMenu.innerHTML = ''; // İçini temizle
+                    mobileMenu.appendChild(clonedMenu); // Klonlanmış ve düzeltilmiş menüyü ekle
+                }
+            }
+
+            // Mobil menüyü aç/kapat
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('active');
+                mobileMenuOverlay.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            }
+
+            // Olay dinleyicilerini ata
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+                mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+            }
+
+            // --- Kodları Başlat ---
+            adjustMainContentPadding();
+            cloneMenuForMobile(); // Düzeltilmiş kopyalama fonksiyonunu çağır
+            window.addEventListener('resize', adjustMainContentPadding);
+
+        });
     </script>
+
+
+    
 </body>
 </html>

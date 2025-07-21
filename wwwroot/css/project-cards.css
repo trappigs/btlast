@@ -362,3 +362,30 @@
         gap: 20px;
     }
 }
+
+
+/* --- PROJECT CARDS MOBİL UYUMLULUK --- */
+
+@media (max-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr); /* Tablette 2'li dizilim */
+        gap: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-section {
+        padding: 60px 0;
+    }
+    .projects-grid {
+        grid-template-columns: 1fr; /* Telefonda tekli dizilim */
+        gap: 20px;
+    }
+    .section-title {
+        font-size: 1.8rem;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+}
