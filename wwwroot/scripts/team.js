@@ -10,66 +10,60 @@ document.addEventListener('DOMContentLoaded', function() {
             bio: "Furkan Hoşgör, 360 derece yaratıcı ve teknoloji ekiplerini yönetir ve on yıldan fazla deneyime sahiptir. Ödül sahibi, platformlar arası yaratıcı fikirler ve deneyimler geliştirme konusunda uzmanlaşmıştır. 360'tan önce, Mehmet, büyük ajansların yaratıcı departmanında çalıştı ve ulusal markaların projelerinde yer aldı."
         },
         2: {
-            name: "Güray Çakıcı",
-            title: "Müdür",
-            image: "/media/wqspbsg4/guray-cakici-wp-pp.png",
-            bio: "Furkan Hoşgör, 360 derece yaratıcı ve teknoloji ekiplerini yönetir ve on yıldan fazla deneyime sahiptir. Ödül sahibi, platformlar arası yaratıcı fikirler ve deneyimler geliştirme konusunda uzmanlaşmıştır. 360'tan önce, Mehmet, büyük ajansların yaratıcı departmanında çalıştı ve ulusal markaların projelerinde yer aldı."
-        },
-        3: {
             name: "Furkan Hoşgör",
             title: "Genel Yönetici Asistanı",
             image: "/media/abrlq0cs/furkan-ekip-foto.webp",
             bio: "Ayşe Demir, şirketin stratejik yönünü belirlemekte ve operasyonel mükemmelliği sağlamaktadır. 15 yıllık deneyimi ile inşaat sektöründe öncü projelere imza atmıştır. Sürdürülebilir yapı teknolojileri ve yenilikçi çözümler konusunda uzmandır."
         },
-        4: {
+        3: {
             name: "Halime Uçan",
             title: "Finans Uzmanı",
             image: "/media/dkahwv4a/halime-wp-pp.png",
             bio: "Ali Kaya, şirketin kurucusu ve vizyonerıdır. 25 yıllık sektör deneyimi ile Türkiye'nin en prestijli projelerinde yer almıştır. Modern mimari anlayışı ve kaliteli yaşam alanları yaratma konusundaki tutkusu ile sektöre yön vermektedir."
         },
-        5: {
+        4: {
             name: "Semih Aygün",
             title: "Yatırım Uzmanı",
             image: "/media/jhkfyqea/whatsapp-image-2025-02-18-at-113204-1.jpeg",
             bio: "Fatma Özkan, şirketin yaratıcı vizyonunu yönlendirmektedir. Mimarlık ve iç mimarlık alanındaki uzmanlığı ile modern tasarım trendlerini projelerimize yansıtmaktadır. Avrupa'daki çeşitli tasarım firmalarında çalışmış deneyimli bir profesyoneldir."
         },
-        6: {
+        5: {
             name: "Hasan Uysal",
             title: "Operasyon Koordinatörü",
             image: "/media/j3vlurbd/dscf4348.jpg",
             bio: "Hasan Çelik, şirketin stratejik planlamasından ve pazar analizinden sorumludur. İnşaat sektöründe 18 yıllık deneyimi bulunmaktadır. Pazar trendleri ve rekabet analizi konularında uzmanlaşmış, şirketin büyüme stratejilerini yönetmektedir."
         },
-        7: {
+        6: {
             name: "Bahar Bil",
             title: "Satış Pazarlama Uzmanı",
             image: "/media/ofdd52hr/whatsapp-image-2025-01-08-at-134658.jpeg",
             bio: "Zeynep Arslan, marka iletişimi ve pazarlama stratejilerinden sorumludur. Dijital pazarlama ve marka yönetimi alanında 12 yıllık deneyime sahiptir. Müşteri deneyimi ve satış süreçlerini optimize ederek şirketin pazar payını artırmaktadır."
         },
-        8: {
+        7: {
             name: "Hayati Uçan",
             title: "Saha Operasyon Koordinatörü",
             image: "/media/fy1l0o0a/hayati-ucan-wp-pp.png",
             bio: "Emre Şahin, şirketin insan kaynakları politikalarını yönetir ve yetenek gelişimi programlarını koordine eder. 14 yıllık HR deneyimi ile ekip yönetimi, performans değerlendirme ve çalışan gelişimi konularında uzmandır."
         },
-        9: {
+        8: {
             name: "Memet Emin Aktaş",
             title: "Dijital Pazarlama Departman Müdürü",
             image: "/media/xl1nbywg/memet-emin-aktas-1-wp-pp.png",
             bio: "Selin Yıldız, şirketin finansal stratejilerini yönetir ve mali raporlamasını koordine eder. Muhasebe ve finans alanında 16 yıllık deneyime sahiptir. Risk yönetimi ve bütçe planlaması konularında uzmanlaşmıştır."
         },
-        10: {
+        9: {
             name: "Hakan Yant",
             title: "Yatırım Uzmanı",
             image: "/media/v43cfwi5/şşimg_3761.jpg",
             bio: "Selin Yıldız, şirketin finansal stratejilerini yönetir ve mali raporlamasını koordine eder. Muhasebe ve finans alanında 16 yıllık deneyime sahiptir. Risk yönetimi ve bütçe planlaması konularında uzmanlaşmıştır."
         },
-        11: {
+        10: {
             name: "Muhammed Hatay",
             title: "Yazılım Geliştirici",
             image: "/media/nt0n5w3h/mami-wp.png",
             bio: "Selin Yıldız, şirketin finansal stratejilerini yönetir ve mali raporlamasını koordine eder. Muhasebe ve finans alanında 16 yıllık deneyime sahiptir. Risk yönetimi ve bütçe planlaması konularında uzmanlaşmıştır."
         },
-        12: {
+        11: {
             name: "Mehmet Arslan",
             title: "Satış Pazarlama Uzmanı",
             image: "/media/ecqohpw3/mehmet-arslan-ekip.jpg",

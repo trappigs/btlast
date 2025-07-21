@@ -1,325 +1,179 @@
-// Contact & Appointment Form Handler
-class ContactAppointmentForm {
-    constructor(formElement) {
-        this.form = formElement;
-        this.currentType = 'contact';
-        this.init();
+// wwwroot/scripts/contact-appointment-form.js
+(function () {
+    'use strict';
+
+    const form = document.getElementById('contactAppointmentForm');
+    if (!form) return;
+
+    const formContainer = document.getElementById('contactFormContainer');
+    const tabButtons = form.querySelectorAll('.tab-button');
+    const tabContents = form.querySelectorAll('.tab-content');
+    const formTypeInput = form.querySelector('#formType');
+    const submitButton = form.querySelector('.btn-submit');
+
+    // --- Sekme (Tab) Fonksiyonları ---
+    function initializeTabs() {
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+                switchTab(tabId);
+            });
+        });
+        // Başlangıçta doğru sekmenin elemanları aktif olsun
+        switchTab('contact'); 
     }
 
-    init() {
-        this.setupEventListeners();
-        this.setupDateInput();
-        this.setupTimeAvailability();
-    }
+    function switchTab(tabId) {
+        // Butonların aktif durumunu güncelle
+        tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+        
+        // Gizli inputun değerini güncelle
+        if (formTypeInput) formTypeInput.value = tabId;
 
-    setupEventListeners() {
-        // Form type selector
-        const selectorButtons = this.form.parentElement.querySelectorAll('.selector-btn');
-        selectorButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                this.switchFormType(e.target.dataset.formType);
+        tabContents.forEach(content => {
+            const isActive = content.id === `${tabId}Tab`;
+            content.classList.toggle('active', isActive);
+            
+            // --- ANAHTAR DEĞİŞİKLİK BURADA ---
+            // Sekmedeki tüm form elemanlarını bul
+            const fields = content.querySelectorAll('input, textarea, select');
+            
+            // Sekme aktif değilse, içindeki tüm elemanları devre dışı bırak
+            // Sekme aktif ise, tüm elemanları etkinleştir
+            fields.forEach(field => {
+                field.disabled = !isActive;
             });
         });
 
-        // Form submission
-        this.form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleSubmit();
-        });
+        clearAllErrors();
+    }
 
-        // Appointment type change
-        const appointmentTypeSelect = this.form.querySelector('select[name="appointmentType"]');
-        if (appointmentTypeSelect) {
-            appointmentTypeSelect.addEventListener('change', () => {
-                this.updateTimeSlots();
-            });
+    // --- Form Gönderme ve Sunucu Yanıtı ---
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+        if (!validateForm()) {
+            showGlobalError('Lütfen işaretli alanları doğru bir şekilde doldurunuz.');
+            return;
         }
 
-        // Date change
-        const dateInput = this.form.querySelector('input[name="appointmentDate"]');
-        if (dateInput) {
-            dateInput.addEventListener('change', () => {
-                this.updateTimeSlots();
-            });
-        }
-    }
+        submitButton.disabled = true;
+        submitButton.classList.add('loading');
 
-    setupDateInput() {
-        const dateInput = this.form.querySelector('input[name="appointmentDate"]');
-        if (dateInput) {
-            // Set minimum date to today
-            const today = new Date();
-            const todayString = today.toISOString().split('T')[0];
-            dateInput.min = todayString;
-
-            // Set maximum date to 3 months from now
-            const maxDate = new Date(today);
-            maxDate.setMonth(maxDate.getMonth() + 3);
-            const maxDateString = maxDate.toISOString().split('T')[0];
-            dateInput.max = maxDateString;
-        }
-    }
-
-    setupTimeAvailability() {
-        // Mock time availability - in real implementation, this would come from backend
-        this.timeAvailability = {
-            'phone': {
-                'weekdays': ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'],
-                'weekends': ['10:00', '11:00', '14:00', '15:00', '16:00']
-            },
-            'online': {
-                'weekdays': ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'],
-                'weekends': ['10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30']
-            },
-            'face-to-face': {
-                'weekdays': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'],
-                'weekends': []
-            }
-        };
-    }
-
-    switchFormType(type) {
-        this.currentType = type;
-        this.form.dataset.formType = type;
-
-        // Update active button
-        const buttons = this.form.parentElement.querySelectorAll('.selector-btn');
-        buttons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.formType === type);
-        });
-
-        // Show/hide form content
-        const contents = this.form.querySelectorAll('.form-content');
-        contents.forEach(content => {
-            content.classList.toggle('active', content.classList.contains(`${type}-form-content`));
-        });
-
-        // Clear messages
-        this.hideMessages();
-    }
-
-    updateTimeSlots() {
-        const appointmentType = this.form.querySelector('select[name="appointmentType"]').value;
-        const selectedDate = this.form.querySelector('input[name="appointmentDate"]').value;
-        const timeSelect = this.form.querySelector('select[name="appointmentTime"]');
-
-        if (!appointmentType || !selectedDate || !timeSelect) return;
-
-        const selectedDateObj = new Date(selectedDate);
-        const dayOfWeek = selectedDateObj.getDay();
-        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-
-        const availableSlots = this.timeAvailability[appointmentType]?.[isWeekend ? 'weekends' : 'weekdays'] || [];
-
-        // Clear existing options except the first one
-        timeSelect.innerHTML = '<option value="">Saat Seçin</option>';
-
-        // Add available time slots
-        availableSlots.forEach(time => {
-            const option = document.createElement('option');
-            option.value = time;
-            option.textContent = time;
-            timeSelect.appendChild(option);
-        });
-
-        // If no slots available, show message
-        if (availableSlots.length === 0) {
-            const option = document.createElement('option');
-            option.value = '';
-            option.textContent = 'Bu tarih için uygun saat bulunmuyor';
-            option.disabled = true;
-            timeSelect.appendChild(option);
-        }
-    }
-
-    async handleSubmit() {
-        if (!this.validateForm()) return;
-
-        const submitBtn = this.form.querySelector('.submit-btn');
-        submitBtn.classList.add('loading');
+        const formData = new FormData(form);
+        const actionUrl = form.getAttribute('action');
+        const token = form.querySelector('input[name="__RequestVerificationToken"]').value;
 
         try {
-            const formData = this.getFormData();
-            const response = await this.submitForm(formData);
+            const response = await fetch(actionUrl, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'RequestVerificationToken': token,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
             
-            if (response.success) {
-                this.showSuccessMessage();
-                this.resetForm();
-            } else {
-                this.showErrorMessage(response.message || 'Bir hata oluştu. Lütfen tekrar deneyin.');
-            }
+            const data = await response.json();
+            handleServerResponse(data);
+
         } catch (error) {
-            console.error('Form submission error:', error);
-            this.showErrorMessage('Bir hata oluştu. Lütfen tekrar deneyin.');
+            console.error('Sunucuya gönderilirken hata oluştu:', error);
+            showGlobalError('Ağ hatası oluştu. Lütfen daha sonra tekrar deneyin.');
         } finally {
-            submitBtn.classList.remove('loading');
+            submitButton.disabled = false;
+            submitButton.classList.remove('loading');
         }
     }
 
-    validateForm() {
-        const requiredFields = this.form.querySelectorAll('[required]');
+    function handleServerResponse(data) {
+        clearAllErrors();
+        if (data.success) {
+            formContainer.innerHTML = `
+                <div style="text-align: center; padding: 2rem; animation: fadeIn 0.5s;">
+                    <h2 style="font-size: 4rem; color: #28a745;">✓</h2>
+                    <h3>Teşekkür Ederiz!</h3>
+                    <p>${data.message}</p>
+                </div>`;
+        } else if (data.errors) {
+            displayFieldErrors(data.errors);
+            showGlobalError('Lütfen formdaki hataları düzelterek tekrar deneyin.');
+        } else if (data.error) {
+            showGlobalError(data.error);
+        }
+    }
+
+    // --- Doğrulama (Validation) ve Hata Yönetimi ---
+    function validateForm() {
+        clearAllErrors();
         let isValid = true;
-
-        // Clear previous validation styles
-        requiredFields.forEach(field => {
-            field.style.borderColor = '';
+        const activeTab = form.querySelector('.tab-content.active');
+        
+        activeTab.querySelectorAll('[required]').forEach(field => {
+            if (!validateField(field)) isValid = false;
         });
-
-        // Check required fields
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
-                field.style.borderColor = '#e74c3c';
-                isValid = false;
-            }
-        });
-
-        // Email validation
-        const emailField = this.form.querySelector('input[type="email"]');
-        if (emailField && emailField.value) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(emailField.value)) {
-                emailField.style.borderColor = '#e74c3c';
-                isValid = false;
-            }
-        }
-
-        // Phone validation
-        const phoneField = this.form.querySelector('input[type="tel"]');
-        if (phoneField && phoneField.value) {
-            const phoneRegex = /^[0-9+\-\s()]{10,}$/;
-            if (!phoneRegex.test(phoneField.value)) {
-                phoneField.style.borderColor = '#e74c3c';
-                isValid = false;
-            }
-        }
-
-        // Date validation for appointments
-        if (this.currentType === 'appointment') {
-            const dateField = this.form.querySelector('input[name="appointmentDate"]');
-            if (dateField && dateField.value) {
-                const selectedDate = new Date(dateField.value);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-
-                if (selectedDate < today) {
-                    dateField.style.borderColor = '#e74c3c';
-                    isValid = false;
-                }
-            }
-        }
-
-        if (!isValid) {
-            this.showErrorMessage('Lütfen tüm gerekli alanları doğru şekilde doldurun.');
-        }
+        
+        const kvkkCheckbox = form.querySelector('#kvkkConsent');
+        if (kvkkCheckbox && !validateField(kvkkCheckbox)) isValid = false;
 
         return isValid;
     }
 
-    getFormData() {
-        const formData = new FormData(this.form);
-        const data = {
-            type: this.currentType,
-            timestamp: new Date().toISOString()
-        };
+    function validateField(field) {
+        const group = field.closest('.form-group, .checkbox-label, .appointment-types');
+        let message = '';
 
-        // Convert FormData to object
-        for (let [key, value] of formData.entries()) {
-            data[key] = value;
+        if (field.type === 'radio') {
+            const radioGroup = form.querySelectorAll(`input[name="${field.name}"]`);
+            if (![...radioGroup].some(r => r.checked)) message = 'Lütfen bir seçim yapınız.';
+        } else if (field.type === 'checkbox') {
+            if (!field.checked) message = 'Bu alanı onaylamanız gerekmektedir.';
+        } else if (!field.value.trim()) {
+            message = 'Bu alan zorunludur.';
+        } else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+            message = 'Geçerli bir e-posta adresi giriniz.';
+        } else if (field.type === 'tel' && !/^[0-9\s\(\)\-\+]{10,}$/.test(field.value)) {
+            message = 'Geçerli bir telefon numarası giriniz.';
         }
 
-        return data;
+        if (message) {
+            showFieldError(group, message);
+            return false;
+        }
+        return true;
     }
-
-    async submitForm(formData) {
-        // Simulate API call - replace with actual endpoint
-        const endpoint = this.currentType === 'appointment' ? '/api/appointments' : '/api/contact';
-        
-        // Mock response - replace with actual fetch call
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                // Simulate success response
-                resolve({
-                    success: true,
-                    message: 'Form submitted successfully'
-                });
-            }, 1500);
-        });
-
-        // Actual implementation would be:
-        /*
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        });
-
-        return await response.json();
-        */
+    
+    function showFieldError(group, message) {
+        group.classList.add('error');
+        const errorElement = document.createElement('div');
+        errorElement.className = 'form-error-message';
+        errorElement.textContent = message;
+        group.appendChild(errorElement);
     }
-
-    showSuccessMessage() {
-        this.hideMessages();
-        const successMessage = this.form.querySelector('.success-message');
-        if (successMessage) {
-            successMessage.style.display = 'flex';
-            
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 5000);
+    
+    function showGlobalError(message) {
+        let container = form.querySelector('#global-error-container');
+        if (container) {
+             container.innerHTML = `<div class="global-error-message">${message}</div>`;
         }
     }
 
-    showErrorMessage(message) {
-        this.hideMessages();
-        const errorMessage = this.form.querySelector('.error-message');
-        if (errorMessage) {
-            const messageText = errorMessage.querySelector('span');
-            if (messageText) {
-                messageText.textContent = message;
+    function clearAllErrors() {
+        form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+        form.querySelectorAll('.form-error-message, .global-error-message').forEach(el => el.remove());
+    }
+    
+    function displayFieldErrors(errors) {
+        Object.keys(errors).forEach(key => {
+            const field = form.querySelector(`[name="${key}"]`);
+            if (field) {
+                const group = field.closest('.form-group, .checkbox-label, .appointment-types');
+                if (group) showFieldError(group, errors[key][0]);
             }
-            errorMessage.style.display = 'flex';
-            
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                errorMessage.style.display = 'none';
-            }, 5000);
-        }
-    }
-
-    hideMessages() {
-        const messages = this.form.querySelectorAll('.success-message, .error-message');
-        messages.forEach(msg => {
-            msg.style.display = 'none';
         });
     }
 
-    resetForm() {
-        this.form.reset();
-        
-        // Clear validation styles
-        const fields = this.form.querySelectorAll('input, select, textarea');
-        fields.forEach(field => {
-            field.style.borderColor = '';
-        });
+    // --- Başlatma ---
+    initializeTabs();
+    form.addEventListener('submit', handleFormSubmit);
 
-        // Reset time slots
-        const timeSelect = this.form.querySelector('select[name="appointmentTime"]');
-        if (timeSelect) {
-            timeSelect.innerHTML = '<option value="">Saat Seçin</option>';
-        }
-    }
-}
-
-// Initialize forms when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForms = document.querySelectorAll('.contact-form');
-    contactForms.forEach(form => {
-        new ContactAppointmentForm(form);
-    });
-});
-
-// Export for use in other scripts if needed
-window.ContactAppointmentForm = ContactAppointmentForm;
+})();
