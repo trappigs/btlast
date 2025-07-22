@@ -664,3 +664,92 @@
 .phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(7) { transition-delay: 0.315s; }
 .phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(8) { transition-delay: 0.36s; }
 .phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(9) { transition-delay: 0.405s; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Navigation Fixed Position Düzeltmesi - Bu kodu site.css'e ekleyin */
+
+/* Ana body için padding-top ayarla */
+body {
+    padding-top: 80px; /* Navigation yüksekliği kadar boşluk */
+}
+
+/* Modern navigation için düzeltme */
+.modern-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 80px; /* Sabit yükseklik */
+}
+
+/* Main content için margin düzeltmesi */
+.main-content {
+    margin-top: 0; /* Ekstra margin kaldır */
+    padding-top: 0; /* Ekstra padding kaldır */
+}
+
+/* Hero bölümü için özel düzeltme */
+.hero-slider,
+.hero-video-container,
+.projects-section {
+    margin-top: 0; /* Yukarı margin kaldır */
+}
+
+/* Responsive navigation yükseklikleri */
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px; /* Mobilde daha küçük navigation */
+    }
+    
+    .modern-nav {
+        height: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 60px; /* Küçük mobilde daha da küçük */
+    }
+    
+    .modern-nav {
+        height: 60px;
+    }
+}
+
+/* Sayfa başlıkları için ek boşluk (isteğe bağlı) */
+.page-header,
+.section-header {
+    margin-top: 2rem; /* Üst kısımda biraz boşluk */
+}
+
+/* FAQ, Project Cards gibi bölümler için */
+.faq-section,
+.projects-section,
+.team-section,
+.about-hero {
+    padding-top: 2rem; /* Üst padding ekle */
+}
+
+/* Contact page için özel düzeltme */
+.contact-page {
+    padding-top: 2rem;
+}

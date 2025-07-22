@@ -377,15 +377,67 @@
     .projects-section {
         padding: 60px 0;
     }
+    
     .projects-grid {
         grid-template-columns: 1fr; /* Telefonda tekli dizilim */
         gap: 20px;
+        padding: 0 10px; /* Yan boşlukları azalt */
     }
+    
     .section-title {
         font-size: 1.8rem;
     }
+    
     .section-subtitle {
         font-size: 1rem;
         padding: 0 20px;
+    }
+    
+    /* Mobilde kartları tam genişlik yap */
+    .project-card {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 12px;
+    }
+    
+    /* Mobilde görsel alanını büyüt */
+    .card-image {
+        height: 400px; /* 280px'den 400px'e büyük artış */
+    }
+    
+    /* Mobilde overlay'deki açıklamayı gizle */
+    .card-description {
+        display: none;
+    }
+    
+    /* Mobilde butonları küçült */
+    .card-actions {
+        gap: 8px; /* Butonlar arası boşluğu azalt */
+    }
+    
+    .btn-sm {
+        padding: 4px 8px;   /* %40 küçültme - 6px'den 4px, 14px'den 8px */
+        font-size: 0.45rem; /* %40 küçültme - 0.75rem'den 0.45rem */
+        min-width: 60px;    /* %40 küçültme - 100px'den 60px */
+    }
+    
+    /* Mobilde card title'ı biraz küçült */
+    .card-title {
+        font-size: 1.1rem; /* 1.4rem'den küçültme */
+        margin-bottom: 8px; /* 12px'den küçültme */
+    }
+    
+    /* Mobilde card overlay padding'i azalt */
+    .card-overlay {
+        padding: 20px; /* 30px'den küçültme */
+    }
+    
+    /* Card footer'ı mobilde gizle veya küçült */
+    .card-footer {
+        padding: 15px;
+    }
+    
+    .card-location {
+        font-size: 1rem;
     }
 }
