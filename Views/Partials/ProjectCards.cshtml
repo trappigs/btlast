@@ -2,33 +2,21 @@
 @using System.Globalization
 @using System.Text.RegularExpressions
 @{
-    // --- TÜRKÇE KARAKTER UYUMLU, NİHAİ SLUG FONKSİYONU ---
+    // --- SLUG FONKSİYONU ---
     Func<string, string> GenerateSlug = (phrase) => 
     {
         if (string.IsNullOrEmpty(phrase)) return "";
-        
-        string str = phrase.ToLower(new CultureInfo("tr-TR")); // Türkçe'ye uygun küçük harfe çevir
-        
-        // Türkçe karakterleri değiştir
-        str = str.Replace("ı", "i");
-        str = str.Replace("ğ", "g");
-        str = str.Replace("ü", "u");
-        str = str.Replace("ş", "s");
-        str = str.Replace("ö", "o");
-        str = str.Replace("ç", "c");
-        
-        // Geçersiz karakterleri tire ile değiştir
-        str = Regex.Replace(str, @"[^a-z0-9\s-]", ""); 
-        // Boşlukları tek tire ile değiştir
-        str = Regex.Replace(str, @"\s+", "-").Trim(); 
-        // Birden fazla tireyi tek tireye indirge
-        str = Regex.Replace(str, @"-+", "-"); 
-        // Başta veya sonda olabilecek tireleri temizle
+        string str = phrase.ToLower(new CultureInfo("tr-TR"));
+        str = str.Replace("ı", "i").Replace("ğ", "g").Replace("ü", "u").Replace("ş", "s").Replace("ö", "o").Replace("ç", "c");
+        str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+        str = Regex.Replace(str, @"\s+", "-").Trim();
+        str = Regex.Replace(str, @"-+", "-");
         str = str.Trim('-'); 
-        
         return str;
     };
 }
+
+<link rel="stylesheet" href="/css/project-cards.css">
 
 <div class="projects-section" id="projectsSection">
     <div class="container">
@@ -45,33 +33,35 @@
                 var projects = new[]
                 {
                     new { Name = "Çanakkale - Armoni", Image = "/media/widhwltq/18.jpg", Description = "Doğa ile uyum içinde, modern yaşamın konforunu sunan villa projesi. Deniz manzaralı parseller ile huzurun adresi." },
-                    new { Name = "Ayvalık - Çamoba", Image = "/media/widhwltq/18.jpg", Description = "Ege'nin incisi Ayvalık'ta, zeytinlikler arasında konumlanmış özel villa parselleri. Denize sıfır konumu ile ayricalıklı." },
-                    new { Name = "İznik", Image = "/media/widhwltq/18.jpg", Description = "Tarihi İznik Gölü kıyısında, doğa ile iç içe yaşam alanları. Sakin ve huzurlu bir yaşam için ideal lokasyon." },
-                    new { Name = "Kocaeli", Image = "/media/widhwltq/18.jpg", Description = "İstanbul'a yakın konumu ile pratik ulaşım imkanı. Modern mimarisi ve geniş yaşam alanları ile öne çıkan proje." },
+                    new { Name = "Ayvalık - Çamoba", Image = "/media/ewqfs4d4/3.jpg", Description = "Ege'nin incisi Ayvalık'ta, zeytinlikler arasında konumlanmış özel villa parselleri. Denize sıfır konumu ile ayricalıklı." },
+                    new { Name = "İznik", Image = "/media/ly5dg0sn/7.jpg", Description = "Tarihi İznik Gölü kıyısında, doğa ile iç içe yaşam alanları. Sakin ve huzurlu bir yaşam için ideal lokasyon." },
+                    new { Name = "Kocaeli", Image = "/media/py3lzk01/dji_0819.jpg", Description = "İstanbul'a yakın konumu ile pratik ulaşım imkanı. Modern mimarisi ve geniş yaşam alanları ile öne çıkan proje." },
                     new { Name = "Çanakkale", Image = "/media/widhwltq/18.jpg", Description = "Çanakkale'nin en prestijli bölgesinde, deniz ve doğa manzaralı lüks villa projeleri. Yatırım değeri yüksek parseller." },
-                    new { Name = "Düzce - Gümüşova", Image = "/media/widhwltq/18.jpg", Description = "Karadeniz'in yeşili ile buluşan villa parselleri. Doğal yaşamın tadını çıkarabileceğiniz huzurlu bir ortam." }
+                    new { Name = "Düzce - Gümüşova", Image = "/media/wmjlu2fo/dji_0478.jpg", Description = "Karadeniz'in yeşili ile buluşan villa parselleri. Doğal yaşamın tadını çıkarabileceğiniz huzurlu bir ortam." }
                 };
 
                 foreach (var project in projects)
                 {
                     var projectSlug = GenerateSlug(project.Name);
                     <div class="project-card" data-location="@project.Name">
-                        <div class="card-image">
+                        
+                        <div class="card-header">
+                            <h3 class="card-title">@project.Name</h3>
+                        </div>
+                        
+                        <div class="card-image-container">
                             <img src="@project.Image" alt="@project.Name">
-                            <div class="card-overlay">
-                                <div class="card-content">
-                                    <h3 class="card-title">@project.Name</h3>
-                                    <p class="card-description">@project.Description</p>
-                                    <div class="card-actions">
-                                        <a href="/projeler/@projectSlug/" class="btn btn-primary btn-sm">Projeyi İncele</a>
-                                        <a href="#" class="btn btn-secondary btn-sm">Form Doldur</a>
-                                    </div>
-                                </div>
+                            
+                            <div class="card-description-overlay">
+                                <p>@project.Description</p>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <h4 class="card-location">@project.Name</h4>
+
+                        <div class="card-actions">
+                            <a href="/projeler/@projectSlug/" class="btn btn-primary">Projeyi İncele</a>
+                            <button class="btn btn-secondary open-form-btn">Form Doldurun</button>
                         </div>
+
                     </div>
                 }
             }
@@ -79,5 +69,4 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="/css/project-cards.css">
 <script src="/Scripts/project-cards.js"></script>

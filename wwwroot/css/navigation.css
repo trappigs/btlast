@@ -1,8 +1,10 @@
-/* İnce Navigation Bar Güncellemeleri */
+/* wwwroot/css/navigation.css */
 
+/* --- GENEL NAVİGASYON STİLLERİ --- */
+/* --- GENEL NAVİGASYON STİLLERİ (BÜYÜTÜLMÜŞ VERSİYON) --- */
 .modern-nav {
     background-color: #045129;
-    padding: 8px 0; /* 15px'den 8px'e düşürüldü */
+    padding: 15px 0; /* Dikey boşluk artırıldı */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
@@ -10,9 +12,12 @@
     right: 0;
     z-index: 1000;
     width: 100%;
-    overflow-x: hidden;
     transform: translateY(0);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.modern-nav.nav-hidden {
+    transform: translateY(-100%);
 }
 
 .nav-container {
@@ -22,212 +27,41 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative;
-    min-height: 50px; /* Minimum yükseklik eklendi */
+    min-height: 65px; /* Minimum yükseklik artırıldı */
 }
 
-/* Logo Boyutu Küçültüldü */
 .nav-logo .logo-link {
     display: flex;
     align-items: center;
     color: white;
-    font-size: 20px; /* 24px'den 20px'e */
+    font-size: 24px; /* Logo yazı boyutu artırıldı */
     font-weight: bold;
     text-decoration: none;
-    letter-spacing: 1.5px; /* 2px'den 1.5px'e */
+    letter-spacing: 1.5px;
     transition: color 0.3s ease;
 }
 
-/* Menu Item'ları Daha Kompakt */
+.nav-logo .logo-link:hover {
+    color: #ccc;
+}
+
+/* --- MASAÜSTÜ MENÜ STİLLERİ (BÜYÜTÜLMÜŞ VERSİYON) --- */
 .nav-menu {
     display: flex;
-    gap: 30px; /* 40px'den 30px'e */
-    flex: 1;
-    justify-content: center;
+    gap: 35px; /* Menü elemanları arası boşluk artırıldı */
     align-items: center;
-    max-width: calc(100% - 300px);
-    overflow: hidden;
 }
 
 .nav-item {
     color: white;
     text-decoration: none;
-    font-size: 13px; /* 14px'den 13px'e */
+    font-size: 16px; /* Menü yazı boyutu artırıldı */
     font-weight: 500;
-    letter-spacing: 0.8px; /* 1px'den 0.8px'e */
-    transition: all 0.3s ease;
-    padding: 6px 0; /* 8px'den 6px'e */
+    letter-spacing: 0.8px;
+    padding: 8px 0;
     position: relative;
     white-space: nowrap;
-}
-
-/* Mobile Menu Button Küçültüldü */
-.mobile-menu-btn {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 3px; /* 4px'den 3px'e */
-    background: none;
-    border: none;
-    padding: 6px; /* 8px'den 6px'e */
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-    flex-shrink: 0;
-    z-index: 1001;
-}
-
-.mobile-menu-btn span {
-    width: 22px; /* 25px'den 22px'e */
-    height: 2px; /* 3px'den 2px'e */
-    background-color: white;
-    transition: all 0.3s ease;
-    border-radius: 2px;
-}
-
-/* Responsive Düzenlemeler */
-@media (max-width: 1200px) {
-    .nav-menu {
-        gap: 20px; /* 25px'den 20px'e */
-    }
-    
-    .nav-item {
-        font-size: 12px; /* 13px'den 12px'e */
-    }
-}
-
-@media (max-width: 992px) {
-    .modern-nav {
-        padding: 6px 0; /* 8px'den 6px'e */
-    }
-    
-    .nav-container {
-        min-height: 45px; /* 50px'den 45px'e */
-    }
-    
-    .nav-menu {
-        gap: 15px;
-    }
-    
-    .nav-item {
-        font-size: 11px; /* 12px'den 11px'e */
-        padding: 5px 0;
-    }
-    
-    .nav-logo .logo-link {
-        font-size: 18px; /* 20px'den 18px'e */
-        letter-spacing: 1.2px;
-    }
-}
-
-@media (max-width: 768px) {
-    .modern-nav {
-        padding: 8px 0; /* Mobilde biraz daha fazla padding */
-    }
-    
-    .nav-container {
-        padding: 0 15px;
-        min-height: 50px;
-    }
-
-    .nav-logo .logo-link {
-        font-size: 16px; /* 18px'den 16px'e */
-        letter-spacing: 1px;
-    }
-
-    .logo-text {
-        font-size: 16px;
-    }
-
-    .mobile-menu-btn {
-        padding: 5px;
-    }
-
-    .mobile-menu-btn span {
-        width: 20px;
-        height: 2px;
-    }
-}
-
-@media (max-width: 480px) {
-    .modern-nav {
-        padding: 6px 0;
-    }
-    
-    .nav-container {
-        padding: 0 10px;
-        min-height: 45px;
-    }
-
-    .nav-logo .logo-link {
-        font-size: 14px;
-        letter-spacing: 0.8px;
-    }
-
-    .logo-text {
-        font-size: 14px;
-    }
-
-    .mobile-menu-btn {
-        padding: 4px;
-    }
-
-    .mobile-menu-btn span {
-        width: 18px;
-        height: 2px;
-    }
-}
-
-@media (max-width: 360px) {
-    .modern-nav {
-        padding: 5px 0;
-    }
-    
-    .nav-container {
-        padding: 0 8px;
-        min-height: 40px;
-    }
-
-    .nav-logo .logo-link {
-        font-size: 13px;
-        letter-spacing: 0.5px;
-    }
-
-    .mobile-menu-btn span {
-        width: 16px;
-        height: 1.5px;
-    }
-}
-
-/* Landscape Mobile - Ekstra İnce */
-@media (max-width: 768px) and (orientation: landscape) {
-    .modern-nav {
-        padding: 4px 0; /* Landscape'de çok ince */
-    }
-    
-    .nav-container {
-        min-height: 35px;
-    }
-    
-    .nav-logo .logo-link {
-        font-size: 14px;
-    }
-    
-    .mobile-menu-btn {
-        padding: 3px;
-    }
-    
-    .mobile-menu-btn span {
-        width: 16px;
-        height: 1.5px;
-        gap: 2px;
-    }
-}
-
-/* Hover Efektleri Korundu */
-.nav-logo .logo-link:hover {
-    color: #ccc;
+    transition: color 0.3s ease;
 }
 
 .nav-item:hover,
@@ -238,7 +72,7 @@
 .nav-item::after {
     content: '';
     position: absolute;
-    bottom: -3px; /* -5px'den -3px'e */
+    bottom: -3px;
     left: 0;
     width: 0;
     height: 2px;
@@ -251,16 +85,103 @@
     width: 100%;
 }
 
-.mobile-menu-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+/* --- MOBİL İÇİN HAMBURGER BUTONU --- */
+.mobile-menu-btn {
+    display: none; /* Masaüstünde gizli */
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+    background: none;
+    border: none;
+    padding: 8px;
+    z-index: 1002; /* Menünün üzerinde kalması için */
 }
 
-/* Navigation Hidden/Visible States */
-.modern-nav.nav-hidden {
-    transform: translateY(-100%);
+.mobile-menu-btn span {
+    width: 25px;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+    border-radius: 2px;
 }
 
-.modern-nav.nav-visible {
-    transform: translateY(0);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+/* --- MOBİL MENÜ STİLLERİ (768px ve altı) --- */
+/* wwwroot/css/navigation.css dosyasında bu bloğu güncelleyin */
+
+@media (max-width: 768px) {
+    /* Ana navigasyon barının mobil yüksekliğini ayarlıyoruz */
+    .modern-nav {
+        padding: 6px 0;
+    }
+    .nav-container {
+        min-height: 50px;
+    }
+    
+    /* Menü stilini yeni tasarıma göre güncelliyoruz */
+    .nav-menu {
+        position: fixed;
+        /* Navigasyon barının yüksekliği kadar aşağıdan başlatıyoruz */
+        top: 62px; 
+        right: -100%;
+        width: 280px; /* Menü genişliği */
+        /* Yüksekliği, navigasyon barı hariç tüm ekranı kaplayacak şekilde ayarlıyoruz */
+        height: calc(100vh - 62px); 
+        
+        background-color: white; /* Arka planı beyaz yapıyoruz */
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        
+        padding: 20px;
+        gap: 0; /* Linkler arası boşluğu sıfırlıyoruz */
+        
+        box-shadow: none; /* Gölgelendirmeyi kaldırıyoruz */
+        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+
+    /* Menü linklerinin stilini güncelliyoruz */
+    .nav-item {
+        font-size: 1rem; /* Yazı tipi boyutu */
+        width: 100%;
+        color: var(--primary-green); /* Yazı rengini yeşil yapıyoruz */
+        padding: 15px 10px; /* Linklerin iç boşlukları */
+        border-bottom: 1px solid #f0f0f0; /* Linkler arasına ayırıcı çizgi */
+    }
+    
+    .nav-item:hover {
+        background-color: #f8f9fa; /* Üzerine gelince hafif renk değişimi */
+        color: var(--light-green);
+    }
+
+    .nav-item::after {
+        display: none;
+    }
+
+    /* Hamburger butonu görünür kalacak */
+    .mobile-menu-btn {
+        display: flex;
+    }
+}
+
+/* Menü açıldığında arkaplanı karartan overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 999;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }

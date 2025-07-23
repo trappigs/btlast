@@ -1,13 +1,23 @@
-﻿<div class="hero-slider" id="heroSlider">
+﻿<style>
+    /* Stilsiz İçerik Pırıltısını (FOUC) önlemek için kritik kural */
+    .hero-slider .slide-title-line > span {
+        transform: translateY(110%);
+        display: block;
+    }
+</style>
+
+<link rel="stylesheet" href="/css/hero-slider.css">
+
+
+<div class="hero-slider" id="heroSlider">
     <div class="slider-container">
-        <!-- Slide 1 -->
-        <div class="slide active" data-bg="/media/fpgio55l/img_2370-1.jpg" data-title="Nova Arsa ile Geleceğinize" data-subtitle="Güvenle Yatırım Yapın" data-location="Çanakkale Armoni">
+        <div class="slide active" data-bg="/media/fpgio55l/img_2370-1.jpg" data-title="Bereketli Topraklar ile Geleceğinize" data-subtitle="Güvenle Yatırım Yapın" data-location="Çanakkale Armoni">
             <div class="slide-content">
                 <div class="content-wrapper">
                     <h1 class="slide-title">
-                        Nova Arsa ile<br>
-                        <span class="highlight">Geleceğinize</span><br>
-                        <span class="subtitle">Güvenle Yatırım Yapın</span>
+                        <span class="slide-title-line">Bereketli Topraklar ile</span>
+                        <span class="slide-title-line"><span class="highlight">Geleceğinize</span></span>
+                        <span class="slide-title-line"><span class="subtitle">Güvenle Yatırım Yapın</span></span>
                     </h1>
                     <div class="slide-actions">
                         <a href="#projeler" class="btn btn-primary">Projelerimizi İnceleyin</a>
@@ -17,14 +27,13 @@
             </div>
         </div>
 
-        <!-- Slide 2 -->
         <div class="slide" data-bg="/media/fpgio55l/img_2370-1.jpg" data-title="Dört Mevsim Huzuru Hissedin" data-subtitle="Çanakkale Armoni" data-location="Kocaeli">
             <div class="slide-content">
                 <div class="content-wrapper">
                     <h1 class="slide-title">
-                        Dört Mevsim<br>
-                        <span class="highlight">Huzuru Hissedin</span><br>
-                        <span class="subtitle">Çanakkale Armoni</span>
+                        <span class="slide-title-line">Dört Mevsim</span>
+                        <span class="slide-title-line"><span class="highlight">Huzuru Hissedin</span></span>
+                        <span class="slide-title-line"><span class="subtitle">Çanakkale Armoni</span></span>
                     </h1>
                     <div class="slide-actions">
                         <a href="#projeler" class="btn btn-primary">Proje Detay</a>
@@ -34,14 +43,13 @@
             </div>
         </div>
 
-        <!-- Slide 3 -->
         <div class="slide" data-bg="/media/fpgio55l/img_2370-1.jpg" data-title="Doğanın Kalbinde Yerinizi Alın" data-subtitle="Kocaeli" data-location="Bursa">
             <div class="slide-content">
                 <div class="content-wrapper">
                     <h1 class="slide-title">
-                        Doğanın Kalbinde<br>
-                        <span class="highlight">Yerinizi Alın</span><br>
-                        <span class="subtitle">Kocaeli</span>
+                        <span class="slide-title-line">Doğanın Kalbinde</span>
+                        <span class="slide-title-line"><span class="highlight">Yerinizi Alın</span></span>
+                        <span class="slide-title-line"><span class="subtitle">Kocaeli</span></span>
                     </h1>
                     <div class="slide-actions">
                         <a href="#lokasyonlar" class="btn btn-primary">Proje Detay</a>
@@ -52,59 +60,37 @@
         </div>
     </div>
 
-    <!-- Navigation -->
     <div class="slider-navigation">
         <button class="nav-btn prev-btn" id="prevBtn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <!-- Preview container for previous slide -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <div class="nav-preview prev-preview" id="prevPreview">
                 <div class="preview-image"></div>
-                <div class="preview-content">
-                    <div class="preview-title"></div>
-                    <div class="preview-subtitle"></div>
-                </div>
+                <div class="preview-content"><div class="preview-title"></div><div class="preview-subtitle"></div></div>
             </div>
         </button>
         <button class="nav-btn next-btn" id="nextBtn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <!-- Preview container for next slide -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <div class="nav-preview next-preview" id="nextPreview">
                 <div class="preview-image"></div>
-                <div class="preview-content">
-                    <div class="preview-title"></div>
-                    <div class="preview-subtitle"></div>
-                </div>
+                <div class="preview-content"><div class="preview-title"></div><div class="preview-subtitle"></div></div>
             </div>
         </button>
     </div>
 
-    <!-- Pagination Dots -->
     <div class="slider-pagination">
         <span class="pagination-dot active" data-slide="0"></span>
         <span class="pagination-dot" data-slide="1"></span>
         <span class="pagination-dot" data-slide="2"></span>
     </div>
 
-    <!-- Scroll Indicator -->
     <div class="scroll-indicator">
         <div class="scroll-text">Projelerimiz</div>
-        <div class="scroll-arrow">
-            <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
-                <path d="M8 2V22M8 22L2 16M8 22L14 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
+        <div class="scroll-arrow"><svg width="16" height="24" viewBox="0 0 16 24" fill="none"><path d="M8 2V22M8 22L2 16M8 22L14 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
 
-    <!-- Progress Bar -->
     <div class="slide-progress">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 </div>
 
-<!-- CSS ve JS dosyalarını include et -->
-<link rel="stylesheet" href="/css/hero-slider.css">
 <script src="/Scripts/hero-slider.js"></script>
