@@ -527,3 +527,53 @@
     }
     /* .mobile-menu-btn zaten varsayılan olarak gösteriliyor */
 }
+
+
+
+
+/* =================================================================== */
+/* MASAÜSTÜ SCROLL NAVBAR EFEKTİ (YENİ EKLENEN KODLAR)             */
+/* =================================================================== */
+
+/* Bu kurallar sadece 769px'den geniş ekranlarda (masaüstü) geçerli olacak */
+@media (min-width: 769px) {
+
+    /* --- BAŞLANGIÇ GÖRÜNÜMÜ (Sayfa en üstte) --- */
+    .modern-nav {
+        background: linear-gradient(135deg, #045129, #067d3c);
+        /* Kenarlardan boşluklu ve yuvarlak tasarım */
+        top: 20px;
+        left: 50%;
+        width: calc(100% - 450px);
+        transform: translateX(-50%);
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        position: fixed;
+        /* position: fixed; zaten var, tekrar yazmaya gerek yok */
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    /* Başlangıçta body'de boşluk olmamalı */
+    body {
+        padding-top: 0 !important;
+    }
+
+    /* --- SCROLL EDİLMİŞ GÖRÜNÜM --- */
+    .modern-nav.scrolled {
+        /* Klasik düz görünüme geçiş */
+        background: #045129;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 0;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        transform: translateX(0); 
+
+    }
+
+    /* Scroll sonrası içeriğin navbar altına girmesini engelle */
+    body.scrolled-nav {
+        padding-top: 95px; /* Navbar'ın scroll sonrası yüksekliği */
+    }
+}

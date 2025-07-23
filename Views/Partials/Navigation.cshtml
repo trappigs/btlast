@@ -162,4 +162,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+</script><script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbar = document.querySelector('.modern-nav');
+        const body = document.body;
+
+        // Sayfa scroll olayını dinle
+        window.addEventListener('scroll', function() {
+            // Sadece masaüstü (768px'den geniş) için çalış
+            if (window.innerWidth > 768) {
+                if (window.pageYOffset > 20) { // 20px'den fazla kaydırılınca
+                    navbar.classList.add('scrolled');
+                    body.classList.add('scrolled-nav');
+                } else {
+                    navbar.classList.remove('scrolled');
+                    body.classList.remove('scrolled-nav');
+                }
+            }
+        });
+
+        // Sayfa ilk yüklendiğinde de bir kontrol yap
+        if (window.innerWidth > 768 && window.pageYOffset > 20) {
+            navbar.classList.add('scrolled');
+            body.classList.add('scrolled-nav');
+        }
+    });
 </script>
