@@ -51,6 +51,7 @@
 }
 
 /* Slide Content */
+/* Slide Content */
 .slide-content {
     position: relative;
     width: 100%;
@@ -59,7 +60,7 @@
     align-items: center;
     z-index: 2;
     padding: 0 5%;
-    transform: translateY(-15%);
+    /* transform: translateY(-15%); <-- BU SATIRI SİLDİK */
 }
 
 .content-wrapper {
@@ -183,16 +184,17 @@
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.9);
-    color: #2c3e2d;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
+    background: #ffffff !important; /* Arkaplanı tam beyaz yap ve diğer kuralları ez! */
+    color: #045129;
+    border: 2px solid #045129;
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 1);
+    background: #045129 !important; /* Hover durumunu da garantile */
+    color: white;
+    border-color: #045129;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 20px rgba(4, 81, 41, 0.3);
 }
 
 /* Location Pin - REMOVED */
@@ -204,7 +206,7 @@
 /* Navigation */
 .slider-navigation {
     position: absolute;
-    bottom: 250px;
+    bottom: 85px; /* Değeri 50px'e düşürdük */
     right: 350px;
     display: flex;
     gap: 1rem;
@@ -360,7 +362,7 @@
 /* Pagination */
 .slider-pagination {
     position: absolute;
-    bottom: 110px;
+    bottom: 30px; /* Değeri 30px'e düşürdük */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -391,7 +393,7 @@
 /* Scroll Indicator */
 .scroll-indicator {
     position: absolute;
-    bottom: 90px;
+    bottom: 30px; /* Değeri 30px'e düşürdük */
     right: 30px;
     display: flex;
     flex-direction: column;
