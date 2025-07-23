@@ -1,139 +1,238 @@
-﻿@* ContactAppointmentForm.cshtml *@
+﻿@* ContactAppointmentForm.cshtml - Updated Design *@
 @model btlast.Models.ContactFormViewModel
 
 <link rel="stylesheet" href="/css/contact-appointment-form.css">
 
 <div id="contactFormContainer" class="contact-form-container">
-    @using (Html.BeginUmbracoForm("SubmitContactForm", "Contact", FormMethod.Post, new { @id = "contactAppointmentForm", @class = "contact-form", @autocomplete = "off", @novalidate = "novalidate" }))
-    {
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="FormType" id="formType" value="contact" />
-
-        <div class="form-tabs">
-            <button type="button" class="tab-button active" data-tab="contact">İletişim Formu</button>
-            <button type="button" class="tab-button" data-tab="appointment">Randevu Al</button>
+    
+    @* Header Section - Green Background *@
+    <div class="form-header">
+        <div class="header-content">
+            <h1 class="header-title">Satış Ofisimiz ile İletişime Geçin</h1>
+            <p class="header-subtitle">Fırsatları Kaçırmayın! Tüm projelerimiz hakkında detaylı bilgi sahibi olmak için formu doldurun.</p>
         </div>
+    </div>
 
-        <div id="loadingOverlay" class="loading-overlay" style="display:none;">
-            <div class="loading-spinner"></div>
-            <p>Gönderiliyor...</p>
-        </div>
+    @* Form Container *@
+    <div class="form-container">
+        @using (Html.BeginUmbracoForm("SubmitContactForm", "Contact", FormMethod.Post, new { @id = "contactAppointmentForm", @class = "contact-form", @autocomplete = "off", @novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="FormType" id="formType" value="contact" />
 
-        <div class="tab-content active" id="contactTab">
-            <h3>İletişim Formu</h3>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label" for="name">Ad Soyad *</label>
-                    <input type="text" class="form-control" id="name" name="Name" required placeholder="Adınızı ve soyadınızı giriniz" />
-                </div>
+            <div class="form-tabs">
+                <button type="button" class="tab-button active" data-tab="contact">
+                    <span>📧</span> İletişim Formu
+                </button>
+                <button type="button" class="tab-button" data-tab="appointment">
+                    <span>📅</span> Randevu Al
+                </button>
             </div>
-            <div class="form-row">
-                <div class="form-group half">
-                    <label class="form-label" for="email">Email *</label>
-                    <input type="email" class="form-control" id="email" name="Email" required placeholder="ornek@email.com" />
-                </div>
-                <div class="form-group half">
-                    <label class="form-label" for="phone">Telefon *</label>
-                    <input type="tel" class="form-control" id="phone" name="Phone" required placeholder="0555 123 45 67" />
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label" for="subject">Konu</label>
-                    <input type="text" class="form-control" id="subject" name="Subject" placeholder="Mesajınızın konusu" />
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label" for="message">Mesaj</label>
-                    <textarea class="form-control" id="message" name="Message" rows="5" placeholder="Mesajınızı buraya yazınız..."></textarea>
-                </div>
-            </div>
-        </div>
 
-        <div class="tab-content" id="appointmentTab">
-            <h3>Randevu Talep Formu</h3>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label" for="apptName">Ad Soyad *</label>
-                    <input type="text" class="form-control" id="apptName" name="Name" required placeholder="Adınızı ve soyadınızı giriniz" />
-                </div>
+            <div id="loadingOverlay" class="loading-overlay" style="display:none;">
+                <div class="loading-spinner"></div>
+                <p>Gönderiliyor...</p>
             </div>
-            <div class="form-row">
-                <div class="form-group half">
-                    <label class="form-label" for="apptEmail">Email *</label>
-                    <input type="email" class="form-control" id="apptEmail" name="Email" required placeholder="ornek@email.com" />
+
+            <div class="tab-content active" id="contactTab">
+                <div class="form-row">
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="name">Ad Soyad *</label>
+                        <input type="text" class="form-control" id="name" name="Name" required placeholder="Adınızı ve soyadınızı giriniz" />
+                    </div>
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="email">Email *</label>
+                        <input type="email" class="form-control" id="email" name="Email" required placeholder="ornek@email.com" />
+                    </div>
                 </div>
-                <div class="form-group half">
-                    <label class="form-label" for="apptPhone">Telefon *</label>
-                    <input type="tel" class="form-control" id="apptPhone" name="Phone" required placeholder="0555 123 45 67" />
+                
+                <div class="form-row">
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="phone">Telefon *</label>
+                        <input type="tel" class="form-control" id="phone" name="Phone" required placeholder="0555 123 45 67" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="subject">Konu</label>
+                        <input type="text" class="form-control" id="subject" name="Subject" placeholder="Mesajınızın konusu" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Randevu Türü *</label>
-                    <div class="appointment-types">
-                        <label class="appointment-option">
-                            <input type="radio" name="AppointmentType" value="Telefon Görüşmesi" required />
-                            <span class="option-content"><i>📞</i><span>Telefon</span></span>
-                        </label>
-                        <label class="appointment-option">
-                            <input type="radio" name="AppointmentType" value="Online Görüşme" required />
-                            <span class="option-content"><i>💻</i><span>Online</span></span>
-                        </label>
-                        <label class="appointment-option">
-                            <input type="radio" name="AppointmentType" value="Yüz Yüze Görüşme" required />
-                            <span class="option-content"><i>👤</i><span>Yüz Yüze</span></span>
-                        </label>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="message">Mesaj</label>
+                        <textarea class="form-control" id="message" name="Message" rows="5" placeholder="Mesajınızı buraya yazınız..."></textarea>
                     </div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group half">
-                    <label class="form-label" for="apptDate">Randevu Tarihi *</label>
-                    <input type="date" class="form-control" id="apptDate" name="AppointmentDate" required />
-                </div>
-                <div class="form-group half">
-                    <label class="form-label" for="apptTime">Randevu Saati *</label>
-                    <select class="form-control" id="apptTime" name="AppointmentTime" required>
-                        <option value="">Saat seçiniz</option>
-                        <option value="09:00">09:00</option>
-                        <option value="17:30">17:30</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label" for="apptNote">Ek Bilgiler</label>
-                    <textarea class="form-control" id="apptNote" name="Message" rows="4" placeholder="Randevu ile ilgili ek bilgilerinizi buraya yazabilirsiniz..."></textarea>
-                </div>
-            </div>
-        </div>
 
-        <div class="form-row">
-            <div class="form-group">
+            <div class="tab-content" id="appointmentTab">
+                <div class="form-row">
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="apptName">Ad Soyad *</label>
+                        <input type="text" class="form-control" id="apptName" name="Name" required placeholder="Adınızı ve soyadınızı giriniz" />
+                    </div>
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="apptEmail">Email *</label>
+                        <input type="email" class="form-control" id="apptEmail" name="Email" required placeholder="ornek@email.com" />
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="apptPhone">Telefon *</label>
+                        <input type="tel" class="form-control" id="apptPhone" name="Phone" required placeholder="0555 123 45 67" />
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Randevu Türü *</label>
+                        <div class="appointment-types">
+                            <label class="appointment-option">
+                                <input type="radio" name="AppointmentType" value="Telefon Görüşmesi" required />
+                                <span class="option-content">
+                                    <i>📞</i>
+                                    <span>Telefon</span>
+                                </span>
+                            </label>
+                            <label class="appointment-option">
+                                <input type="radio" name="AppointmentType" value="Online Görüşme" required />
+                                <span class="option-content">
+                                    <i>💻</i>
+                                    <span>Online</span>
+                                </span>
+                            </label>
+                            <label class="appointment-option">
+                                <input type="radio" name="AppointmentType" value="Yüz Yüze Görüşme" required />
+                                <span class="option-content">
+                                    <i>👤</i>
+                                    <span>Yüz Yüze</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="apptDate">Randevu Tarihi *</label>
+                        <input type="date" class="form-control" id="apptDate" name="AppointmentDate" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="apptTime">Randevu Saati *</label>
+                        <select class="form-control" id="apptTime" name="AppointmentTime" required>
+                            <option value="">Saat seçiniz</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="apptNote">Ek Bilgiler</label>
+                        <textarea class="form-control" id="apptNote" name="Message" rows="4" placeholder="Randevu ile ilgili ek bilgilerinizi buraya yazabilirsiniz..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkbox-group">
                 <label class="checkbox-label">
                     <input type="checkbox" id="kvkkConsent" name="KvkkConsent" value="true" class="form-checkbox" required />
                     <span class="checkmark"></span>
                     <span class="checkbox-text">
-                        <a href="#" class="kvkk-link">KVKK Aydınlatma Metni</a>'ni okudum ve kabul ediyorum. *
+                        Sitenizde yer alan <a href="#" class="kvkk-link">Aydınlatma Metni'ni</a> okudum ve kabul ediyorum. *
+                    </span>
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="marketing" name="marketing" class="form-checkbox" />
+                    <span class="checkmark"></span>
+                    <span class="checkbox-text">
+                        Kampanyalardan haberdar olmak için elektronik ileti almak istiyorum.
                     </span>
                 </label>
             </div>
-        </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-submit">
-                    <span class="button-text">Gönder</span>
-                    <span class="button-spinner"></span>
-                </button>
-            </div>
-        </div>
-    }
+            <button type="submit" class="btn btn-primary btn-submit">
+                <span class="button-text">Formu Gönder</span>
+                <span class="button-spinner"></span>
+            </button>
+        }
+    </div>
 </div>
 
 <div id="kvkkModal" class="kvkk-modal" style="display:none;">
+    <div class="kvkk-modal-content">
+        <div class="kvkk-modal-header">
+            <h3>KVKK Aydınlatma Metni</h3>
+            <button class="kvkk-modal-close">&times;</button>
+        </div>
+        <div class="kvkk-modal-body">
+            <h4>Veri Sorumlusu</h4>
+            <p>Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") uyarınca hazırlanmıştır.</p>
+            
+            <h4>İşlenen Kişisel Veriler</h4>
+            <ul>
+                <li>Kimlik bilgileri (ad, soyad)</li>
+                <li>İletişim bilgileri (telefon, e-posta)</li>
+                <li>Mesaj içeriği</li>
+            </ul>
+            
+            <h4>Verilerin İşlenme Amacı</h4>
+            <p>Kişisel verileriniz, iletişim talebinizin karşılanması ve müşteri hizmetlerinin sunulması amacıyla işlenmektedir.</p>
+            
+            <h4>Verilerinizin Aktarımı</h4>
+            <p>Kişisel verileriniz, yalnızca hukuki yükümlülüklerimizin yerine getirilmesi durumunda üçüncü kişilerle paylaşılacaktır.</p>
+        </div>
+        <div class="kvkk-modal-footer">
+            <button class="btn btn-primary" onclick="closeKvkkModal()">Anladım</button>
+        </div>
     </div>
+</div>
 
 <script src="/Scripts/contact-appointment-form.js"></script>
+
+<script>
+// KVKK Modal Functions
+function openKvkkModal() {
+    document.getElementById('kvkkModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeKvkkModal() {
+    document.getElementById('kvkkModal').classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+// KVKK Link Click
+document.addEventListener('DOMContentLoaded', function() {
+    const kvkkLink = document.querySelector('.kvkk-link');
+    if (kvkkLink) {
+        kvkkLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            openKvkkModal();
+        });
+    }
+
+    // Close modal on overlay click
+    const kvkkModal = document.getElementById('kvkkModal');
+    kvkkModal.addEventListener('click', function(e) {
+        if (e.target === kvkkModal) {
+            closeKvkkModal();
+        }
+    });
+
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && kvkkModal.classList.contains('show')) {
+            closeKvkkModal();
+        }
+    });
+});
+</script>

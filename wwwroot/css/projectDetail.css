@@ -376,6 +376,9 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .xtx {
+        display: none;
+    }
     .hero-title {
         font-size: 2.5rem;
     }
@@ -736,3 +739,333 @@
   transform-origin: center; /* Ölçeklendirmenin merkezden olmasını sağlar */
   display: inline-block; /* Transform özelliklerinin doğru çalışması için */
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* Mobile için yeni tasarım */
+@media (max-width: 768px) {
+    .image-section {
+        position: relative;
+        width: 100%;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    /* Ana büyük resim */
+    .main-project-media {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 0;
+        box-shadow: none;
+        margin-bottom: 1rem;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Galeri section - mobil için yeniden tasarlanmış */
+    .gallery-section {
+        margin: 0;
+        width: 100%;
+    }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 10px;
+        max-height: none;
+        aspect-ratio: 1;
+        width: 100%;
+    }
+
+    .gallery-item {
+        aspect-ratio: 3/2;
+        overflow: hidden;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        position: relative;
+        background-color: #f5f5f5;
+    }
+
+    .gallery-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 2;
+    }
+
+    .gallery-item:hover::before {
+        opacity: 1;
+    }
+
+    .gallery-item:hover {
+        transform: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        border: none;
+    }
+
+    .gallery-image,
+    .gallery-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+        border-radius: 8px;
+    }
+
+    .gallery-item:hover .gallery-image,
+    .gallery-item:hover .gallery-video {
+        transform: scale(1.05);
+    }
+
+    /* Video overlay için */
+    .video-item {
+        position: relative;
+    }
+
+    .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.3);
+        opacity: 1;
+        transition: opacity 0.3s ease;
+        border-radius: 8px;
+        z-index: 3;
+    }
+
+    .video-item:hover .video-overlay {
+        opacity: 0.8;
+    }
+
+    .play-icon {
+        color: white;
+        font-size: 1.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.5);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Active state için */
+    .gallery-item.active {
+        border: 2px solid #4CAF50;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+    }
+
+    /* Lazy loading placeholder */
+    .gallery-item[data-src] .gallery-image {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+
+    /* Grid items için özel pozisyonlar (isteğe bağlı) */
+    .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .gallery-item:nth-child(2) { grid-column: 2; grid-row: 1; }
+    .gallery-item:nth-child(3) { grid-column: 3; grid-row: 1; }
+    .gallery-item:nth-child(4) { grid-column: 1; grid-row: 2; }
+    .gallery-item:nth-child(5) { grid-column: 2; grid-row: 2; }
+    .gallery-item:nth-child(6) { grid-column: 3; grid-row: 2; }
+    .gallery-item:nth-child(7) { grid-column: 1; grid-row: 3; }
+    .gallery-item:nth-child(8) { grid-column: 2; grid-row: 3; }
+    .gallery-item:nth-child(9) { grid-column: 3; grid-row: 3; }
+
+    /* Eğer 9'dan fazla resim varsa, fazlaları gizle */
+    .gallery-item:nth-child(n+10) {
+        display: none;
+    }
+
+    /* Ana resim container'ı */
+    .main-image-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 1rem;
+        background: #f5f5f5;
+        border-radius: 0;
+        overflow: hidden;
+    }
+
+    /* Touch optimizations */
+    .gallery-item {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    /* Performance optimizations */
+    .gallery-grid {
+        will-change: transform;
+        backface-visibility: hidden;
+        perspective: 1000px;
+    }
+
+    .gallery-item {
+        will-change: transform;
+        backface-visibility: hidden;
+    }
+
+    /* Loading state */
+    .gallery-item.loading {
+        background: #f0f0f0;
+        position: relative;
+    }
+
+    .gallery-item.loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        border: 2px solid #e0e0e0;
+        border-top: 2px solid #999;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Error state */
+    .gallery-item.error {
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 12px;
+    }
+
+    .gallery-item.error::before {
+        content: '📷';
+        font-size: 20px;
+        opacity: 0.5;
+    }
+}
+
+/* Very small mobile devices */
+@media (max-width: 480px) {
+    .main-project-media {
+        height: 280px;
+    }
+
+    .gallery-grid {
+        gap: 8px;
+    }
+
+    .gallery-item {
+        border-radius: 6px;
+    }
+
+    .play-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.3rem;
+    }
+}
+
+/* Landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .main-project-media {
+        height: 300px;
+    }
+
+    .gallery-grid {
+        aspect-ratio: 1.2;
+    }
+}
+
+/* High DPI displays */
+@media (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
+    .gallery-item {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Dark mode support (if needed) */
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+    .gallery-item {
+        background-color: #2a2a2a;
+    }
+    
+    .gallery-item.loading {
+        background: #333;
+    }
+    
+    .gallery-item.error {
+        background: #2a2a2a;
+        color: #666;
+    }
+}
+
+/* Reduced motion */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .gallery-item,
+    .gallery-image,
+    .gallery-video,
+    .video-overlay {
+        transition: none;
+        animation: none;
+    }
+    
+    .gallery-item:hover .gallery-image,
+    .gallery-item:hover .gallery-video {
+        transform: none;
+    }
+}
+
+/* Print styles */
+@media print {
+    .gallery-grid {
+        display: block;
+    }
+    
+    .gallery-item {
+        display: inline-block;
+        width: 30%;
+        margin: 1%;
+        break-inside: avoid;
+    }
+}
+
+
+
+
+
+

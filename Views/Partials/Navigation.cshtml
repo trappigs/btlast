@@ -32,6 +32,14 @@
             }
         </div>
 
+        <!-- Telefon Numarası - Sadece Desktop -->
+        <div class="nav-phone">
+            <a href="tel:02244324959" class="phone-link">
+                <i class="fas fa-phone-alt"></i>
+                <span class="phone-number">0224 432 49 59</span>
+            </a>
+        </div>
+
         <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
             <span></span>
             <span></span>
@@ -126,5 +134,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     }, { passive: true });
+
+    // Telefon numarası click tracking (isteğe bağlı)
+    const phoneLink = document.querySelector('.phone-link');
+    if (phoneLink) {
+        phoneLink.addEventListener('click', function() {
+            console.log('Telefon numarası tıklandı: 0224 432 49 59');
+            // Buraya analytics tracking kodu ekleyebilirsiniz
+        });
+    }
 });
 </script>

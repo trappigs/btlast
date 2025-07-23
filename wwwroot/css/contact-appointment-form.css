@@ -1,13 +1,63 @@
-/* Contact & Appointment Form Styles */
+/* Updated Contact & Appointment Form Styles - Based on Screenshot Design */
 .contact-form-container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 2rem;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(4, 81, 41, 0.08);
     position: relative;
     overflow: hidden;
+}
+
+/* Form Header - Green Background Section */
+.form-header {
+    background: linear-gradient(135deg, #045129 0%, #067833 100%);
+    color: white;
+    text-align: center;
+    padding: 40px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.05)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+    animation: float 20s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+}
+
+.header-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+}
+
+.header-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 400;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+/* Form Container */
+.form-container {
+    padding: 50px 40px;
 }
 
 /* Form Tabs */
@@ -16,6 +66,10 @@
     margin-bottom: 2rem;
     border-bottom: 2px solid #f0f0f0;
     gap: 0;
+    justify-content: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tab-button {
@@ -26,13 +80,15 @@
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     color: #666;
     border-bottom: 3px solid transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .tab-button:hover {
@@ -41,21 +97,10 @@
 }
 
 .tab-button.active {
-    color: #007bff;
-    border-bottom-color: #007bff;
-    background-color: #f8f9fa;
+    color: #045129;
+    border-bottom-color: #045129;
+    background-color: #f8fdf9;
 }
-
-.tab-button i {
-    font-size: 1.2rem;
-}
-
-/* Icons */
-.icon-message::before { content: "✉️"; }
-.icon-calendar::before { content: "📅"; }
-.icon-phone::before { content: "📞"; }
-.icon-video::before { content: "💻"; }
-.icon-user::before { content: "👤"; }
 
 /* Tab Content */
 .tab-content {
@@ -75,47 +120,52 @@
 /* Form Elements */
 .contact-form {
     position: relative;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .form-row {
     margin-bottom: 1.5rem;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
 }
 
 .form-group {
     flex: 1;
-    min-width: 200px;
+    min-width: 250px;
+    position: relative;
 }
 
 .form-group.half {
-    flex: 0 0 calc(50% - 0.5rem);
+    flex: 0 0 calc(50% - 0.75rem);
 }
 
 .form-label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
     font-weight: 600;
-    color: #333;
-    font-size: 0.9rem;
+    color: #2c3e2d;
+    font-size: 0.95rem;
 }
 
 .form-control {
     width: 100%;
-    padding: 0.875rem 1rem;
-    border: 2px solid #e1e5e9;
-    border-radius: 8px;
+    padding: 16px 20px;
+    border: 2px solid #e8f0e9;
+    border-radius: 12px;
     font-size: 1rem;
     transition: all 0.3s ease;
-    background-color: #fff;
+    background: #fafcfb;
+    color: #2c3e2d;
     box-sizing: border-box;
 }
 
 .form-control:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    border-color: #045129;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(4, 81, 41, 0.1);
     transform: translateY(-1px);
 }
 
@@ -124,7 +174,7 @@
 }
 
 .form-control::placeholder {
-    color: #999;
+    color: #94a3b8;
 }
 
 /* Textarea */
@@ -132,6 +182,16 @@ textarea.form-control {
     resize: vertical;
     min-height: 120px;
     font-family: inherit;
+}
+
+/* Select */
+select.form-control {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    cursor: pointer;
 }
 
 /* Appointment Types */
@@ -159,24 +219,24 @@ textarea.form-control {
     flex-direction: column;
     align-items: center;
     padding: 1.5rem 1rem;
-    border: 2px solid #e1e5e9;
-    border-radius: 8px;
+    border: 2px solid #e8f0e9;
+    border-radius: 12px;
     transition: all 0.3s ease;
-    background: #fff;
+    background: #fafcfb;
     text-align: center;
     gap: 0.5rem;
 }
 
 .appointment-option:hover .option-content {
-    border-color: #007bff;
+    border-color: #045129;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(4, 81, 41, 0.15);
 }
 
 .appointment-option input[type="radio"]:checked + .option-content {
-    border-color: #007bff;
-    background-color: #f8f9ff;
-    color: #007bff;
+    border-color: #045129;
+    background-color: #f8fdf9;
+    color: #045129;
     font-weight: 600;
 }
 
@@ -189,8 +249,19 @@ textarea.form-control {
     display: flex;
     align-items: flex-start;
     cursor: pointer;
-    gap: 0.75rem;
+    gap: 12px;
     line-height: 1.5;
+    padding: 16px 20px;
+    background: #f8fdf9;
+    border-radius: 12px;
+    border: 2px solid #e8f0e9;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.checkbox-label:hover {
+    border-color: #045129;
+    background: #f2f8f3;
 }
 
 .form-checkbox {
@@ -202,8 +273,8 @@ textarea.form-control {
 .checkmark {
     width: 20px;
     height: 20px;
-    border: 2px solid #e1e5e9;
-    border-radius: 4px;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
     position: relative;
     transition: all 0.3s ease;
     flex-shrink: 0;
@@ -224,8 +295,8 @@ textarea.form-control {
 }
 
 .form-checkbox:checked + .checkmark {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #045129;
+    border-color: #045129;
 }
 
 .form-checkbox:checked + .checkmark::after {
@@ -234,14 +305,15 @@ textarea.form-control {
 
 .checkbox-text {
     flex: 1;
-    font-size: 0.9rem;
-    color: #666;
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.5;
 }
 
 .kvkk-link {
-    color: #007bff;
+    color: #045129;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .kvkk-link:hover {
@@ -255,7 +327,7 @@ textarea.form-control {
     justify-content: center;
     padding: 0.875rem 2rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
@@ -263,22 +335,44 @@ textarea.form-control {
     transition: all 0.3s ease;
     gap: 0.5rem;
     min-height: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #007bff, #0056b3);
+    background: linear-gradient(135deg, #045129, #067833);
     color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: linear-gradient(135deg, #0056b3, #004085);
+    background: linear-gradient(135deg, #067833, #045129);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(4, 81, 41, 0.3);
 }
 
 .btn-submit {
     width: 100%;
     position: relative;
+    margin-top: 20px;
+    padding: 18px 40px;
+    font-size: 1.1rem;
 }
 
 .btn-submit:disabled {
@@ -304,11 +398,14 @@ textarea.form-control {
 .btn-submit.loading .button-spinner {
     display: block;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* Loading Overlay */
@@ -324,7 +421,7 @@ textarea.form-control {
     justify-content: center;
     flex-direction: column;
     z-index: 1000;
-    border-radius: 12px;
+    border-radius: 20px;
 }
 
 .loading-overlay.show {
@@ -335,7 +432,7 @@ textarea.form-control {
     width: 50px;
     height: 50px;
     border: 4px solid #f3f3f3;
-    border-top: 4px solid #007bff;
+    border-top: 4px solid #045129;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 1rem;
@@ -345,6 +442,7 @@ textarea.form-control {
     color: #666;
     font-size: 1.1rem;
     margin: 0;
+    font-weight: 500;
 }
 
 /* Error Messages */
@@ -362,6 +460,7 @@ textarea.form-control {
     border-radius: 8px;
     border: 1px solid #f5c6cb;
     width: 100%;
+    margin-bottom: 1rem;
 }
 
 .global-error p {
@@ -371,14 +470,15 @@ textarea.form-control {
 /* Success Message */
 .success-message {
     text-align: center;
-    padding: 3rem 2rem;
+    padding: 60px 40px;
+    color: #045129;
     animation: fadeIn 0.5s ease;
 }
 
 .success-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #28a745, #20c997);
+    background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -397,15 +497,37 @@ textarea.form-control {
 }
 
 .success-message h3 {
-    color: #333;
+    color: #045129;
     margin-bottom: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
 }
 
 .success-message p {
-    color: #666;
+    color: #64748b;
     margin-bottom: 2rem;
     line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Form Icons */
+.form-group.with-icon {
+    position: relative;
+}
+
+.form-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 1.1rem;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.form-group.with-icon .form-control {
+    padding-left: 50px;
 }
 
 /* KVKK Modal */
@@ -488,7 +610,7 @@ textarea.form-control {
     font-size: 1.1rem;
 }
 
-.kvkk-modal-body h4:first-child {
+.kvkv-modal-body h4:first-child {
     margin-top: 0;
 }
 
@@ -508,21 +630,59 @@ textarea.form-control {
     text-align: right;
 }
 
+/* Animation for form elements */
+.form-group {
+    animation: slideInUp 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .contact-form-container {
         margin: 1rem;
-        padding: 1.5rem;
+        border-radius: 15px;
+    }
+
+    .form-header {
+        padding: 30px 20px;
+    }
+
+    .header-title {
+        font-size: 1.8rem;
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+    }
+
+    .form-container {
+        padding: 40px 20px;
     }
 
     .form-tabs {
         flex-direction: column;
         gap: 0;
+        max-width: 100%;
     }
 
     .tab-button {
         border-bottom: 1px solid #e9ecef;
         border-right: none;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
     }
 
     .tab-button:last-child {
@@ -530,17 +690,16 @@ textarea.form-control {
     }
 
     .tab-button.active {
-        border-bottom-color: #007bff;
+        border-bottom-color: #045129;
     }
 
     .form-row {
         flex-direction: column;
-        gap: 0;
+        gap: 1rem;
     }
 
     .form-group.half {
         flex: 1;
-        margin-bottom: 1.5rem;
     }
 
     .appointment-types {
@@ -552,7 +711,7 @@ textarea.form-control {
     }
 
     .success-message {
-        padding: 2rem 1rem;
+        padding: 40px 20px;
     }
 
     .success-icon {
@@ -571,22 +730,52 @@ textarea.form-control {
     .kvkk-modal-footer {
         padding: 1rem 1.5rem;
     }
+
+    .btn-submit {
+        padding: 16px 32px;
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
     .contact-form-container {
         margin: 0.5rem;
-        padding: 1rem;
+        border-radius: 12px;
+    }
+
+    .form-header {
+        padding: 25px 15px;
+    }
+
+    .header-title {
+        font-size: 1.6rem;
+    }
+
+    .header-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .form-container {
+        padding: 30px 15px;
     }
 
     .tab-button {
-        padding: 0.75rem 1rem;
-        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
     }
 
     .form-control {
-        padding: 0.75rem;
+        padding: 14px 16px;
         font-size: 0.9rem;
+    }
+
+    .form-group.with-icon .form-control {
+        padding-left: 45px;
+    }
+
+    .form-icon {
+        font-size: 1rem;
+        left: 14px;
     }
 
     .btn {
@@ -597,6 +786,22 @@ textarea.form-control {
     .checkbox-text {
         font-size: 0.85rem;
     }
+
+    .checkbox-label {
+        padding: 12px 16px;
+    }
+
+    .success-message h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Focus states for accessibility */
+.form-control:focus,
+.checkbox-label:focus-within,
+.btn:focus {
+    outline: 2px solid #045129;
+    outline-offset: 2px;
 }
 
 /* Print Styles */
@@ -608,5 +813,11 @@ textarea.form-control {
 
     .btn, .loading-overlay, .kvkk-modal {
         display: none !important;
+    }
+
+    .form-header {
+        background: #045129 !important;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
     }
 }
