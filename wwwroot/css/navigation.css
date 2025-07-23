@@ -340,3 +340,190 @@
         font-size: 12px;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- YENİ: SAĞDAN AÇILAN PANEL STİLLERİ --- */
+
+/* Masaüstünde gösterilecek hamburger butonu */
+.side-panel-toggle {
+    display: none; /* Varsayılan olarak gizli */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.side-panel-toggle svg {
+    width: 28px;
+    height: 28px;
+    fill: white;
+}
+
+/* Arka plan karartması */
+.side-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.side-panel-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Panelin kendisi */
+.side-panel-container {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Başlangıçta ekran dışında */
+    width: 350px;
+    max-width: 90%;
+    height: 100%;
+    background: white;
+    z-index: 1002;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow-y: auto;
+}
+
+.side-panel-container.active {
+    right: 0; /* Aktif olduğunda ekranın içine kaydır */
+}
+
+/* Panel içeriği */
+.side-panel-content {
+    padding: 2rem;
+}
+
+.side-panel-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: #888;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.pxl-logo {
+    margin-bottom: 2rem;
+}
+
+.pxl-logo img {
+    max-width: 180px;
+    height: auto;
+}
+
+.side-panel-heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.side-panel-address a {
+    color: #555;
+    text-decoration: none;
+    line-height: 1.6;
+}
+
+.side-panel-spacer {
+    height: 1px;
+    background-color: #eee;
+    margin: 2rem 0;
+}
+
+.side-panel-icon-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.side-panel-icon-list li a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    color: #555;
+    text-decoration: none;
+}
+
+.side-panel-icon-list i {
+    font-size: 1.2rem;
+    color: var(--primary-green);
+}
+
+.side-panel-social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 2rem;
+}
+
+.side-panel-social-icons a {
+    color: #fff;
+    background-color: var(--primary-green);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.side-panel-social-icons a:hover {
+    background-color: var(--light-green);
+}
+
+/* --- RESPONSIVE KONTROL --- */
+
+/* Masaüstü ve büyük tabletler (769px ve üzeri) */
+@media (min-width: 769px) {
+    .mobile-menu-btn {
+        display: none; /* Mobil butonu gizle */
+    }
+    .side-panel-toggle {
+        display: block; /* Masaüstü butonunu göster */
+    }
+}
+
+/* Mobil ve küçük tabletler (768px ve altı) */
+@media (max-width: 768px) {
+    .side-panel-toggle {
+        display: none; /* Masaüstü butonunu gizle */
+    }
+    /* .mobile-menu-btn zaten varsayılan olarak gösteriliyor */
+}

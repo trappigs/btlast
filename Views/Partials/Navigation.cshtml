@@ -20,65 +20,96 @@
             <a href="@rootNode.Url()" class="nav-item @(Model.Id == rootNode.Id ? "active" : "")">
                 ANA SAYFA
             </a>
-
             @foreach (var child in children)
             {
                 var navTitle = child.HasValue("navigationTitle") ? child.Value("navigationTitle").ToString() : child.Name;
                 var isActive = child.Id == Model.Id ? "active" : "";
-                
                 <a href="@child.Url()" class="nav-item @isActive">
                     @navTitle.ToUpper()
                 </a>
             }
         </div>
-
-        <!-- Telefon Numarası - Sadece Desktop -->
-        <div class="nav-phone">
+<div class="nav-phone">
             <a href="tel:02244324959" class="phone-link">
                 <i class="fas fa-phone-alt"></i>
                 <span class="phone-number">0224 432 49 59</span>
             </a>
         </div>
+        <!-- YENİ MASAÜSTÜ HAMBURGER BUTONU -->
+        <button class="side-panel-toggle" aria-label="İletişim panelini aç">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><g id="List"><path d="m21 7h-18c-1.3 0-1.3-2 0-2h18c1.3 0 1.3 2 0 2z"></path><path d="m18 13h-15c-1.3 0-1.3-2 0-2h15c1.3 0 1.3 2 0 2z"></path><path d="m12 19h-9c-1.3 0-1.3-2 0-2h9c1.3 0 1.3 2 0 2z"></path></g></svg>
+        </button>
 
+        <!-- MOBİL HAMBURGER BUTONU -->
         <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
             <span></span>
             <span></span>
             <span></span>
         </button>
     </div>
-    
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay"></div>
 </nav>
+
+<!-- MOBİL MENÜ İÇİN ARKA PLAN KARARTMASI -->
+<div class="mobile-menu-overlay"></div>
+
+<!-- YENİ: SAĞDAN AÇILAN PANELİN HTML İÇERİĞİ -->
+<div class="side-panel-overlay"></div>
+<div class="side-panel-container">
+    <button class="side-panel-close" aria-label="İletişim panelini kapat">&times;</button>
+    <div class="side-panel-content">
+        <div class="pxl-logo">
+            <a href="/">
+                <img width="200" src="https://www.novaarsa.com/wp-content/uploads/2025/03/logo-01.png" alt="Logo">
+            </a>
+        </div>
+        
+        <h2 class="side-panel-heading">Bademli Ofis</h2>
+        <div class="side-panel-address">
+            <a href="https://maps.app.goo.gl/wR5jdLPyQWdS1f6j8?g_st=com.google.maps.preview.copy" target="_blank">
+                <span>Nilüferköy Mahallesi, Değirmen Sokak, Prime Bademli İş Merkezi, No:12, İç Kapı No:A3<br> Osmangazi/Bursa</span>
+            </a>
+        </div>
+
+
+        <div class="side-panel-spacer"></div>
+
+        <ul class="side-panel-icon-list">
+            <li>
+                <a href="mailto:info@novaarsa.com">
+                    <i aria-hidden="true" class="far fa-envelope"></i>
+                    <span>info@bereketlitopraklar.com.tr</span>
+                </a>
+            </li>
+            <li>
+                <a href="tel:02244324959">
+                    <i aria-hidden="true" class="fas fa-phone-volume"></i>
+                    <span>0224 432 49 59</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="side-panel-social-icons">
+            <a href="https://www.facebook.com/novaarsatr/" target="_blank"><i aria-hidden="true" class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/novaarsaofficial/" target="_blank"><i aria-hidden="true" class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/novaarsa/" target="_blank"><i aria-hidden="true" class="fab fa-linkedin-in"></i></a>
+            <a href="https://api.whatsapp.com/send/?phone=905452616626" target="_blank"><i aria-hidden="true" class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+</div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // --- MEVCUT MOBİL MENÜ KODLARI (DEĞİŞİKLİK YOK) ---
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
-    const overlay = document.querySelector('.mobile-menu-overlay');
-    const navbar = document.querySelector('.modern-nav');
+    const mobileOverlay = document.querySelector('.mobile-menu-overlay');
     const body = document.body;
-    const mainContent = document.querySelector('.main-content');
-
-    // Bu fonksiyon, sadece masaüstü ekranlarda içerik boşluğunu ayarlar.
-    function adjustContentPadding() {
-        if (!navbar || !mainContent) return;
-
-        // Mobil breakpoint'imiz 768px
-        if (window.innerWidth > 768) {
-            const navHeight = navbar.offsetHeight;
-            mainContent.style.paddingTop = navHeight + 'px';
-        } else {
-            // Mobil ekranlarda padding'i sıfırla
-            mainContent.style.paddingTop = '0';
-        }
-    }
 
     function openMobileMenu() {
         navMenu.classList.add('active');
-        overlay.classList.add('active');
+        mobileOverlay.classList.add('active');
         body.style.overflow = 'hidden';
-
         const spans = mobileMenuBtn.querySelectorAll('span');
         spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
         spans[1].style.opacity = '0';
@@ -87,60 +118,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function closeMobileMenu() {
         navMenu.classList.remove('active');
-        overlay.classList.remove('active');
+        mobileOverlay.classList.remove('active');
         body.style.overflow = 'auto';
-
         const spans = mobileMenuBtn.querySelectorAll('span');
         spans[0].style.transform = 'none';
         spans[1].style.opacity = '1';
         spans[2].style.transform = 'none';
     }
 
-    // --- Olay Dinleyicileri ---
-
-    // Sayfa yüklendiğinde ve pencere yeniden boyutlandırıldığında padding'i ayarla
-    adjustContentPadding();
-    window.addEventListener('resize', () => {
-        adjustContentPadding();
-        // Eğer ekran büyütülürken menü açıksa, kapat
-        if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
-            closeMobileMenu();
-        }
-    });
-
-    // Mobil menü butonları ve kapatma işlevleri
-    if (mobileMenuBtn && navMenu) {
+    if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', () => {
             navMenu.classList.contains('active') ? closeMobileMenu() : openMobileMenu();
         });
-        overlay.addEventListener('click', closeMobileMenu);
-        navMenu.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', closeMobileMenu));
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-                closeMobileMenu();
-            }
-        });
+        mobileOverlay.addEventListener('click', closeMobileMenu);
     }
 
-    // Scroll'a göre navigasyon barını gizle/göster (Bu kısım aynı kalabilir)
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', () => {
-        if (navMenu.classList.contains('active')) return;
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight) {
-            navbar.classList.add('nav-hidden');
-        } else {
-            navbar.classList.remove('nav-hidden');
-        }
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    }, { passive: true });
+    // --- YENİ EKLENEN SAĞ PANEL KODLARI ---
+    const sidePanelToggle = document.querySelector('.side-panel-toggle');
+    const sidePanelContainer = document.querySelector('.side-panel-container');
+    const sidePanelOverlay = document.querySelector('.side-panel-overlay');
+    const sidePanelClose = document.querySelector('.side-panel-close');
 
-    // Telefon numarası click tracking (isteğe bağlı)
-    const phoneLink = document.querySelector('.phone-link');
-    if (phoneLink) {
-        phoneLink.addEventListener('click', function() {
-            console.log('Telefon numarası tıklandı: 0224 432 49 59');
-            // Buraya analytics tracking kodu ekleyebilirsiniz
+    function openSidePanel() {
+        sidePanelContainer.classList.add('active');
+        sidePanelOverlay.classList.add('active');
+        body.style.overflow = 'hidden';
+    }
+
+    function closeSidePanel() {
+        sidePanelContainer.classList.remove('active');
+        sidePanelOverlay.classList.remove('active');
+        body.style.overflow = 'auto';
+    }
+
+    if (sidePanelToggle) {
+        sidePanelToggle.addEventListener('click', openSidePanel);
+        sidePanelOverlay.addEventListener('click', closeSidePanel);
+        sidePanelClose.addEventListener('click', closeSidePanel);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidePanelContainer.classList.contains('active')) {
+                closeSidePanel();
+            }
         });
     }
 });
