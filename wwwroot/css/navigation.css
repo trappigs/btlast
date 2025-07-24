@@ -703,7 +703,7 @@
 
     /* --- NAVBAR GİZLEME/GÖSTERME ANİMASYONLARI --- */
     .modern-nav.nav-hidden {
-        transform: translateY(-100%);
+        transform: translateY(-120%);
     }
 
     .modern-nav.nav-visible {
