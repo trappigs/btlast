@@ -6,49 +6,40 @@
     if (!form) return;
 
     const formContainer = document.getElementById('contactFormContainer');
-    const tabButtons = form.querySelectorAll('.tab-button');
-    const tabContents = form.querySelectorAll('.tab-content');
-    const formTypeInput = form.querySelector('#formType');
     const submitButton = form.querySelector('.btn-submit');
+    const appointmentTypes = form.querySelectorAll('input[name="AppointmentType"]');
+    const dateTimeWrapper = document.getElementById('appointment-date-time-wrapper');
+    const dateField = form.querySelector('#apptDate');
+    const timeField = form.querySelector('#apptTime');
 
-    // --- Sekme (Tab) Fonksiyonları ---
-    function initializeTabs() {
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const tabId = button.dataset.tab;
-                switchTab(tabId);
-            });
+    function initializeAppointmentTypeListener() {
+        appointmentTypes.forEach(radio => {
+            radio.addEventListener('change', handleAppointmentTypeChange);
         });
-        // Başlangıçta doğru sekmenin elemanları aktif olsun
-        switchTab('contact'); 
+        handleAppointmentTypeChange();
     }
 
-    function switchTab(tabId) {
-        // Butonların aktif durumunu güncelle
-        tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
-        
-        // Gizli inputun değerini güncelle
-        if (formTypeInput) formTypeInput.value = tabId;
+    function handleAppointmentTypeChange() {
+        const selectedType = form.querySelector('input[name="AppointmentType"]:checked').value;
+        const showDateTime = selectedType === 'Online Görüşme' || selectedType === 'Yüz Yüze Görüşme';
 
-        tabContents.forEach(content => {
-            const isActive = content.id === `${tabId}Tab`;
-            content.classList.toggle('active', isActive);
-            
-            // --- ANAHTAR DEĞİŞİKLİK BURADA ---
-            // Sekmedeki tüm form elemanlarını bul
-            const fields = content.querySelectorAll('input, textarea, select');
-            
-            // Sekme aktif değilse, içindeki tüm elemanları devre dışı bırak
-            // Sekme aktif ise, tüm elemanları etkinleştir
-            fields.forEach(field => {
-                field.disabled = !isActive;
-            });
-        });
-
-        clearAllErrors();
+        if (showDateTime) {
+            dateTimeWrapper.style.display = 'flex';
+            dateField.required = true;
+            timeField.required = true;
+            dateField.disabled = false;
+            timeField.disabled = false;
+        } else {
+            dateTimeWrapper.style.display = 'none';
+            dateField.required = false;
+            timeField.required = false;
+            dateField.disabled = true;
+            timeField.disabled = true;
+            dateField.value = '';
+            timeField.value = '';
+        }
     }
 
-    // --- Form Gönderme ve Sunucu Yanıtı ---
     async function handleFormSubmit(event) {
         event.preventDefault();
         if (!validateForm()) {
@@ -94,7 +85,7 @@
                     <h3>Teşekkür Ederiz!</h3>
                     <p>${data.message}</p>
                 </div>`;
-                formContainer.scrollIntoView({ behavior: 'smooth' });
+            formContainer.scrollIntoView({ behavior: 'smooth' });
         } else if (data.errors) {
             displayFieldErrors(data.errors);
             showGlobalError('Lütfen formdaki hataları düzelterek tekrar deneyin.');
@@ -102,20 +93,20 @@
             showGlobalError(data.error);
         }
     }
-
-    // --- Doğrulama (Validation) ve Hata Yönetimi ---
     function validateForm() {
         clearAllErrors();
         let isValid = true;
-        const activeTab = form.querySelector('.tab-content.active');
         
-        activeTab.querySelectorAll('[required]').forEach(field => {
+        form.querySelectorAll('[required]:not([disabled])').forEach(field => {
             if (!validateField(field)) isValid = false;
         });
-        
-        const kvkkCheckbox = form.querySelector('#kvkkConsent');
-        if (kvkkCheckbox && !validateField(kvkkCheckbox)) isValid = false;
 
+        // E-posta alanı zorunlu değil ama doluysa formatını kontrol et
+        const emailField = form.querySelector('#apptEmail');
+        if (emailField && emailField.value.trim() !== '' && !validateField(emailField)) {
+            isValid = false;
+        }
+        
         return isValid;
     }
 
@@ -123,16 +114,20 @@
         const group = field.closest('.form-group, .checkbox-label, .appointment-types');
         let message = '';
 
-        if (field.type === 'radio') {
-            const radioGroup = form.querySelectorAll(`input[name="${field.name}"]`);
-            if (![...radioGroup].some(r => r.checked)) message = 'Lütfen bir seçim yapınız.';
-        } else if (field.type === 'checkbox') {
-            if (!field.checked) message = 'Bu alanı onaylamanız gerekmektedir.';
-        } else if (!field.value.trim()) {
-            message = 'Bu alan zorunludur.';
-        } else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+        if (field.required) {
+            if (field.type === 'radio') {
+                const radioGroup = form.querySelectorAll(`input[name="${field.name}"]`);
+                if (![...radioGroup].some(r => r.checked)) message = 'Lütfen bir seçim yapınız.';
+            } else if (field.type === 'checkbox') {
+                if (!field.checked) message = 'Bu alanı onaylamanız gerekmektedir.';
+            } else if (!field.value.trim()) {
+                message = 'Bu alan zorunludur.';
+            }
+        }
+        
+        if (field.type === 'email' && field.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
             message = 'Geçerli bir e-posta adresi giriniz.';
-        } else if (field.type === 'tel' && !/^[0-9\s\(\)\-\+]{10,}$/.test(field.value)) {
+        } else if (field.type === 'tel' && field.required && !/^[0-9\s\(\)\-\+]{10,}$/.test(field.value)) {
             message = 'Geçerli bir telefon numarası giriniz.';
         }
 
@@ -153,9 +148,12 @@
     
     function showGlobalError(message) {
         let container = form.querySelector('#global-error-container');
-        if (container) {
-             container.innerHTML = `<div class="global-error-message">${message}</div>`;
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'global-error-container';
+            form.insertBefore(container, form.firstChild);
         }
+        container.innerHTML = `<div class="global-error-message">${message}</div>`;
     }
 
     function clearAllErrors() {
@@ -173,7 +171,6 @@
         });
     }
 
-    // --- Başlatma ---
-    initializeTabs();
+    initializeAppointmentTypeListener();
     form.addEventListener('submit', handleFormSubmit);
 })();

@@ -241,7 +241,12 @@ select.form-control {
 }
 
 .option-content i {
-    font-size: 1.5rem;
+    font-size: 1.8rem; /* Tüm ikonların (emoji ve font) boyutunu eşitler */
+    min-height: 30px;  /* Yüksekliklerini eşitlemek için minimum yükseklik verir */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1; /* Dikey hizalamayı iyileştirir */
 }
 
 /* Checkbox Styling */

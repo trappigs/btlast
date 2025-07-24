@@ -8,7 +8,7 @@ namespace btlast.Models
         [Required(ErrorMessage = "Ad Soyad alanı zorunludur.")]
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "E-posta alanı zorunludur.")]
+        // E-posta alanı artık zorunlu değil
         [EmailAddress(ErrorMessage = "Geçerli bir e-posta adresi giriniz.")]
         public string? Email { get; set; }
 
@@ -26,7 +26,7 @@ namespace btlast.Models
         public string? Subject { get; set; }
         public string? Message { get; set; }
 
-        // Sadece Randevu Formu Alanları
+        // Randevu/İletişim Formu Alanları
         public string? AppointmentType { get; set; }
         public string? AppointmentDate { get; set; }
         public string? AppointmentTime { get; set; }
@@ -34,12 +34,13 @@ namespace btlast.Models
         // Koşullu Doğrulama Metodu
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (FormType == "appointment")
+            if (string.IsNullOrWhiteSpace(AppointmentType))
             {
-                if (string.IsNullOrWhiteSpace(AppointmentType))
-                {
-                    yield return new ValidationResult("Randevu Türü alanı zorunludur.", new[] { nameof(AppointmentType) });
-                }
+                yield return new ValidationResult("İletişim Türü alanı zorunludur.", new[] { nameof(AppointmentType) });
+            }
+
+            if (AppointmentType == "Online Görüşme" || AppointmentType == "Yüz Yüze Görüşme")
+            {
                 if (string.IsNullOrWhiteSpace(AppointmentDate))
                 {
                     yield return new ValidationResult("Randevu Tarihi alanı zorunludur.", new[] { nameof(AppointmentDate) });
