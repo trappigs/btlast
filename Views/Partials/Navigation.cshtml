@@ -18,18 +18,18 @@
 
         <div class="nav-menu">
             <a href="@rootNode.Url()" class="nav-item @(Model.Id == rootNode.Id ? "active" : "")">
-                ANA SAYFA
+                Ana sayfa
             </a>
             @foreach (var child in children)
             {
                 var navTitle = child.HasValue("navigationTitle") ? child.Value("navigationTitle").ToString() : child.Name;
                 var isActive = child.Id == Model.Id ? "active" : "";
                 <a href="@child.Url()" class="nav-item @isActive">
-                    @navTitle.ToUpper()
+                    @navTitle
                 </a>
             }
         </div>
-<div class="nav-phone">
+        <div class="nav-phone">
             <a href="tel:02244324959" class="phone-link">
                 <i class="fas fa-phone-alt"></i>
                 <span class="phone-number">0224 432 49 59</span>
@@ -72,7 +72,6 @@
 
 
         <div class="side-panel-spacer"></div>
-
         <ul class="side-panel-icon-list">
             <li>
                 <a href="mailto:info@novaarsa.com">
@@ -162,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-</script><script>
     document.addEventListener('DOMContentLoaded', function () {
         const navbar = document.querySelector('.modern-nav');
         const body = document.body;

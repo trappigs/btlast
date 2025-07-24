@@ -123,20 +123,35 @@
     function setupEventListeners() {
         console.log('Setting up event listeners');
 
-        // Navigation buttons
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                console.log('Previous button clicked');
-                previousSlide();
-            });
-        }
+    // Navigation buttons
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            console.log('Previous button clicked');
+            previousSlide();
+            
+            // Tıklamadan hemen sonra önizlemeyi güncellemek için
+            // küçük bir gecikme ile fonksiyonu çağırıyoruz.
+            // Bu, slayt durumunun güncellenmesine zaman tanır.
+            setTimeout(() => {
+                updatePreview('prev');
+                updatePreview('next');
+            }, 100); // 100 milisaniye gecikme
+        });
+    }
 
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                console.log('Next button clicked');
-                nextSlide();
-            });
-        }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            console.log('Next button clicked');
+            nextSlide();
+            
+            // Tıklamadan hemen sonra önizlemeyi güncellemek için
+            // küçük bir gecikme ile fonksiyonu çağırıyoruz.
+            setTimeout(() => {
+                updatePreview('prev');
+                updatePreview('next');
+            }, 100); // 100 milisaniye gecikme
+        });
+    }
 
         // Pagination dots
         paginationDots.forEach((dot, index) => {
@@ -190,7 +205,7 @@
         const prevIndex = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
         goToSlide(prevIndex);
     }
-
+    
     function goToSlide(index) {
         if (isTransitioning || index === currentSlide || index < 0 || index >= totalSlides) {
             return;
@@ -223,8 +238,6 @@
         // Update pagination
         updatePagination();
 
-        // Update navigation previews
-        updateNavigationPreviews();
 
         // Reset autoplay
         resetAutoPlay();

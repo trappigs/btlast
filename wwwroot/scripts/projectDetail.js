@@ -301,6 +301,7 @@ function showLightboxSlide(index) {
     }
     
     updateThumbnailsActive();
+    scrollToActiveThumbnail();
 }
 
 // Change slide (navigation)
@@ -418,40 +419,6 @@ function initializeFormHandlers() {
     }
 }
 
-function handleContactSubmit(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    
-    // Validate required fields
-    if (!data.name || !data.email || !data.phone || !data.message) {
-        alert('Lütfen zorunlu alanları doldurunuz.');
-        return;
-    }
-    
-    // Validate KVKK consent
-    if (!document.getElementById('aydinlatma-onay').checked) {
-        alert('Lütfen aydınlatma metnini okuyup kabul ediniz.');
-        return;
-    }
-    
-    // Show loading state
-    const submitBtn = e.target.querySelector('.submit-btn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Gönderiliyor...';
-    submitBtn.disabled = true;
-    
-    // Simulate form submission (replace with actual endpoint)
-    setTimeout(() => {
-        alert('Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.');
-        e.target.reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }, 2000);
-}
-
 // ===== RESPONSIVE UTILITIES =====
 function handleResize() {
     // Reinitialize mobile scroll behavior
@@ -536,3 +503,23 @@ function optimizeForMobile() {
 
 // Initialize mobile optimizations
 document.addEventListener('DOMContentLoaded', optimizeForMobile);
+
+
+
+
+// DOSYANIN EN ALTINA BU YENİ FONKSİYONU EKLEYİN
+
+function scrollToActiveThumbnail() {
+    const thumbnailsContainer = document.getElementById('lightboxThumbnails');
+    const activeThumbnail = thumbnailsContainer.querySelector('.lightbox-thumbnail.active');
+
+    if (!thumbnailsContainer || !activeThumbnail) return;
+
+    // scrollIntoView metodu, modern tarayıcılarda elementi
+    // pürüzsüz bir şekilde ve ortalayarak görünür alana taşır.
+    activeThumbnail.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest'
+    });
+}

@@ -821,3 +821,38 @@ select.form-control {
         color-adjust: exact;
     }
 }
+
+
+
+/* =================================================================== */
+/* FORM ONAY KUTUCUĞU HATA GÖRÜNÜMÜ (MOBİL İÇİN)   */
+/* =================================================================== */
+
+/* Hata oluştuğunda onay kutusu satırının genel stili */
+.checkbox-label.error {
+    flex-wrap: wrap; /* İçeriklerin (hata mesajı gibi) bir alt satıra kaymasına izin ver */
+    border-color: #dc3545; /* Hata çerçevesi */
+    background-color: #fff2f2; /* Hafif kırmızı hata arka planı */
+}
+
+/* Hata mesajının kendisi için stiller */
+.checkbox-label.error .form-error-message {
+    /* Hata mesajını tam genişlik kaplayarak alt satıra indir */
+    flex-basis: 100%; 
+    
+    /* Metnin soldan hizalanması için (checkmark genişliği + boşluk kadar) */
+    margin-left: 32px; /* 20px checkmark + 12px gap */
+    margin-top: 8px;   /* Üstündeki metinle arasına boşluk koy */
+    
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #a94442; /* Koyu kırmızı hata metni rengi */
+}
+
+/* Daha dar mobil ekranlar için ince ayar */
+@media (max-width: 480px) {
+    .checkbox-label.error .form-error-message {
+        /* Çok dar ekranlarda hizalamayı kaldır, tam soldan başlasın */
+        margin-left: 0; 
+    }
+}

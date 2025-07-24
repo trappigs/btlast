@@ -26,9 +26,11 @@
 
 </head>
 <body class="bg-beige">
+
 @await Html.PartialAsync("social-items")
 @await Html.PartialAsync("Navigation")
 
+    @await Html.PartialAsync("fontTry")
 
     <!-- Main Content -->
     <main class="main-content">
@@ -43,12 +45,14 @@
         <i class="fa-solid fa-phone-volume"></i>
         <span>Sizi Arayalım</span>
     </a>
-
+ 
     <a href="https://wa.me/905551234567" class="fixed-whatsapp-btn" target="_blank" aria-label="WhatsApp üzerinden iletişime geçin">
         <i class="fa-brands fa-whatsapp"></i>
         <span>WhatsApp</span>
     </a>
-    
+    <a href="tel:02244324959" class="fixed-phone-btn" aria-label="Bizi Arayın">
+        <i class="fa-solid fa-phone"></i>
+    </a>
 
 
     <!-- Bootstrap 5.3.7 JavaScript -->

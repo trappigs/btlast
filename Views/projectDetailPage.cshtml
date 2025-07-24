@@ -111,27 +111,34 @@
                 
                 @if (mainMediaItem != null)
                 {
-                    if (isMainVideo)
+                    @if (isMainVideo)
                     {
-                        <video src="@mainMediaItem.Url()" 
-                               class="main-project-media" 
-                               id="mainProjectMedia" 
-                               onclick="openLightbox()" 
-                               controls 
-                               autoplay 
-                               muted 
-                               playsinline>
-                        </video>
+                        // VİDEO İÇİN YAPI
+                        <div class="main-media-container">
+                            <video src="@mainMediaItem.Url()"
+                                   class="main-project-media"
+                                   id="mainProjectMedia"
+                                   controls
+                                   autoplay
+                                   muted
+                                   playsinline>
+                            </video>
+                            
+                            <div class="video-click-overlay" onclick="openLightbox(0)"></div>
+                        </div>
                     }
                     else
                     {
-                        <img src="@mainMediaItem.Url()" 
-                             alt="@Model.Value("projectName")" 
-                             class="main-project-media" 
-                             id="mainProjectMedia" 
-                             onclick="openLightbox()">
+                        // RESİM İÇİN YAPI (Resimler için overlay'e gerek yok)
+                        <div class="main-media-container" onclick="openLightbox(0)">
+                             <img src="@mainMediaItem.Url()"
+                                 alt="@Model.Value("projectName")"
+                                 class="main-project-media"
+                                 id="mainProjectMedia" />
+                        </div>
                     }
                 }
+
                 
                 <!-- Gallery Section -->
                 @if (Model.HasValue("projectGallery"))

@@ -7,13 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
             name: "Bilal Aktaş",
             title: "Kurucu & Genel Müdür",
             image: "/media/y3qnyrg5/img_8930.jpg",
-            bio: "Furkan Hoşgör, 360 derece yaratıcı ve teknoloji ekiplerini yönetir ve on yıldan fazla deneyime sahiptir. Ödül sahibi, platformlar arası yaratıcı fikirler ve deneyimler geliştirme konusunda uzmanlaşmıştır. 360'tan önce, Mehmet, büyük ajansların yaratıcı departmanında çalıştı ve ulusal markaların projelerinde yer aldı."
+            bio: "Uludağ Üniversitesi Mekatronik öğrencisi Furkan, Bosch’taki süreç ve kalite yönetimi deneyimini Bereketli Topraklar’da strateji ve operasyonel mükemmelliğe dönüştürüyor. Disiplinli organizasyon yeteneği, ekip sinerjisini ve iş süreçlerindeki etkililiği artırıyor."
         },
         2: {
             name: "Furkan Hoşgör",
             title: "Genel Yönetici Asistanı",
             image: "/media/abrlq0cs/furkan-ekip-foto.webp",
-            bio: "Ayşe Demir, şirketin stratejik yönünü belirlemekte ve operasyonel mükemmelliği sağlamaktadır. 15 yıllık deneyimi ile inşaat sektöründe öncü projelere imza atmıştır. Sürdürülebilir yapı teknolojileri ve yenilikçi çözümler konusunda uzmandır."
+            bio: "Uludağ Üniversitesi Mekatronik öğrencisi Furkan, Bosch’taki süreç ve kalite yönetimi deneyimini Bereketli Topraklar’da strateji ve operasyonel mükemmelliğe dönüştürüyor. Disiplinli organizasyon yeteneği, ekip sinerjisini ve iş süreçlerindeki etkililiği artırıyor."
         },
         3: {
             name: "Halime Uçan",

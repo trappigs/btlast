@@ -52,7 +52,6 @@ h2, h3, h4, .section-title, .feature-title {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
 }
 
 
@@ -160,7 +159,7 @@ h2, h3, h4, .section-title, .feature-title {
     box-shadow: -2px 4px 10px rgba(0, 0, 0, 0.2);
 
     /* Metin ve İkon */
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
@@ -216,12 +215,6 @@ h2, h3, h4, .section-title, .feature-title {
     .fixed-social {
         display: none;
     }
-
-    /* WhatsApp butonunu mobilde ayarla */
-    .fixed-whatsapp-btn {
-        bottom: 20px;
-        left: 20px;
-    }
 }
 
 
@@ -229,5 +222,61 @@ h2, h3, h4, .section-title, .feature-title {
 @media (max-width: 480px) {
     .fixed-call-btn {
         top: 65px; /* Küçük mobil navigasyon barı yüksekliği */
+    }
+}
+
+
+/* =================================================================== */
+/* SAĞ ALT KÖŞE SABİT TELEFON BUTONU             */
+/* =================================================================== */
+
+.fixed-phone-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--light-green), var(--primary-green));
+    color: white;
+    border-radius: 50%;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulse-phone 2.5s infinite;
+}
+
+.fixed-phone-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+    animation-play-state: paused; /* Hover'da animasyonu durdur */
+}
+
+.fixed-phone-btn i {
+    font-size: 24px;
+}
+
+@keyframes pulse-phone {
+    0% {
+        box-shadow: 0 0 0 0 rgba(4, 81, 41, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(4, 81, 41, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(4, 81, 41, 0);
+    }
+}
+
+/* Mobil cihazlarda diğer butonlarla çakışmaması için ayar */
+@media (max-width: 768px) {
+    .fixed-phone-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
     }
 }

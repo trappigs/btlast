@@ -1057,5 +1057,25 @@
 
 
 
+/* DOSYANIN EN ALTINA BU KODU EKLEYİN */
 
+/* Tıklama olayını alacak olan ana medya sarmalayıcısı */
+.main-media-container {
+    position: relative;
+    line-height: 0; /* Resim/video altındaki istenmeyen boşlukları kaldırır */
+    cursor: pointer;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Videonun üzerine gelen şeffaf tıklama katmanı */
+.video-click-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* KONTROL ÇUBUĞUNU DIŞARIDA BIRAKMAK İÇİN YÜKSEKLİĞİ AYARLIYORUZ */
+    height: calc(100% - 50px); /* Alttan 50px'lik alanı boş bırakır */
+    z-index: 2; /* Video'nun üzerinde olmasını sağlar */
+}
 

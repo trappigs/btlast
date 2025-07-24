@@ -94,6 +94,7 @@
                     <h3>Teşekkür Ederiz!</h3>
                     <p>${data.message}</p>
                 </div>`;
+                formContainer.scrollIntoView({ behavior: 'smooth' });
         } else if (data.errors) {
             displayFieldErrors(data.errors);
             showGlobalError('Lütfen formdaki hataları düzelterek tekrar deneyin.');
@@ -175,5 +176,4 @@
     // --- Başlatma ---
     initializeTabs();
     form.addEventListener('submit', handleFormSubmit);
-
 })();

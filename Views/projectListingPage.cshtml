@@ -5,4 +5,19 @@
     ViewBag.Title = "Projelerimiz";
 }
 
+@* Sadece ProjectCards partial'ını çağırıyoruz *@
 @await Html.PartialAsync("ProjectCards")
+
+@*
+    Yalnızca bu sayfaya özel bir stil ekleyerek ProjectCards'ın
+    üst kısmına fazladan boşluk ekliyoruz. Bu, anasayfadaki
+    görünümünü etkilemeden, sadece projeler sayfasında
+    içeriği doğru konuma kaydırır.
+*@
+<style>
+    /* .projects-section, ProjectCards.cshtml partial'ının ana taşıyıcısıdır. */
+    /* !important kullanarak harici CSS dosyasındaki kuralı ezdiğimizden emin oluyoruz. */
+    .projects-section {
+        padding-top: 140px !important; 
+    }
+</style>
