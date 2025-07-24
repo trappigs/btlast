@@ -80,10 +80,10 @@
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 800;
     line-height: 1.1;
-    color: #045129;
+    color: #F8F9FA; /* Ana başlık için Kırık Beyaz */
     margin-bottom: 2rem;
-    text-shadow: none;
-    /* Eski animasyon buradan kaldırıldı */
+    /* Okunabilirliği garantilemek için gölgeyi biraz daha belirgin hale getiriyoruz */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
 }
 
 /* YENİ: Başlık satırları için sarmalayıcı */
@@ -109,7 +109,7 @@
 
 
 .slide-title .highlight {
-    color: #067833;
+    color: #B4D8C8; /* Vurgulanan metin için Yumuşak Yeşil */
     position: relative;
 }
 
@@ -120,15 +120,16 @@
     left: 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, #067833, #0a9940);
+    background: linear-gradient(90deg, #B4D8C8, #C8E6DC);
     border-radius: 2px;
 }
 
 .slide-title .subtitle {
     font-size: 0.7em;
     font-weight: 600;
-    color: #045129;
-    opacity: 0.9;
+    /* Alt başlığı da ana başlıkla uyumlu hale getiriyoruz */
+    color: rgba(248, 249, 250, 0.9); /* Hafif transparan Kırık Beyaz */
+    opacity: 1; 
 }
 
 
@@ -679,3 +680,4 @@
         transform: translateY(0);
     }
 }
+

@@ -12,7 +12,8 @@
     <div class="nav-container">
         <div class="nav-logo">
             <a href="/" class="logo-link">
-                <span class="logo-text">BEREKETLİ TOPRAKLAR</span>
+                @* Hatalı SVG kodunu siliyoruz ve yerine bu <img> etiketini ekliyoruz *@
+                <img src="/media/ihljr0ls/logo-light.svg" alt="Bereketli Topraklar Logo" class="logo-image" />
             </a>
         </div>
 
@@ -28,7 +29,32 @@
                     @navTitle
                 </a>
             }
+             @* --- YENİ EKLENEN BÖLÜM --- *@
+            @* Bu div, sadece mobil menüde görünecek *@
+            <div class="mobile-menu-contact-info">
+                <ul class="side-panel-icon-list">
+                    <li>
+                        <a href="mailto:info@bereketlitopraklar.com.tr">
+                            <i aria-hidden="true" class="far fa-envelope"></i>
+                            <span>info@bereketlitopraklar.com.tr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tel:02244324959">
+                            <i aria-hidden="true" class="fas fa-phone-volume"></i>
+                            <span>0224 432 49 59</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="side-panel-social-icons">
+                    <a href="https://www.facebook.com/bereketliemlak" target="_blank"><i aria-hidden="true" class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/bereketli_topraklar/" target="_blank"><i aria-hidden="true" class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/bereketlitopraklar/?originalSubdomain=tr" target="_blank"><i aria-hidden="true" class="fab fa-linkedin-in"></i></a>
+                    <a href="https://t.me/bereketlitopraklar" target="_blank"><i aria-hidden="true" class="fab fa-telegram"></i></a>
+                </div>
+            </div>
         </div>
+        
         <div class="nav-phone">
             <a href="tel:02244324959" class="phone-link">
                 <i class="fas fa-phone-alt"></i>
@@ -52,14 +78,16 @@
 <!-- MOBİL MENÜ İÇİN ARKA PLAN KARARTMASI -->
 <div class="mobile-menu-overlay"></div>
 
+
+
 <!-- YENİ: SAĞDAN AÇILAN PANELİN HTML İÇERİĞİ -->
 <div class="side-panel-overlay"></div>
 <div class="side-panel-container">
     <button class="side-panel-close" aria-label="İletişim panelini kapat">&times;</button>
     <div class="side-panel-content">
-        <div class="pxl-logo">
+        <div class="nav-logo">
             <a href="/">
-                <img width="200" src="https://www.novaarsa.com/wp-content/uploads/2025/03/logo-01.png" alt="Logo">
+                <img width="200" src="/media/lq2jzklk/download-1.svg" alt="Logo">
             </a>
         </div>
         
@@ -164,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('DOMContentLoaded', function () {
         const navbar = document.querySelector('.modern-nav');
         const body = document.body;
-
+    
         // Sayfa scroll olayını dinle
         window.addEventListener('scroll', function() {
             // Sadece masaüstü (768px'den geniş) için çalış
