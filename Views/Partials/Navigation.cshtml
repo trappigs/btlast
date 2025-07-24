@@ -192,25 +192,52 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('DOMContentLoaded', function () {
         const navbar = document.querySelector('.modern-nav');
         const body = document.body;
+        let lastScrollTop = 0;
+        const scrollThreshold = 5; // Minimum scroll mesafesi
     
         // Sayfa scroll olayını dinle
         window.addEventListener('scroll', function() {
             // Sadece masaüstü (768px'den geniş) için çalış
             if (window.innerWidth > 768) {
-                if (window.pageYOffset > 20) { // 20px'den fazla kaydırılınca
-                    navbar.classList.add('scrolled');
-                    body.classList.add('scrolled-nav');
-                } else {
-                    navbar.classList.remove('scrolled');
+                const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // Scrolled class kontrolü (sadece yukarı scroll'da ve sayfa üstünde değilken)
+                // Bu kısmı navbar gizleme/gösterme mantığına entegre ettik
+
+                // Navbar gizleme/gösterme mantığı
+                if (currentScrollTop <= 50) {
+                    // Sayfa üstündeyken her zaman göster (yuvarlak halde)
+                    navbar.classList.remove('nav-hidden');
+                    navbar.classList.add('nav-visible');
+                    navbar.classList.remove('scrolled'); // Yuvarlak navbar'ı koru
                     body.classList.remove('scrolled-nav');
+                } else if (Math.abs(lastScrollTop - currentScrollTop) > scrollThreshold) {
+                    if (currentScrollTop > lastScrollTop) {
+                        // Aşağı scroll - navbar'ı gizle (scrolled class'ını ekleme)
+                        navbar.classList.add('nav-hidden');
+                        navbar.classList.remove('nav-visible');
+                    } else {
+                        // Yukarı scroll - düz navbar'ı göster
+                        navbar.classList.remove('nav-hidden');
+                        navbar.classList.add('nav-visible');
+                        navbar.classList.add('scrolled'); // Düz navbar
+                        body.classList.add('scrolled-nav');
+                    }
                 }
+
+                // Son scroll pozisyonunu kaydet (mobil scroll glitch'ını önle)
+                lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
             }
         });
 
         // Sayfa ilk yüklendiğinde de bir kontrol yap
-        if (window.innerWidth > 768 && window.pageYOffset > 20) {
-            navbar.classList.add('scrolled');
-            body.classList.add('scrolled-nav');
+        if (window.innerWidth > 768) {
+            if (window.pageYOffset > 20) {
+                navbar.classList.add('scrolled');
+                body.classList.add('scrolled-nav');
+            }
+            // Başlangıçta her zaman görünür olsun
+            navbar.classList.add('nav-visible');
         }
     });
 </script>

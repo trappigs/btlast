@@ -659,3 +659,59 @@
         text-decoration: none;
     }
 }
+
+
+
+/* =================================================================== */
+/* MASAÜSTÜ SCROLL NAVBAR EFEKTİ (YENİ EKLENEN KODLAR)             */
+/* =================================================================== */
+
+@media (min-width: 769px) {
+
+    /* --- BAŞLANGIÇ GÖRÜNÜMÜ (Sayfa en üstte) --- */
+    .modern-nav {
+        background: #045129;
+        /* Kenarlardan boşluklu ve yuvarlak tasarım */
+        top: 20px;
+        left: 225px; /* 450px / 2 = 225px (kenarlardan eşit boşluk) */
+        right: 225px; /* Sağdan da eşit boşluk */
+        width: auto; /* Genişliği otomatik hesapla */
+        transform: none; /* Transform'u kaldır */
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        position: fixed;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    /* Başlangıçta body'de boşluk olmamalı */
+    body {
+        padding-top: 0 !important;
+    }
+
+    /* --- SCROLL EDİLMİŞ GÖRÜNÜM --- */
+    .modern-nav.scrolled {
+        /* Klasik düz görünüme geçiş */
+        background: #045129;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 0;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        transform: none; /* Transform'u kaldır */
+    }
+
+    /* --- NAVBAR GİZLEME/GÖSTERME ANİMASYONLARI --- */
+    .modern-nav.nav-hidden {
+        transform: translateY(-100%);
+    }
+
+    .modern-nav.nav-visible {
+        transform: translateY(0);
+    }
+
+    /* Scroll sonrası içeriğin navbar altına girmesini engelle */
+    body.scrolled-nav {
+        padding-top: 95px; /* Navbar'ın scroll sonrası yüksekliği */
+    }
+}
