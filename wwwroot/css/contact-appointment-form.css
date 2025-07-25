@@ -861,3 +861,25 @@ select.form-control {
         margin-left: 0; 
     }
 }
+
+
+
+
+
+/* =================================================================== */
+/* MOBİLDE RANDEVU TÜRÜ SEÇENEKLERİNİ 2x2 GRID YAPMA      */
+/* =================================================================== */
+
+@media (max-width: 768px) {
+    .appointment-types {
+        flex-direction: row; /* Dikey yerine yatay sıralama */
+        flex-wrap: wrap;     /* Öğeler sığmazsa alt satıra indir */
+        gap: 0.75rem;        /* Hücreler arası boşluğu biraz azaltalım */
+    }
+
+    .appointment-option {
+        /* Her hücrenin genişliğini %50'den boşluk payı kadar küçük yapıyoruz */
+        flex-basis: calc(50% - 0.375rem); 
+        min-width: 0; /* min-width'i sıfırlayarak esnekliği artırıyoruz */
+    }
+}
