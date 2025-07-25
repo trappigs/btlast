@@ -29,18 +29,27 @@
                 <div class="form-row">
                     <div class="form-group with-icon">
                         <label class="form-label" for="apptName">Ad Soyad *</label>
-                        <input type="text" class="form-control" id="apptName" name="Name" required placeholder="Adınızı ve soyadınızı giriniz" />
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-user form-icon"></i>
+                            <input type="text" class="form-control" id="apptName" name="Name" required placeholder="Adınızı ve soyadınızı giriniz" />
+                        </div>
                     </div>
                     <div class="form-group with-icon">
-                        <label class="form-label" for="apptEmail">Email</label> @* Yıldız kaldırıldı *@
-                        <input type="email" class="form-control" id="apptEmail" name="Email" placeholder="ornek@email.com" /> @* required kaldırıldı *@
+                        <label class="form-label" for="apptEmail">Email</label>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-envelope form-icon"></i>
+                            <input type="email" class="form-control" id="apptEmail" name="Email" placeholder="ornek@email.com" />
+                        </div>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group with-icon">
                         <label class="form-label" for="apptPhone">Telefon *</label>
-                        <input type="tel" class="form-control" id="apptPhone" name="Phone" required placeholder="0555 123 45 67" />
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-phone form-icon"></i>
+                            <input type="tel" class="form-control" id="apptPhone" name="Phone" required placeholder="0555 123 45 67" />
+                        </div>
                     </div>
                 </div>
                 
@@ -51,7 +60,7 @@
                             <label class="appointment-option">
                                 <input type="radio" name="AppointmentType" value="Telefon Görüşmesi" required checked />
                                 <span class="option-content">
-                                    <i>📞</i>
+                                     <i>📞</i>
                                     <span>Telefon</span>
                                 </span>
                             </label>
@@ -81,9 +90,12 @@
                 </div>
                 
                 <div class="form-row" id="appointment-date-time-wrapper" style="display: none;">
-                    <div class="form-group">
+                    <div class="form-group with-icon">
                         <label class="form-label" for="apptDate">Randevu Tarihi *</label>
-                        <input type="date" class="form-control" id="apptDate" name="AppointmentDate" />
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-calendar-days form-icon"></i>
+                            <input type="text" class="form-control datepicker" id="apptDate" name="AppointmentDate" readonly placeholder="Tarih seçmek için tıklayın" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="apptTime">Randevu Saati *</label>
@@ -116,7 +128,6 @@
                         Sitenizde yer alan <a href="#" class="kvkk-link">Aydınlatma Metni'ni</a> okudum ve kabul ediyorum. *
                     </span>
                 </label>
-
                 <label class="checkbox-label">
                     <input type="checkbox" id="marketing" name="marketing" class="form-checkbox" />
                     <span class="checkmark"></span>
@@ -185,6 +196,11 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             openKvkkModal();
         });
+    }
+    
+    const closeBtn = document.querySelector('.kvkk-modal-close');
+    if(closeBtn) {
+        closeBtn.addEventListener('click', closeKvkkModal);
     }
 
     const kvkkModal = document.getElementById('kvkkModal');

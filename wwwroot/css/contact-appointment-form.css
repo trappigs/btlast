@@ -60,63 +60,6 @@
     padding: 50px 40px;
 }
 
-/* Form Tabs */
-.form-tabs {
-    display: flex;
-    margin-bottom: 2rem;
-    border-bottom: 2px solid #f0f0f0;
-    gap: 0;
-    justify-content: center;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.tab-button {
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 1rem 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #666;
-    border-bottom: 3px solid transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.tab-button:hover {
-    background-color: #f8f9fa;
-    color: #333;
-}
-
-.tab-button.active {
-    color: #045129;
-    border-bottom-color: #045129;
-    background-color: #f8fdf9;
-}
-
-/* Tab Content */
-.tab-content {
-    display: none;
-    animation: fadeIn 0.3s ease;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
 /* Form Elements */
 .contact-form {
     position: relative;
@@ -137,10 +80,6 @@
     position: relative;
 }
 
-.form-group.half {
-    flex: 0 0 calc(50% - 0.75rem);
-}
-
 .form-label {
     display: block;
     margin-bottom: 8px;
@@ -159,6 +98,7 @@
     background: #fafcfb;
     color: #2c3e2d;
     box-sizing: border-box;
+    height: 54px; 
 }
 
 .form-control:focus {
@@ -169,22 +109,17 @@
     transform: translateY(-1px);
 }
 
-.form-control:invalid {
-    border-color: #dc3545;
-}
-
 .form-control::placeholder {
     color: #94a3b8;
 }
 
-/* Textarea */
 textarea.form-control {
     resize: vertical;
     min-height: 120px;
+    height: auto;
     font-family: inherit;
 }
 
-/* Select */
 select.form-control {
     appearance: none;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>');
@@ -241,12 +176,12 @@ select.form-control {
 }
 
 .option-content i {
-    font-size: 1.8rem; /* Tüm ikonların (emoji ve font) boyutunu eşitler */
-    min-height: 30px;  /* Yüksekliklerini eşitlemek için minimum yükseklik verir */
+    font-size: 1.8rem;
+    min-height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1; /* Dikey hizalamayı iyileştirir */
+    line-height: 1;
 }
 
 /* Checkbox Styling */
@@ -326,58 +261,24 @@ select.form-control {
 }
 
 /* Buttons */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.875rem 2rem;
-    border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    gap: 0.5rem;
-    min-height: 50px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.btn:hover::before {
-    left: 100%;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #045129, #067833);
-    color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-    background: linear-gradient(135deg, #067833, #045129);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(4, 81, 41, 0.3);
-}
-
 .btn-submit {
     width: 100%;
     position: relative;
     margin-top: 20px;
     padding: 18px 40px;
     font-size: 1.1rem;
+    background: linear-gradient(135deg, #045129, #067833);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background: linear-gradient(135deg, #067833, #045129);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(4, 81, 41, 0.3);
 }
 
 .btn-submit:disabled {
@@ -413,66 +314,28 @@ select.form-control {
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Loading Overlay */
-.loading-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.95);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    z-index: 1000;
-    border-radius: 20px;
-}
-
-.loading-overlay.show {
-    display: flex;
-}
-
-.loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #045129;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
-}
-
-.loading-overlay p {
-    color: #666;
-    font-size: 1.1rem;
-    margin: 0;
-    font-weight: 500;
-}
-
 /* Error Messages */
-.form-error {
-    color: #dc3545;
+.form-group.error .form-control,
+.checkbox-label.error {
+    border-color: #dc3545;
+    background-color: #fff2f2;
+}
+
+.form-error-message {
+    color: #a94442;
     font-size: 0.875rem;
     margin-top: 0.5rem;
     display: block;
 }
 
-.global-error {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #f5c6cb;
-    width: 100%;
-    margin-bottom: 1rem;
+/* =================================================================== */
+/* SUCCESS MESSAGE (EKLENDİ)                                         */
+/* =================================================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.global-error p {
-    margin: 0;
-}
-
-/* Success Message */
 .success-message {
     text-align: center;
     padding: 60px 40px;
@@ -515,371 +378,172 @@ select.form-control {
     font-size: 1.1rem;
 }
 
-/* Form Icons */
-.form-group.with-icon {
+
+/* =================================================================== */
+/* İKON STİLLERİ                                                     */
+/* =================================================================== */
+.input-wrapper {
     position: relative;
 }
 
 .form-icon {
     position: absolute;
-    left: 16px;
+    left: 20px;
     top: 50%;
     transform: translateY(-50%);
-    color: #64748b;
-    font-size: 1.1rem;
-    pointer-events: none;
+    color: #94a3b8;
     z-index: 2;
+    font-size: 1.2rem;
+    pointer-events: none;
 }
 
 .form-group.with-icon .form-control {
     padding-left: 50px;
 }
 
-/* KVKK Modal */
-.kvkk-modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.3s ease;
+
+/* =================================================================== */
+/* DATEPICKER STİLLERİ                                               */
+/* =================================================================== */
+.form-control.datepicker {
+    cursor: pointer;
 }
 
-.kvkk-modal.show {
-    display: block;
-}
-
-.kvkk-modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 0;
+.datepicker-container {
+    position: absolute;
+    z-index: 1050;
+    font-family: 'Inter', sans-serif;
+    background-color: #fff;
+    border: 1px solid #e8f0e9;
     border-radius: 12px;
-    width: 90%;
-    max-width: 700px;
-    max-height: 80vh;
-    overflow: hidden;
-    animation: slideIn 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    display: none;
+    animation: fadeIn 0.2s ease-out;
 }
 
-@keyframes slideIn {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.kvkk-modal-header {
-    padding: 1.5rem 2rem;
-    background: #f8f9fa;
-    border-bottom: 1px solid #e9ecef;
+.datepicker-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px 20px;
+    background-color: #f8fdf9;
+    border-bottom: 1px solid #e8f0e9;
 }
 
-.kvkk-modal-header h3 {
-    margin: 0;
-    color: #333;
+.datepicker-month-year {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #045129;
 }
 
-.kvkk-modal-close {
+.datepicker-nav {
     background: none;
     border: none;
-    font-size: 1.5rem;
     cursor: pointer;
+    font-size: 1.5rem;
     color: #666;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 8px;
 }
 
-.kvkk-modal-close:hover {
+.datepicker-nav:hover {
+    background-color: #e8f0e9;
+    color: #045129;
+}
+
+.datepicker-nav:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.datepicker-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #94a3b8;
+}
+
+.datepicker-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0 10px 10px;
+}
+
+.datepicker-day-empty {
+    height: 40px;
+}
+
+.datepicker-day {
+    border: none;
+    background-color: transparent;
+    text-align: center;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 0.9rem;
     color: #333;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.kvkk-modal-body {
-    padding: 2rem;
-    max-height: 400px;
-    overflow-y: auto;
-    line-height: 1.6;
+.datepicker-day.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    text-decoration: line-through;
 }
 
-.kvkk-modal-body h4 {
-    color: #333;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    font-size: 1.1rem;
+.datepicker-day.available:hover {
+    background-color: #e8f0e9;
 }
 
-.kvkv-modal-body h4:first-child {
-    margin-top: 0;
+.datepicker-day.today {
+    font-weight: 700;
+    border: 1px solid #045129;
 }
 
-.kvkk-modal-body ul {
-    padding-left: 1.5rem;
-    margin-bottom: 1rem;
+.datepicker-day.selected {
+    background-color: #045129;
+    color: white;
+    font-weight: 700;
 }
 
-.kvkk-modal-body li {
-    margin-bottom: 0.5rem;
+.datepicker-day.available {
+    color: #10b981;
+    font-weight: 600;
 }
 
-.kvkk-modal-footer {
-    padding: 1.5rem 2rem;
-    background: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-    text-align: right;
-}
-
-/* Animation for form elements */
-.form-group {
-    animation: slideInUp 0.6s ease forwards;
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.form-group:nth-child(1) { animation-delay: 0.1s; }
-.form-group:nth-child(2) { animation-delay: 0.2s; }
-.form-group:nth-child(3) { animation-delay: 0.3s; }
-.form-group:nth-child(4) { animation-delay: 0.4s; }
-
-@keyframes slideInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.datepicker-day.disabled:hover {
+    background-color: transparent;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .contact-form-container {
         margin: 1rem;
-        border-radius: 15px;
     }
-
     .form-header {
         padding: 30px 20px;
     }
-
     .header-title {
         font-size: 1.8rem;
     }
-
-    .header-subtitle {
-        font-size: 1rem;
-    }
-
     .form-container {
         padding: 40px 20px;
     }
-
-    .form-tabs {
-        flex-direction: column;
-        gap: 0;
-        max-width: 100%;
-    }
-
-    .tab-button {
-        border-bottom: 1px solid #e9ecef;
-        border-right: none;
-        padding: 0.75rem 1rem;
-        font-size: 0.9rem;
-    }
-
-    .tab-button:last-child {
-        border-bottom: 3px solid transparent;
-    }
-
-    .tab-button.active {
-        border-bottom-color: #045129;
-    }
-
     .form-row {
         flex-direction: column;
         gap: 1rem;
+        margin-bottom: 1rem;
     }
-
-    .form-group.half {
-        flex: 1;
-    }
-
     .appointment-types {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 0.75rem;
     }
-
     .appointment-option {
-        min-width: 100%;
-    }
-
-    .success-message {
-        padding: 40px 20px;
-    }
-
-    .success-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 2rem;
-    }
-
-    .kvkk-modal-content {
-        margin: 10% auto;
-        width: 95%;
-    }
-
-    .kvkk-modal-header,
-    .kvkk-modal-body,
-    .kvkk-modal-footer {
-        padding: 1rem 1.5rem;
-    }
-
-    .btn-submit {
-        padding: 16px 32px;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .contact-form-container {
-        margin: 0.5rem;
-        border-radius: 12px;
-    }
-
-    .form-header {
-        padding: 25px 15px;
-    }
-
-    .header-title {
-        font-size: 1.6rem;
-    }
-
-    .header-subtitle {
-        font-size: 0.9rem;
-    }
-
-    .form-container {
-        padding: 30px 15px;
-    }
-
-    .tab-button {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.8rem;
-    }
-
-    .form-control {
-        padding: 14px 16px;
-        font-size: 0.9rem;
-    }
-
-    .form-group.with-icon .form-control {
-        padding-left: 45px;
-    }
-
-    .form-icon {
-        font-size: 1rem;
-        left: 14px;
-    }
-
-    .btn {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.9rem;
-    }
-
-    .checkbox-text {
-        font-size: 0.85rem;
-    }
-
-    .checkbox-label {
-        padding: 12px 16px;
-    }
-
-    .success-message h3 {
-        font-size: 1.5rem;
-    }
-}
-
-/* Focus states for accessibility */
-.form-control:focus,
-.checkbox-label:focus-within,
-.btn:focus {
-    outline: 2px solid #045129;
-    outline-offset: 2px;
-}
-
-/* Print Styles */
-@media print {
-    .contact-form-container {
-        box-shadow: none;
-        border: 1px solid #ccc;
-    }
-
-    .btn, .loading-overlay, .kvkk-modal {
-        display: none !important;
-    }
-
-    .form-header {
-        background: #045129 !important;
-        -webkit-print-color-adjust: exact;
-        color-adjust: exact;
-    }
-}
-
-
-
-/* =================================================================== */
-/* FORM ONAY KUTUCUĞU HATA GÖRÜNÜMÜ (MOBİL İÇİN)   */
-/* =================================================================== */
-
-/* Hata oluştuğunda onay kutusu satırının genel stili */
-.checkbox-label.error {
-    flex-wrap: wrap; /* İçeriklerin (hata mesajı gibi) bir alt satıra kaymasına izin ver */
-    border-color: #dc3545; /* Hata çerçevesi */
-    background-color: #fff2f2; /* Hafif kırmızı hata arka planı */
-}
-
-/* Hata mesajının kendisi için stiller */
-.checkbox-label.error .form-error-message {
-    /* Hata mesajını tam genişlik kaplayarak alt satıra indir */
-    flex-basis: 100%; 
-    
-    /* Metnin soldan hizalanması için (checkmark genişliği + boşluk kadar) */
-    margin-left: 32px; /* 20px checkmark + 12px gap */
-    margin-top: 8px;   /* Üstündeki metinle arasına boşluk koy */
-    
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #a94442; /* Koyu kırmızı hata metni rengi */
-}
-
-/* Daha dar mobil ekranlar için ince ayar */
-@media (max-width: 480px) {
-    .checkbox-label.error .form-error-message {
-        /* Çok dar ekranlarda hizalamayı kaldır, tam soldan başlasın */
-        margin-left: 0; 
-    }
-}
-
-
-
-
-
-/* =================================================================== */
-/* MOBİLDE RANDEVU TÜRÜ SEÇENEKLERİNİ 2x2 GRID YAPMA      */
-/* =================================================================== */
-
-@media (max-width: 768px) {
-    .appointment-types {
-        flex-direction: row; /* Dikey yerine yatay sıralama */
-        flex-wrap: wrap;     /* Öğeler sığmazsa alt satıra indir */
-        gap: 0.75rem;        /* Hücreler arası boşluğu biraz azaltalım */
-    }
-
-    .appointment-option {
-        /* Her hücrenin genişliğini %50'den boşluk payı kadar küçük yapıyoruz */
         flex-basis: calc(50% - 0.375rem); 
-        min-width: 0; /* min-width'i sıfırlayarak esnekliği artırıyoruz */
+        min-width: 0;
     }
 }

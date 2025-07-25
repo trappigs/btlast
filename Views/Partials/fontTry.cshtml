@@ -223,6 +223,35 @@
     letter-spacing: 1.3px;
     text-transform: uppercase;
 }
+.font-sora {
+    font-family: "Sora", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 278;
+  font-style: normal;
+}
+.font-manrope {
+    font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.font-ericaone {
+    font-family: "Erica One", sans-serif;
+    font-weight: 100;
+    font-size: 0.5rem;
+    font-style: normal;
+}
+
+.font-vagron {
+    font-family: 'Vagron', sans-serif; /* 1. Adımda verdiğiniz ismi ve bir yedek fontu yazın */
+    font-weight: normal;
+}
+
+.font-blippo {
+    font-family: 'Blippo', sans-serif; /* 1. Adımda verdiğiniz ismi ve bir yedek fontu yazın */
+    font-weight: normal;
+}
+
 
 /* Test Buttons */
 .test-buttons {
@@ -257,116 +286,6 @@
 </style>
 
 <div class="font-showcase">
-    <h2 style="color: white; font-family: Inter; margin-bottom: 30px;">🎨 Logo Font Seçenekleri Test Alanı</h2>
-    
-    <!-- Font Seçenekleri -->
-    <div class="font-option" onclick="selectFont('oswald')">
-        <div class="font-name">A. Oswald - Clean & Professional</div>
-        <div class="logo-sample font-oswald">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('anton')">
-        <div class="font-name">B. Anton - Bold & Impactful</div>
-        <div class="logo-sample font-anton">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('fjalla')">
-        <div class="font-name">C. Fjalla One - Nordic & Modern</div>
-        <div class="logo-sample font-fjalla">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('russo')">
-        <div class="font-name">D. Russo One - Futuristic & Strong</div>
-        <div class="logo-sample font-russo">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('barlow')">
-        <div class="font-name">E. Barlow Condensed - Modern & Sleek</div>
-        <div class="logo-sample font-barlow">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('titillium')">
-        <div class="font-name">F. Titillium Web - Tech & Clean</div>
-        <div class="logo-sample font-titillium">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('rajdhani')">
-        <div class="font-name">G. Rajdhani - Elegant & Modern</div>
-        <div class="logo-sample font-rajdhani">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('saira')">
-        <div class="font-name">H. Saira Condensed - Contemporary</div>
-        <div class="logo-sample font-saira">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('kanit')">
-        <div class="font-name">I. Kanit - International & Modern</div>
-        <div class="logo-sample font-kanit">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <!-- YENİ EKSOTIK FONTLAR -->
-    
-    <div class="font-option" onclick="selectFont('orbitron')">
-        <div class="font-name">J. Orbitron - Sci-Fi & Futuristic 🚀</div>
-        <div class="logo-sample font-orbitron">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('exo')">
-        <div class="font-name">K. Exo 2 - Space Age & Dynamic ⚡</div>
-        <div class="logo-sample font-exo">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('audiowide')">
-        <div class="font-name">L. Audiowide - Retro Gaming & 80s 🎮</div>
-        <div class="logo-sample font-audiowide">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('blackops')">
-        <div class="font-name">M. Black Ops One - Military & Tactical 🪖</div>
-        <div class="logo-sample font-blackops">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('michroma')">
-        <div class="font-name">N. Michroma - Chrome & Metallic 🤖</div>
-        <div class="logo-sample font-michroma">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('teko')">
-        <div class="font-name">O. Teko - Ultra Condensed & Tall 📏</div>
-        <div class="logo-sample font-teko">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('squada')">
-        <div class="font-name">P. Squada One - Bold Display & Impact 💥</div>
-        <div class="logo-sample font-squada">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('bungee')">
-        <div class="font-name">Q. Bungee - Funky & Creative 🎨</div>
-        <div class="logo-sample font-bungee">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('righteous')">
-        <div class="font-name">R. Righteous - Vintage & Strong 🏛️</div>
-        <div class="logo-sample font-righteous">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('aldrich')">
-        <div class="font-name">S. Aldrich - Art Deco & Elegant 💎</div>
-        <div class="logo-sample font-aldrich">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('electrolize')">
-        <div class="font-name">T. Electrolize - Digital & Tech ⚙️</div>
-        <div class="logo-sample font-electrolize">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
-    <div class="font-option" onclick="selectFont('jura')">
-        <div class="font-name">U. Jura - Modern Sans & Clean ✨</div>
-        <div class="logo-sample font-jura">BEREKETLI TOPRAKLAR</div>
-    </div>
-    
     <!-- Hızlı Test Butonları -->
     <div class="test-buttons">
         <!-- İLK GRUP - Klasik -->
@@ -396,6 +315,11 @@
         <button class="test-btn" onclick="applyToLogo('aldrich')" title="Art Deco">💎 Aldrich</button>
         <button class="test-btn" onclick="applyToLogo('jura')" title="Modern Clean">✨ Jura</button>
         <button class="test-btn" onclick="applyToLogo('kanit')" title="International">🌍 Kanit</button>
+        <button class="test-btn" onclick="applyToLogo('sora')" title="birinci">SORA</button>
+        <button class="test-btn" onclick="applyToLogo('manrope')" title="ikinci">Manrope</button>
+        <button class="test-btn" onclick="applyToLogo('ericaone')" title="ucuncu">Erica One</button>
+        <button class="test-btn" onclick="applyToLogo('vagron')" title="dorduncu">Vagron</button>
+        <button class="test-btn" onclick="applyToLogo('blippo')" title="dorduncu">Blippo</button>
         
         <!-- RESET -->
         <button class="test-btn" onclick="applyToLogo('reset')" style="background: #ff4444; margin-top: 10px;">🔄 Sıfırla</button>
@@ -408,6 +332,11 @@
         <button onclick="debugFonts()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; cursor: pointer;">🔍 Font Debug</button>
     </div>
 </div>
+
+
+
+
+
 
 <script>
 // Logo'ya ve tüm typography'ye uygula
@@ -563,6 +492,36 @@ function applyTypographySystem(primaryFont) {
             secondary: { family: "'Jura', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
             body: { family: "'Jura', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
             button: { family: "'Jura', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        sora: {
+            primary: { family: "'Sora', 'Helvetica', sans-serif", weight: "600", spacing: "1.3px" },
+            secondary: { family: "'Sora', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
+            body: { family: "'Sora', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Sora', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        manrope: {
+            primary: { family: "'Manrope', 'Helvetica', sans-serif", weight: "600", spacing: "1.3px" },
+            secondary: { family: "'Manrope', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
+            body: { family: "'Manrope', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Manrope', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        ericaone: {
+            primary: { family: "'Erica One', 'Helvetica', sans-serif", weight: "100", spacing: "1px" },
+            secondary: { family: "'Erica One', 'Helvetica', sans-serif", weight: "100", spacing: "0.8px" },
+            body: { family: "'Erica One', 'Helvetica', sans-serif", weight: "100", spacing: "0.2px" },
+            button: { family: "'Erica One', 'Helvetica', sans-serif", weight: "100", spacing: "1px" }
+        },
+        vagron: {
+            primary: { family: "'Vagron', 'Helvetica', sans-serif", weight: "600", spacing: "1.3px" },
+            secondary: { family: "'Vagron', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
+            body: { family: "'Vagron', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Vagron', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        blippo: {
+            primary: { family: "'Blippo', 'Helvetica', sans-serif", weight: "600", spacing: "1.3px" },
+            secondary: { family: "'Blippo', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
+            body: { family: "'Blippo', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Blippo', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
         }
     };
     
@@ -647,28 +606,6 @@ function resetAllFonts() {
     });
 }
 
-// Gerçek zamanlı önizleme
-function previewFont(fontName) {
-    if (fontName === 'reset') {
-        resetAllFonts();
-        return;
-    }
-    
-    // Font yüklü mü kontrol et
-    if (!isFontLoaded(fontName)) {
-        console.warn(`Font ${fontName} henüz yüklenmemiş, alternatif gösteriliyor`);
-    }
-    
-    // Geçici önizleme uygula
-    applyTypographySystem(fontName);
-    
-    // 3 saniye sonra sıfırla (önizleme)
-    setTimeout(() => {
-        if (!document.querySelector('.test-btn.active')) {
-            resetAllFonts();
-        }
-    }, 3000);
-}
 
 // Font yüklü mü kontrol et
 function isFontLoaded(fontName) {
@@ -693,7 +630,12 @@ function isFontLoaded(fontName) {
         righteous: "'Righteous', sans-serif",
         aldrich: "'Aldrich', sans-serif",
         electrolize: "'Electrolize', sans-serif",
-        jura: "'Jura', sans-serif"
+        jura: "'Jura', sans-serif",
+        sora: "'Sora', sans-serif",
+        manrope: "'Manrope', sans-serif",
+        ericaone: "'Erica One', sans-serif",
+        vagron: "'Vagron', sans-serif",
+        blippo: "'Blippo', sans-serif"
     };
     
     const fontFamily = fontConfigs[fontName];
@@ -745,7 +687,7 @@ function debugFonts() {
     const fonts = ['oswald', 'anton', 'fjalla', 'russo', 'barlow', 'titillium', 
                    'rajdhani', 'saira', 'kanit', 'orbitron', 'exo', 'audiowide', 
                    'blackops', 'michroma', 'teko', 'squada', 'bungee', 'righteous', 
-                   'aldrich', 'electrolize', 'jura'];
+                   'aldrich', 'electrolize', 'jura', 'sora', 'manrope', 'ericaone', "vagron", "blippo"];
     
     console.log('🔍 Font Debug Raporu:');
     fonts.forEach(font => {
@@ -773,7 +715,7 @@ function debugFonts() {
     const fonts = ['oswald', 'anton', 'fjalla', 'russo', 'barlow', 'titillium', 
                    'rajdhani', 'saira', 'kanit', 'orbitron', 'exo', 'audiowide', 
                    'blackops', 'michroma', 'teko', 'squada', 'bungee', 'righteous', 
-                   'aldrich', 'electrolize', 'jura'];
+                   'aldrich', 'electrolize', 'jura', 'sora', 'manrope', 'ericaone', "vagron", "blippo"];
     
     console.log('🔍 Font Debug Raporu:');
     fonts.forEach(font => {
@@ -792,7 +734,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Emoji'leri temizle
             const cleanFontName = fontName.replace(/[🅰️🅱️🅾️🆁🅴🅵🅶🅷🅸🚀⚡⚙️🎮🪖🤖🎨🏛️📏💥💎✨🌍🔄]/g, '');
             if (cleanFontName && cleanFontName !== 'sıfırla') {
-                previewFont(cleanFontName);
+                
             }
         });
     });

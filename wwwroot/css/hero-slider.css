@@ -78,7 +78,7 @@
 }
 .slide-title {
     font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 800;
+    font-weight: 400;
     line-height: 1.1;
     color: #F8F9FA; /* Ana başlık için Kırık Beyaz */
     margin-bottom: 2rem;

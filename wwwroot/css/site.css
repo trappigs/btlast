@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-family: 'Erica One', 'Segoe UI', Arial, sans-serif;
     background-color: #f8f9fa;
     line-height: 1.6;
     padding-top: 0 !important; /* Önceki sorunları önlemek için */
@@ -18,21 +18,33 @@ body {
     background-color: #f5f4f0 !important;
 }
 
+@font-face {
+  font-family: 'Vagron'; /* Fontunuza bir isim verin */
+  src: url('/fonts/VAGRON.TTF') format('truetype'); /* Dosyanın yolunu belirtin */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Blippo'; /* Fontunuza bir isim verin */
+  src: url('/fonts/blippo.ttf') format('truetype'); /* Dosyanın yolunu belirtin */
+  font-weight: normal;
+  font-style: normal;
+}
 /* =================================================================== */
 /* FONT HİYERARŞİSİ                            */
 /* =================================================================== */
 
 /* Ana Başlıklar (Logo, Hero vb.) */
 .logo-text, h1, .hero-title, .main-title, .project-title, .portfolio-title, .modal-header h3, .contact-header h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-weight: 400;
+    font-family: 'Erica One', sans-serif;
+    font-weight: 100;
     letter-spacing: 1.5px;
     line-height: 1.1;
 }
 
 /* Alt Başlıklar */
 h2, h3, h4, .section-title, .feature-title {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Erica One', sans-serif;
     font-weight: 600;
     letter-spacing: 0.5px;
     line-height: 1.3;
@@ -48,7 +60,7 @@ h2, h3, h4, .section-title, .feature-title {
 
 /* Navigasyon Menüsü */
 .nav-item {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Erica One', sans-serif;
     font-weight: 500;
     letter-spacing: 0.5px;
 }
