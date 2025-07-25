@@ -247,9 +247,15 @@
     }
     
     .answer-content {
-        padding: 0 20px 20px 65px;
-        font-size: 0.9rem;
-    }
+    /* Sol boşluğu, soru metniyle aynı hizaya getiriyoruz */
+    padding: 0 20px 20px 20px; 
+    font-size: 0.9rem !important;
+}
+.answer-content p {
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
 }
 
 @@media (max-width: 480px) {
@@ -263,9 +269,11 @@
         font-size: 0.95rem;
     }
     
-    .answer-content {
-        padding: 0 15px 18px 55px;
-    }
+    .answer-content p {
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
 }
 </style>
 

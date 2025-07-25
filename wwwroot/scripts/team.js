@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (twitterBtn) {
         twitterBtn.addEventListener('click', function() {
             // Twitter follow functionality can be added here
-            alert('Twitter sayfamızı ziyaret edin!');
+            alert('Linkedin sayfamızı ziyaret edin!');
         });
     }
 

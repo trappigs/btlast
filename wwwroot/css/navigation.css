@@ -160,13 +160,30 @@
 /* --- MOBİL MENÜ STİLLERİ (768px ve altı) --- */
 @media (max-width: 768px) {
     /* Ana navigasyon barının mobil yüksekliğini ayarlıyoruz */
-    .modern-nav {
-        padding: 6px 0;
-    }
+    /* Var olan .modern-nav kuralına ekleyin */
+.modern-nav {
+    padding: 6px 0;
+    /* YENİ EKLENEN KOD AŞAĞIDA */
+    border-radius: 10px 10px 10px 10px; /* Sadece alt köşelere ovallik verir */
+}
     .nav-container {
         min-height: 50px;
     }
-    
+    /* YENİ: Logo boyutunu büyütme */
+    .logo-image {
+        height: 50px; /* Logo yüksekliğini 45px'ten 50px'e çıkarıyoruz */
+    }
+
+    /* YENİ: Hamburger menü ikonunu büyütme */
+    .mobile-menu-btn {
+        gap: 5px; /* Çizgiler arası boşluğu biraz artırıyoruz */
+        padding: 10px; /* Tıklama alanını genişletiyoruz */
+    }
+    .mobile-menu-btn span {
+        width: 28px;  /* Çizgi genişliğini 25px'ten 28px'e çıkarıyoruz */
+        height: 3px;  /* Çizgi kalınlığını 2px'ten 3px'e çıkarıyoruz */
+    }
+
     /* Telefon numarasını mobilde gizle */
     .nav-phone {
         display: none;
@@ -378,8 +395,8 @@
 }
 
 .side-panel-toggle svg {
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     fill: white;
 }
 
@@ -689,8 +706,8 @@
         background: #045129;
         /* Kenarlardan boşluklu ve yuvarlak tasarım */
         top: 20px;
-        left: 225px; /* 450px / 2 = 225px (kenarlardan eşit boşluk) */
-        right: 225px; /* Sağdan da eşit boşluk */
+        left: 275px; /* 450px / 2 = 225px (kenarlardan eşit boşluk) */
+        right: 275px; /* Sağdan da eşit boşluk */
         width: auto; /* Genişliği otomatik hesapla */
         transform: none; /* Transform'u kaldır */
         border-radius: 15px;
@@ -731,3 +748,29 @@
         padding-top: 95px; /* Navbar'ın scroll sonrası yüksekliği */
     }
 }
+
+
+/* =================================================================== */
+/* OVAL NAV BAR LOGO HİZALAMA (NAV-CONTAINER MARGIN İLE)     */
+/* =================================================================== */
+
+@media (min-width: 769px) {
+    
+    /* Sadece sayfanın en üstündeki oval navbar için geçerli olacak kurallar */
+    .modern-nav:not(.scrolled) .nav-container {
+        /* İçeriği ortalayan 'margin: 0 auto' kuralını eziyoruz */
+        margin: 0;
+
+        /* Kabın, oval navbar'ın tam genişliğini kullanmasını sağlıyoruz */
+        width: 100%;
+        max-width: 100%; /* max-width kısıtlamasını kaldırıyoruz */
+
+        /* Logo ve sağdaki ikonların kenarlara yapışmaması için iç boşluk ekliyoruz */
+        padding: 0 25px;
+    }
+}
+
+
+
+
+

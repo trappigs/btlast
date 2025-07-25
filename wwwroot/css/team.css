@@ -26,7 +26,6 @@
 }
 
 .team-title {
-    font-size: 1rem;
     color: #666;
     letter-spacing: 3px;
     font-weight: 600;
@@ -232,7 +231,7 @@
     display: flex;
     align-items: flex-start;
     gap: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .modal-icon {
@@ -375,6 +374,10 @@
 }
 @media(max-width: 768px)
 {
+    .modal-header {
+        margin: 0px;
+    }
+
     .team-section{
     padding-top: 90px !important;
     }
