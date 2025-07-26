@@ -3,8 +3,8 @@
 /* =================================================================== */
 
 .why-us-section {
-    padding: 60px 20px;
-    background-color: #f8f9fa;
+    padding: 0px 20px;
+    background-color: #f4f7f6;
 }
 
 /* --- MOBİL GÖRÜNÜM (VARSAYILAN) --- */
@@ -20,8 +20,8 @@
 }
 
 .why-us-heading {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 2.2rem;
     font-weight: 400;
     line-height: 1.2;
     color: #333;
@@ -34,7 +34,7 @@
 }
 
 .why-us-text-content p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #666;
     line-height: 1.7;
     max-width: 500px;
@@ -57,6 +57,11 @@
     border-top: 4px solid transparent;
 }
 
+/* Hide specific cards on mobile */
+.desktop-only-card {
+    display: none;
+}
+
 .why-us-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -71,7 +76,7 @@
 }
 
 .card-title {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 1rem; /* Kart başlıkları biraz daha küçük */
     font-weight: 600;
     color: #333;
@@ -84,7 +89,7 @@
 /* --- MASAÜSTÜ GÖRÜNÜMÜ (992px ve üzeri) --- */
 @media (min-width: 992px) {
     .why-us-section {
-        padding: 100px 20px;
+        padding: 60px 20px;
     }
 
     /* Ana yapıyı 2 sütunlu grid'e çeviriyoruz */
@@ -96,21 +101,26 @@
         max-width: 1200px;
         margin: 0 auto;
     }
-
-    /* Sol sütundaki kartları 3x2'lik bir grid yapısına sokuyoruz */
+    
+    /* Re-order for desktop */
     .why-us-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
+        order: 1; /* Kartlar sola */
+    }
+    
+    .why-us-text-content {
+        order: 2; /* Metin sağa */
+        text-align: left;
+        margin-bottom: 0;
+    }
+
+    .desktop-only-card {
+        display: block; /* Show the hidden cards on desktop */
     }
     
     .why-us-card {
         padding: 20px; /* Kartların iç boşluğunu biraz azaltıyoruz */
-    }
-
-    /* Sağ sütundaki metni sola hizalıyoruz */
-    .why-us-text-content {
-        text-align: left;
-        margin-bottom: 0;
     }
 
     .why-us-heading {

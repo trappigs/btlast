@@ -547,3 +547,15 @@ select.form-control {
         min-width: 0;
     }
 }
+
+
+
+
+/* Bu bloğu @media (max-width: 768px) içine ekleyin */
+.btn-submit {
+    width: 90%; /* Butonun genişliğini ayarlar */
+    max-width: 320px; /* Butonun çok büyümesini engeller */
+    display: block; /* margin: auto özelliğinin çalışması için gereklidir */
+    margin-left: auto; /* Soldan boşluk bırakarak ortalar */
+    margin-right: auto; /* Sağdan boşluk bırakarak ortalar */
+}
