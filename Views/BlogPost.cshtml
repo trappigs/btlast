@@ -1,0 +1,140 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = Model.Value("pageTitle");
+
+    var featuredImage = Model.Value<IPublishedContent>("featuredImage");
+
+    var postDate = Model.Value<DateTime>("postDate");
+    if (postDate == default(DateTime)) {
+        postDate = Model.CreateDate;
+    }
+    var formattedDate = postDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
+    
+    // --- YENİ EKLENEN KOD BAŞLANGICI ---
+    var blogPage = Model.Parent; 
+    var otherPosts = Enumerable.Empty<IPublishedContent>();
+    if (blogPage != null)
+    {
+        // Mevcut yazıyı hariç tutarak, tarihe göre sıralayıp en son 10 yazıyı alıyoruz
+        otherPosts = blogPage.Children()
+                             .Where(x => x.IsVisible() && x.Id != Model.Id)
+                             .OrderByDescending(x => x.Value<DateTime>("postDate"))
+                             .Take(10);
+    }
+    // --- YENİ EKLENEN KOD SONU ---
+}
+
+<div class="container blog-post-container">
+    <article>
+        <header class="blog-post-header">
+            <h1 class="blog-post-title">@Model.Value("pageTitle")</h1>
+            <div class="blog-post-meta">
+                <span>@formattedDate</span>
+                &bull;
+                <span>Yazar: @(Model.HasValue("author") ? Model.Value("author") : "Bereketli Topraklar")</span>
+            </div>
+        </header>
+
+        @if (featuredImage != null)
+        {
+            <div class="blog-post-featured-image">
+                <img src="@featuredImage.Url()" alt="@Model.Name" />
+            </div>
+        }
+
+        <div class="blog-post-content">
+            @Model.Value("postContent")
+        </div>
+    </article>
+</div>
+
+@* --- YENİ KAYDIRMALI BLOG BÖLÜMÜ --- *@
+@if (otherPosts.Any())
+{
+    <section class="other-posts-section">
+        <div class="container">
+            <h2 class="other-posts-title">Diğer Yazılarımıza Göz Atın</h2>
+            <div class="other-posts-slider">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        @foreach (var post in otherPosts)
+                        {
+                            var otherFeaturedImage = post.Value<IPublishedContent>("featuredImage");
+                            var otherExcerpt = post.Value<string>("excerpt");
+                            
+                            var otherPostDate = post.Value<DateTime>("postDate");
+                            if (otherPostDate == default(DateTime)) {
+                                otherPostDate = post.CreateDate;
+                            }
+                            var otherFormattedDate = otherPostDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
+
+                            <div class="swiper-slide">
+                                <div class="blog-card">
+                                    @if (otherFeaturedImage != null)
+                                    {
+                                        <div class="blog-card-image">
+                                            <a href="@post.Url()">
+                                                <img src="@otherFeaturedImage.Url()" alt="@post.Name">
+                                            </a>
+                                        </div>
+                                    }
+                                    <div class="blog-card-content">
+                                        <div class="blog-card-date">@otherFormattedDate</div>
+                                        <a href="@post.Url()" class="blog-card-title">@post.Name</a>
+                                        @if (!string.IsNullOrWhiteSpace(otherExcerpt))
+                                        {
+                                            <p class="blog-card-excerpt">@otherExcerpt</p>
+                                        }
+                                        <div class="blog-card-author">
+                                            Yazar: @(post.HasValue("author") ? post.Value("author") : "Bereketli Topraklar")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+}
+
+@* --- SLIDER'I BAŞLATMAK İÇİN GEREKLİ JAVASCRIPT --- *@
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Sadece bu sayfada slider varsa çalıştır
+    if (document.querySelector('.other-posts-slider .swiper-container')) {
+        var swiper = new Swiper('.other-posts-slider .swiper-container', {
+            // Parametreler
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                // 640px ve üzeri
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                // 992px ve üzeri
+                992: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                }
+            }
+        });
+    }
+});
+</script>

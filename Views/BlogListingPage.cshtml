@@ -1,0 +1,57 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = Model.Value("pageTitle");
+
+    var posts = Model.Children()
+                     .Where(x => x.IsVisible())
+                     .OrderByDescending(x => x.Value<DateTime>("postDate"));
+}
+
+<header class="blog-listing-header">
+    <div class="container">
+        <h1 class="blog-listing-title">@Model.Value("pageTitle")</h1>
+        <p class="blog-listing-description">@Model.Value("pageDescription")</p>
+    </div>
+</header>
+
+<div class="blog-listing-container">
+    <div class="container">
+        <div class="blog-grid-listing"> @* <-- Sınıfı "blog-grid-listing" olarak değiştirin *@
+             @foreach (var post in posts)
+            {
+                var featuredImage = post.Value<IPublishedContent>("featuredImage");
+                var excerpt = post.Value<string>("excerpt");
+                
+                // *** YENİ VE DAHA SAĞLAM TARİH KODU ***
+                var postDate = post.Value<DateTime>("postDate");
+                if (postDate == default(DateTime)) {
+                    postDate = post.CreateDate;
+                }
+                var formattedDate = postDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
+
+                <div class="blog-card">
+                    @if (featuredImage != null)
+                    {
+                        <div class="blog-card-image">
+                            <a href="@post.Url()">
+                                <img src="@featuredImage.Url()" alt="@post.Name">
+                            </a>
+                        </div>
+                    }
+                    <div class="blog-card-content">
+                        <div class="blog-card-date">@formattedDate</div>
+                        <a href="@post.Url()" class="blog-card-title">@post.Name</a>
+                        @if (!string.IsNullOrWhiteSpace(excerpt))
+                        {
+                            <p class="blog-card-excerpt">@excerpt</p>
+                        }
+                        <div class="blog-card-author">
+                           Yazar: @(post.HasValue("author") ? post.Value("author") : "Bereketli Topraklar")
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
