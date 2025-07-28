@@ -2,18 +2,19 @@
 @{
     Layout = "masterLayout.cshtml";
     ViewBag.Title = Model.Value("pageTitle");
-
     var posts = Model.Children()
                      .Where(x => x.IsVisible())
                      .OrderByDescending(x => x.Value<DateTime>("postDate"));
 }
+<link rel="stylesheet" href="/css/contact-page.css">
 
-<header class="blog-listing-header">
-    <div class="container">
-        <h1 class="blog-listing-title">@Model.Value("pageTitle")</h1>
-        <p class="blog-listing-description">@Model.Value("pageDescription")</p>
+<section class="contact-hero"> @* Sınıfı contact-hero olarak değiştirdik *@
+    <div class="container text-center">
+        <span class="contact-hero-subtitle">BLOG</span> @* Yeni alt başlık eklendi *@
+        <h1 class="contact-hero-title">@Model.Value("pageTitle")</h1> @* Sınıf contact-hero-title olarak değiştirildi *@
+        <p class="contact-hero-text">@Model.Value("pageDescription")</p> @* Sınıf contact-hero-text olarak değiştirildi *@
     </div>
-</header>
+</section>
 
 <div class="blog-listing-container">
     <div class="container">
@@ -29,7 +30,6 @@
                     postDate = post.CreateDate;
                 }
                 var formattedDate = postDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
-
                 <div class="blog-card">
                     @if (featuredImage != null)
                     {
@@ -42,10 +42,12 @@
                     <div class="blog-card-content">
                         <div class="blog-card-date">@formattedDate</div>
                         <a href="@post.Url()" class="blog-card-title">@post.Name</a>
+                        
                         @if (!string.IsNullOrWhiteSpace(excerpt))
                         {
                             <p class="blog-card-excerpt">@excerpt</p>
                         }
+                      
                         <div class="blog-card-author">
                            Yazar: @(post.HasValue("author") ? post.Value("author") : "Bereketli Topraklar")
                         </div>

@@ -53,7 +53,7 @@
                         
                         <div class="card-image-container">
                             <img src="@project.Image" alt="@project.Name">
-                            
+                 
                             <div class="card-description-overlay">
                                 <p>@project.Description</p>
                             </div>
@@ -108,6 +108,14 @@
                 }
             }
         </div>
+
+        @* --- YENİ EKLENEN BÖLÜM --- *@
+        @if (ViewData["IsProjectListPage"] as bool? != true)
+        {
+            <div class="view-all-btn-container" style="text-align: center; margin-top: 50px;">
+                <a href="/projeler/" class="view-all-btn">Tüm Projeleri Göster</a>
+            </div>
+        }
     </div>
 </div>
 

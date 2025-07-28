@@ -133,7 +133,8 @@
 
 /* --- Blog Listeleme Sayfası --- */
 .blog-listing-header {
-    padding: 120px 0 60px;
+    
+    padding: 170px 0 60px;
     background: linear-gradient(135deg, rgba(4, 81, 41, 0.9), rgba(6, 120, 51, 0.8)), url('/media/if4nn2ca/ai-generated-1.png');
     background-size: cover;
     color: white;

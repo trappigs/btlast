@@ -1,9 +1,12 @@
 ﻿@using Umbraco.Cms.Core.Models.PublishedContent
 @using Umbraco.Cms.Core.Models
+@using System.Text.RegularExpressions
+@using System.Globalization
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
     Layout = "masterLayout.cshtml";
     ViewBag.Title = Model.Value("projectName");
+
     // Hero background image
     var heroBackground = "";
     if (Model.HasValue("heroBackground"))
@@ -11,8 +14,52 @@
         var heroBgImage = Model.Value<IPublishedContent>("heroBackground");
         heroBackground = heroBgImage.Url();
     }
+
+    // --- YENİ EKLENEN KOD BAŞLANGICI ---
+    // Slugify fonksiyonu (ProjectCards.cshtml'den kopyalandı)
+    Func<string, string> GenerateSlug = (phrase) =>
+    {
+        if (string.IsNullOrEmpty(phrase)) return "";
+        string str = phrase.ToLower(new CultureInfo("tr-TR"));
+        str = str.Replace("ı", "i").Replace("ğ", "g").Replace("ü", "u").Replace("ş", "s").Replace("ö", "o").Replace("ç", "c");
+        str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+        str = Regex.Replace(str, @"\s+", "-").Trim();
+        str = Regex.Replace(str, @"-+", "-");
+        str = str.Trim('-');
+        return str;
+    };
+
+    // Proje listeleri (ProjectCards.cshtml'den kopyalandı)
+    var projects = new[]
+    {
+        new { Name = "Çanakkale - Armoni", Image = "/media/wvvnmbkc/ai-generated-10.png", Description = "Doğa ile uyum içinde, modern yaşamın konforunu sunan villa projesi. Deniz manzaralı parseller ile huzurun adresi." },
+        new { Name = "Ayvalık - Çamoba", Image = "/media/wzvhx1ou/ai-generated-8.png", Description = "Ege'nin incisi Ayvalık'ta, zeytinlikler arasında konumlanmış özel villa parselleri. Denize sıfır konumu ile ayricalıklı." },
+        new { Name = "İznik", Image = "/media/o55bhpmq/ai-generated-9.png", Description = "Tarihi İznik Gölü kıyısında, doğa ile iç içe yaşam alanları. Sakin ve huzurlu bir yaşam için ideal lokasyon." },
+        new { Name = "Kocaeli", Image = "/media/plbez1kc/ai-generated-14.png", Description = "İstanbul'a yakın konumu ile pratik ulaşım imkanı. Modern mimarisi ve geniş yaşam alanları ile öne çıkan proje." },
+        new { Name = "Çanakkale", Image = "/media/ehunepwj/ai-generated-13.png", Description = "Çanakkale'nin en prestijli bölgesinde, deniz ve doğa manzaralı lüks villa projeleri. Yatırım değeri yüksek parseller." },
+        new { Name = "Düzce - Gümüşova", Image = "/media/m0olzhwo/ai-generated-11.png", Description = "Karadeniz'in yeşili ile buluşan villa parselleri. Doğal yaşamın tadını çıkarabileceğiniz huzurlu bir ortam." }
+    };
+    var newProjects = new[]
+    {
+        new { Name = "Sakarya - Karasu", Image = "/media/wvvnmbkc/ai-generated-10.png", Description = "Karadeniz'in parlayan yıldızı Karasu'da, yatırım değeri yüksek, denize yakın arsalar." },
+        new { Name = "Bursa - Mudanya", Image = "/media/wzvhx1ou/ai-generated-8.png", Description = "Tarihi dokusu ve deniziyle öne çıkan Mudanya'da eşsiz yaşam alanları." },
+        new { Name = "Yalova - Termal", Image = "/media/o55bhpmq/ai-generated-9.png", Description = "Termal suların şifasıyla, doğa içinde huzurlu bir yatırım fırsatı." },
+        new { Name = "Balıkesir - Edremit", Image = "/media/plbez1kc/ai-generated-14.png", Description = "Kaz Dağları'nın eteğinde, zeytinlikler arasında, oksijeni bol bir yaşam." },
+        new { Name = "İzmir - Urla", Image = "/media/ehunepwj/ai-generated-13.png", Description = "Ege'nin gözde tatil beldesi Urla'da, bağ evleri ve denize yakın parseller." },
+        new { Name = "Muğla - Fethiye", Image = "/media/m0olzhwo/ai-generated-11.png", Description = "Dünyaca ünlü plajlara yakın, doğa harikası Fethiye'de karlı bir yatırım." }
+    };
+
+    var allProjects = projects.Concat(newProjects);
+
+    // Mevcut projenin adını al
+    var currentProjectName = Model.Value<string>("projectName");
+
+    // Mevcut proje hariç diğer projeleri filtrele ve rastgele 6 tane seç
+    var otherProjects = allProjects.Where(p => p.Name != currentProjectName).OrderBy(x => Guid.NewGuid()).Take(6);
+    // --- YENİ EKLENEN KOD SONU ---
 }
 <link rel="stylesheet" href="/css/projectDetail.css">
+<link rel="stylesheet" href="/css/project-cards.css">
 
 <div class="project-hero" style="@(string.IsNullOrEmpty(heroBackground) ? "" : $"background-image: url('{heroBackground}');")">
     <div class="hero-content">
@@ -49,7 +96,7 @@
         <div class="content-grid">
             <div class="image-section">
                 @{
-                    IPublishedContent  mainMediaItem = null;
+                    IPublishedContent mainMediaItem = null;
                     var isMainVideo = false;
                     
                     // Önce video ara
@@ -60,10 +107,10 @@
                         {
                             // İlk video'yu bul
                             var firstVideo = galleryItems.FirstOrDefault(item => 
-                                     item.ContentType.Alias == "video" || 
+                                item.ContentType.Alias == "video" || 
                                 item.Url().EndsWith(".mp4") || 
-                                     item.Url().EndsWith(".webm") || 
-                                     item.Url().EndsWith(".ogg") ||
+                                item.Url().EndsWith(".webm") || 
+                                item.Url().EndsWith(".ogg") ||
                                 item.Url().EndsWith(".mov") ||
                                 item.Url().EndsWith(".avi"));
                             if (firstVideo != null)
@@ -122,7 +169,7 @@
                 @if (Model.HasValue("projectGallery"))
                 {
                     <div class="gallery-section">
-                        <div class="gallery-grid">
+                        <div class="gallery-grid" id="galleryGrid">
                             @{
                                 var allGalleryItems = Model.Value<IEnumerable<IPublishedContent>>("projectGallery").Take(10).ToList();
                                 var currentIndex = 0;
@@ -130,7 +177,7 @@
                                 // Video'ları önce, resimleri sonra sırala
                                 var sortedItems = allGalleryItems
                                     .OrderByDescending(item => 
-                                       item.ContentType.Alias == "video" || 
+                                        item.ContentType.Alias == "video" || 
                                         item.Url().EndsWith(".mp4") || 
                                         item.Url().EndsWith(".webm") || 
                                         item.Url().EndsWith(".ogg") ||
@@ -148,23 +195,21 @@
                                              item.Url().EndsWith(".mov") ||
                                              item.Url().EndsWith(".avi");
                                 
-                                if (isVideo)
-                                {
-                                    <div class="gallery-item video-item" onclick="changeMainMedia('@item.Url()', '@Model.Value("projectName")', @currentIndex, true)">
-                                        <video class="gallery-video" muted>
+                                <div class="gallery-item @(isVideo ? "video-item" : "")" data-index="@currentIndex" onclick="changeMainMedia('@item.Url()', '@Model.Value("projectName")', @currentIndex, @isVideo.ToString().ToLower())">
+                                    @if (isVideo)
+                                    {
+                                        <video class="gallery-video" muted playsinline>
                                             <source src="@item.Url()" type="video/mp4">
                                         </video>
                                         <div class="video-overlay">
                                             <div class="play-icon">▶</div>
                                         </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="gallery-item" onclick="changeMainMedia('@item.Url()', '@Model.Value("projectName")', @currentIndex, false)">
+                                    }
+                                    else
+                                    {
                                         <img src="@item.Url()" alt="@Model.Value("projectName")" class="gallery-image">
-                                    </div>
-                                }
+                                    }
+                                </div>
                                 currentIndex++;
                             }
                         </div>
@@ -178,7 +223,8 @@
                     <h1 class="hero-title tax2">@Model.Value("projectName")</h1>
                     <p>@Model.Value("projectDescription")</p>
                      
-                    <p>Şehrin karmaşasından uzak, ancak ulaşım açısından avantajlı bir konumda yer alan proje, doğayla iç içe yaşamak isteyenlere ilham veriyor. Taş ev konsepti ve geniş yeşil alanlarıyla hem yaşam hem yatırım açısından güçlü bir alternatif sunuyor.</p>
+                    <p>Şehrin karmaşasından uzak, ancak ulaşım açısından avantajlı bir konumda yer alan proje, doğayla iç içe yaşamak isteyenlere ilham veriyor.
+                    Taş ev konsepti ve geniş yeşil alanlarıyla hem yaşam hem yatırım açısından güçlü bir alternatif sunuyor.</p>
                 </div>
 
                 <div class="project-stats">
@@ -198,22 +244,59 @@
                         <div class="expandable-content">
                             <div class="map-container">
                                 <iframe 
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.8567676392077!2d28.97707!3d41.058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDAzJzI4LjgiTiAyOMKwNTgnMzcuNCJF!5e0!3m2!1str!2str!4v1234567890"
+                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.8567676392077!2d28.97707!3d41.058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDAzJzI4LjgiTiAyOMKwNTgnMzcuNCJF!5e0!3m2!1str!2str!4v1234567890"
                                     width="100%" 
                                      height="350" 
-                                    style="border:0;"
-                                     allowfullscreen="" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
                                     loading="lazy" 
                                     referrerpolicy="no-referrer-when-downgrade">
-                                 </iframe>
+                                </iframe>
                             </div>
                         </div>
                     </div>
                 </div>
-             </div>
+            </div>
         </div>
     </div>
 </div>
+
+@* --- YENİ DİĞER PROJELER BÖLÜMÜ --- *@
+@if (otherProjects.Any())
+{
+    <section class="other-projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Diğer Projelerimize Göz Atın</h2>
+            </div>
+            <div class="projects-grid">
+                @foreach (var project in otherProjects)
+                {
+                    var projectSlug = GenerateSlug(project.Name);
+                    <div class="project-card" data-location="@project.Name">
+                        <div class="card-header">
+                            <h3 class="card-title">@project.Name</h3>
+                        </div>
+                        <div class="card-image-container">
+                            <img src="@project.Image" alt="@project.Name">
+                            <div class="card-description-overlay">
+                                <p>@project.Description</p>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="/projeler/@projectSlug/" class="btn btn-primary">Projeyi İncele</a>
+                            <button class="btn btn-secondary open-form-btn">Form Doldurun</button>
+                        </div>
+                    </div>
+                }
+            </div>
+            @* --- YENİ EKLENEN BUTON --- *@
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="/projeler/" class="btn btn-primary">Tüm Projeleri Göster</a>
+            </div>
+        </div>
+    </section>
+}
 
 <div id="lightboxModal" class="lightbox-modal">
     <div class="lightbox-content">
@@ -244,4 +327,29 @@
     </div>
 </div>
 
+<style>
+    .other-projects-section {
+        padding: 80px 0;
+        background-color: #f4f7f6;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .other-projects-section .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .other-projects-section .section-title {
+        font-size: 2.8rem;
+        color: #333;
+    }
+
+    .other-projects-section .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+    }
+</style>
+
 <script src="/Scripts/projectDetail.js"></script>
+<script src="/Scripts/project-cards.js"></script>

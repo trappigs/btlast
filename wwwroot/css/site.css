@@ -184,7 +184,14 @@ h2, h3, h4, .section-title, .feature-title {
 .fixed-call-btn i {
     font-size: 1.3rem;
 }
+.fixed-call-btn:hover {
+   background-color: white; /* Hover arkaplan rengi */
+   color: #1e7e34; /* Hover yazı rengi */
+}
 
+.fixed-call-btn:hover i {
+   color: #1e7e34; /* Hover ikon rengi */
+}
 
 /* =================================================================== */
 /* RESPONSIVE AYARLAR                             */
@@ -316,3 +323,6 @@ img, svg {
     height: 200px; /* Yüksekliği sabit tut */
     object-fit: cover; /* Resmin oranını koruyarak alanı kaplamasını sağla */
 }
+
+
+
