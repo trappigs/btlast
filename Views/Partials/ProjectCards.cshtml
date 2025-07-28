@@ -1,6 +1,7 @@
 ﻿@using System.Text
 @using System.Globalization
 @using System.Text.RegularExpressions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
     // --- SLUG FONKSİYONU ---
     Func<string, string> GenerateSlug = (phrase) => 
@@ -30,6 +31,7 @@
 
         <div class="projects-grid">
             @{
+                // Mevcut projeler (Anasayfada ve Projeler sayfasında görünecek)
                 var projects = new[]
                 {
                     new { Name = "Çanakkale - Armoni", Image = "/media/wvvnmbkc/ai-generated-10.png", Description = "Doğa ile uyum içinde, modern yaşamın konforunu sunan villa projesi. Deniz manzaralı parseller ile huzurun adresi." },
@@ -63,6 +65,46 @@
                         </div>
 
                     </div>
+                }
+
+                // *** DÜZELTİLMİŞ VE PERFORMANSLI KONTROL BLOĞU ***
+                // Yavaşlığa neden olan URL kontrolü yerine, ViewData ile gönderilen parametreyi kontrol ediyoruz.
+                if (ViewData["IsProjectListPage"] as bool? == true)
+                {
+                    var newProjects = new[]
+                    {
+                        new { Name = "Sakarya - Karasu", Image = "/media/wvvnmbkc/ai-generated-10.png", Description = "Karadeniz'in parlayan yıldızı Karasu'da, yatırım değeri yüksek, denize yakın arsalar." },
+                        new { Name = "Bursa - Mudanya", Image = "/media/wzvhx1ou/ai-generated-8.png", Description = "Tarihi dokusu ve deniziyle öne çıkan Mudanya'da eşsiz yaşam alanları." },
+                        new { Name = "Yalova - Termal", Image = "/media/o55bhpmq/ai-generated-9.png", Description = "Termal suların şifasıyla, doğa içinde huzurlu bir yatırım fırsatı." },
+                        new { Name = "Balıkesir - Edremit", Image = "/media/plbez1kc/ai-generated-14.png", Description = "Kaz Dağları'nın eteğinde, zeytinlikler arasında, oksijeni bol bir yaşam." },
+                        new { Name = "İzmir - Urla", Image = "/media/ehunepwj/ai-generated-13.png", Description = "Ege'nin gözde tatil beldesi Urla'da, bağ evleri ve denize yakın parseller." },
+                        new { Name = "Muğla - Fethiye", Image = "/media/m0olzhwo/ai-generated-11.png", Description = "Dünyaca ünlü plajlara yakın, doğa harikası Fethiye'de karlı bir yatırım." }
+                    };
+
+                    foreach (var project in newProjects)
+                    {
+                        var projectSlug = GenerateSlug(project.Name);
+                        <div class="project-card" data-location="@project.Name">
+                            
+                            <div class="card-header">
+                                <h3 class="card-title">@project.Name</h3>
+                            </div>
+                            
+                            <div class="card-image-container">
+                                <img src="@project.Image" alt="@project.Name">
+                                
+                                <div class="card-description-overlay">
+                                    <p>@project.Description</p>
+                                </div>
+                            </div>
+
+                            <div class="card-actions">
+                                <a href="/projeler/@projectSlug/" class="btn btn-primary">Projeyi İncele</a>
+                                <button class="btn btn-secondary open-form-btn">Form Doldurun</button>
+                            </div>
+
+                        </div>
+                    }
                 }
             }
         </div>

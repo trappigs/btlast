@@ -159,55 +159,53 @@
 
 /* --- MOBİL MENÜ STİLLERİ (768px ve altı) --- */
 @media (max-width: 768px) {
-    /* Ana navigasyon barının mobil yüksekliğini ayarlıyoruz */
-    /* Var olan .modern-nav kuralına ekleyin */
-.modern-nav {
-    padding: 6px 0;
-    /* YENİ EKLENEN KOD AŞAĞIDA */
-    border-radius: 10px 10px 10px 10px; /* Sadece alt köşelere ovallik verir */
-}
+    /* *** YENİ DEĞİŞİKLİKLER BAŞLANGICI *** */
+    /* Navbar yüksekliğini 1.5 kat artırıyoruz (eski: ~50px, yeni: 75px) */
     .nav-container {
-        min-height: 50px;
-    }
-    /* YENİ: Logo boyutunu büyütme */
-    .logo-image {
-        height: 50px; /* Logo yüksekliğini 45px'ten 50px'e çıkarıyoruz */
+        min-height: 75px;
     }
 
-    /* YENİ: Hamburger menü ikonunu büyütme */
+    /* Logo boyutunu 1.2 kat büyütüyoruz (eski: 45px, yeni: ~54px) */
+    .logo-image {
+        height: 54px;
+    }
+    
+    /* Açılan mobil menünün tepeden boşluğunu yeni navbar yüksekliğine göre ayarlıyoruz */
+    .nav-menu {
+        top: 75px; 
+        height: calc(100vh - 75px); 
+    }
+    /* *** YENİ DEĞİŞİKLİKLER SONU *** */
+
+    .modern-nav {
+        padding: 6px 0;
+        box-shadow: 0 0px 0px rgba(0, 0, 0, 0) !important;
+    }
+
     .mobile-menu-btn {
-        gap: 5px; /* Çizgiler arası boşluğu biraz artırıyoruz */
-        padding: 10px; /* Tıklama alanını genişletiyoruz */
+        gap: 5px; 
+        padding: 10px; 
     }
     .mobile-menu-btn span {
-        width: 28px;  /* Çizgi genişliğini 25px'ten 28px'e çıkarıyoruz */
-        height: 3px;  /* Çizgi kalınlığını 2px'ten 3px'e çıkarıyoruz */
+        width: 28px;
+        height: 3px;
     }
 
-    /* Telefon numarasını mobilde gizle */
     .nav-phone {
         display: none;
     }
     
-    /* Menü stilini yeni tasarıma göre güncelliyoruz */
     .nav-menu {
         position: fixed;
-        /* Navigasyon barının yüksekliği kadar aşağıdan başlatıyoruz */
-        top: 62px; 
         right: -100%;
-        width: 280px; /* Menü genişliği */
-        /* Yüksekliği, navigasyon barı hariç tüm ekranı kaplayacak şekilde ayarlıyoruz */
-        height: calc(100vh - 62px); 
-        
-        background-color: white; /* Arka planı beyaz yapıyoruz */
+        width: 280px; 
+        background-color: white; 
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        
         padding: 20px;
-        gap: 0; /* Linkler arası boşluğu sıfırlıyoruz */
-        
-        box-shadow: none; /* Gölgelendirmeyi kaldırıyoruz */
+        gap: 0; 
+        box-shadow: none; 
         transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
@@ -215,19 +213,18 @@
         right: 0;
     }
 
-    /* Menü linklerinin stilini güncelliyoruz */
     .nav-item {
-        font-size: 1rem; /* Yazı tipi boyutu */
+        font-size: 1rem; 
         width: 100%;
-        color: var(--primary-green); /* Yazı rengini yeşil yapıyoruz */
-        padding: 15px 10px; /* Linklerin iç boşlukları */
-        border-bottom: 1px solid #f0f0f0; /* Linkler arasına ayırıcı çizgi */
+        color: var(--primary-green); 
+        padding: 15px 10px; 
+        border-bottom: 1px solid #f0f0f0; 
         font-family: 'DM Sans', sans-serif; 
         font-weight: 100 !important;
     }
     
     .nav-item:hover {
-        background-color: #f8f9fa; /* Üzerine gelince hafif renk değişimi */
+        background-color: #f8f9fa; 
         color: var(--light-green);
     }
 
@@ -235,7 +232,6 @@
         display: none;
     }
 
-    /* Hamburger butonu görünür kalacak */
     .mobile-menu-btn {
         display: flex;
     }
@@ -359,29 +355,6 @@
         font-size: 12px;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* --- YENİ: SAĞDAN AÇILAN PANEL STİLLERİ --- */
 
@@ -547,26 +520,15 @@
     /* .mobile-menu-btn zaten varsayılan olarak gösteriliyor */
 }
 
-
-
-
 /* =================================================================== */
 /* MASAÜSTÜ SCROLL NAVBAR EFEKTİ (YENİ EKLENEN KODLAR)             */
 /* =================================================================== */
 
-/* Bu kurallar sadece 769px'den geniş ekranlarda (masaüstü) geçerli olacak */
 @media (min-width: 769px) {
 
     /* --- BAŞLANGIÇ GÖRÜNÜMÜ (Sayfa en üstte) --- */
     .modern-nav {
         background: #045129;
-        top: 20px;
-        left: 50%;
-        width: calc(100% - 450px);
-        transform: translateX(-50%);
-        border-radius: 15px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-        position: fixed;
         /*
          * DÜZELTME: 'all' yerine sadece belirli özellikleri animate ediyoruz.
          * 'width', 'left', ve 'border-radius' anında değişirken,
@@ -594,10 +556,6 @@
         transform: translateX(0);
     }
 
-    /* Scroll sonrası içeriğin navbar altına girmesini engelle */
-    body.scrolled-nav {
-        padding-top: 95px; /* Navbar'ın scroll sonrası yüksekliği */
-    }
     /* --- NAVBAR GİZLEME/GÖSTERME ANİMASYONLARI --- */
     .modern-nav.nav-hidden {
         /* Sadece dikeyde hareket ettirerek gizliyoruz */
@@ -610,17 +568,6 @@
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /* =================================================================== */
 /* MOBİL MENÜ İLETİŞİM BİLGİLERİ STİLLERİ              */
@@ -692,8 +639,6 @@
         text-decoration: none;
     }
 }
-
-
 
 /* =================================================================== */
 /* MASAÜSTÜ SCROLL NAVBAR EFEKTİ (YENİ EKLENEN KODLAR)             */
@@ -769,8 +714,3 @@
         padding: 0 25px;
     }
 }
-
-
-
-
-

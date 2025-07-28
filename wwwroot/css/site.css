@@ -232,7 +232,7 @@ h2, h3, h4, .section-title, .feature-title {
 
 @media (max-width: 480px) {
     .fixed-call-btn {
-        top: 65px; /* Küçük mobil navigasyon barı yüksekliği */
+        top: 95px; /* Küçük mobil navigasyon barı yüksekliği */
     }
 }
 
