@@ -1,11 +1,9 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Extensions
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 
 @{
-    var rootNode = Model.Root();
-    var children = rootNode.Children().Where(x => x.IsVisible());
-
-    
+    // Dinamik sıralama kodları kaldırıldı.
 }
 
 <link rel="stylesheet" href="/css/navigation.css">
@@ -14,25 +12,32 @@
     <div class="nav-container">
         <div class="nav-logo">
             <a href="/" class="logo-link">
-                @* Hatalı SVG kodunu siliyoruz ve yerine bu <img> etiketini ekliyoruz *@
                 <img src="/media/ihljr0ls/logo-light.svg" alt="Bereketli Topraklar Logo" class="logo-image" width="180" height="45" />
             </a>
         </div>
 
         <div class="nav-menu">
-            <a href="@rootNode.Url()" class="nav-item @(Model.Id == rootNode.Id ? "active" : "")">
+            @* --- YENİ HARD-CODED SIRALAMA --- *@
+            <a href="/" class="nav-item @(Model.Url() == "/" ? "active" : "")">
                 Ana sayfa
             </a>
-            @foreach (var child in children)
-            {
-                var navTitle = child.HasValue("navigationTitle") ? child.Value("navigationTitle").ToString() : child.Name;
-                var isActive = child.Id == Model.Id ? "active" : "";
-                <a href="@child.Url()" class="nav-item @isActive">
-                    @navTitle
-                </a>
-            }
-             @* --- YENİ EKLENEN BÖLÜM --- *@
-            @* Bu div, sadece mobil menüde görünecek *@
+            <a href="/projeler/" class="nav-item @(Model.Url().StartsWith("/projeler") ? "active" : "")">
+                Projeler
+            </a>
+            <a href="/hakkimizda/" class="nav-item @(Model.Url().StartsWith("/hakkimizda") ? "active" : "")">
+                Hakkımızda
+            </a>
+            <a href="/ekibimiz/" class="nav-item @(Model.Url().StartsWith("/ekibimiz") ? "active" : "")">
+                Ekibimiz
+            </a>
+            <a href="/blog/" class="nav-item @(Model.Url().StartsWith("/blog") ? "active" : "")">
+                Blog
+            </a>
+            <a href="/iletisim/" class="nav-item @(Model.Url().StartsWith("/iletisim") ? "active" : "")">
+                İletişim
+            </a>
+            
+            @* Mobil menüde görünecek iletişim bilgileri *@
             <div class="mobile-menu-contact-info">
                 <ul class="side-panel-icon-list">
                     <li>
@@ -63,12 +68,10 @@
                 <span class="phone-number">0224 432 49 59</span>
             </a>
         </div>
-        <!-- YENİ MASAÜSTÜ HAMBURGER BUTONU -->
         <button class="side-panel-toggle" aria-label="İletişim panelini aç">
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><g id="List"><path d="m21 7h-18c-1.3 0-1.3-2 0-2h18c1.3 0 1.3 2 0 2z"></path><path d="m18 13h-15c-1.3 0-1.3-2 0-2h15c1.3 0 1.3 2 0 2z"></path><path d="m12 19h-9c-1.3 0-1.3-2 0-2h9c1.3 0 1.3 2 0 2z"></path></g></svg>
         </button>
 
-        <!-- MOBİL HAMBURGER BUTONU -->
         <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
             <span></span>
             <span></span>
@@ -77,15 +80,13 @@
     </div>
 </nav>
 
-<!-- MOBİL MENÜ İÇİN ARKA PLAN KARARTMASI -->
 <div class="mobile-menu-overlay"></div>
 
 
 
-<!-- YENİ: SAĞDAN AÇILAN PANELİN HTML İÇERİĞİ -->
 <div class="side-panel-overlay"></div>
 <div class="side-panel-container">
-    <button class="side-panel-close" aria-label="İletişim panelini kapat">&times;</button>
+    <button class="side-panel-close" aria-label="İletişim panelini kapat">×</button>
     <div class="side-panel-content">
         <div class="nav-logo">
             <a href="/">
@@ -139,11 +140,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- DİNAMİK MENÜ AÇMA FONKSİYONU ---
     function openMobileMenu() {
         if (!navbar || !navMenu) return;
-
         const navHeight = navbar.offsetHeight; // Navbar'ın o anki yüksekliğini ölç
         
         // Ölçülen yüksekliğe göre menünün pozisyonunu ve yüksekliğini ayarla
-        navMenu.style.top = `${navHeight}px`; 
+        navMenu.style.top = `${navHeight}px`;
         navMenu.style.height = `calc(100vh - ${navHeight}px)`;
 
         navMenu.classList.add('active');
@@ -203,8 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Scroll Davranışı ---
     let lastScrollTop = 0;
-    const scrollThreshold = 5; 
-
+    const scrollThreshold = 5;
     window.addEventListener('scroll', function() {
         if (window.innerWidth > 768) {
             const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -226,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
             lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
         }
     });
-    
+
     if (window.innerWidth > 768) {
         if (window.pageYOffset > 20) {
             navbar.classList.add('scrolled');
