@@ -1,7 +1,7 @@
 /* Updated Contact & Appointment Form Styles - Based on Screenshot Design */
 .contact-form-container {
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 70px auto;
     background: #ffffff;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(4, 81, 41, 0.08);
@@ -522,7 +522,10 @@ select.form-control {
 /* Responsive Design */
 @media (max-width: 768px) {
     .contact-form-container {
-        margin: 1rem;
+        margin-bottom: 3rem;
+        margin-top: 1rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
     }
     .form-header {
         padding: 30px 20px;

@@ -280,7 +280,6 @@
     background: #333;
     color: white;
     border: none;
-    padding: 12px 20px;
     border-radius: 25px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -372,8 +371,13 @@
 .team-section{
     padding-top: 170px !important;
 }
+
 @media(max-width: 768px)
 {
+    .team-title{
+        margin-top: 16%;
+    }
+
     .modal-header {
         margin: 0px;
     }
@@ -381,4 +385,39 @@
     .team-section{
     padding-top: 90px !important;
     }
+}
+
+
+
+/** Modal Footer Stilleri */
+.modal-footer {
+    padding: 1rem;
+    text-align: center;
+}
+
+.modal-footer .twitter-btn a { 
+    background-color: #0077b5; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease; 
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; 
+    text-decoration: none; 
+}
+
+.modal-footer .twitter-btn a:hover {
+    background-color: #005e8f; /* Hover olduğunda hafif koyulaşma */
+}
+
+.modal-footer .twitter-btn a i {
+    font-size: 1.2rem; /* LinkedIn ikon boyutu */
+}
+
+.modal-footer .twitter-btn a span {
+    font-weight: 600; /* Yazıyı biraz daha belirgin yap */
 }

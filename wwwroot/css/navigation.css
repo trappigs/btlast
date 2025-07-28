@@ -196,21 +196,23 @@
     }
     
     .nav-menu {
-        position: fixed;
-        right: -100%;
-        width: 280px; 
-        background-color: white; 
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        padding: 20px;
-        gap: 0; 
-        box-shadow: none; 
-        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
+    position: fixed;
+    right: -100%;
+    width: 280px;
+    background-color: white;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 0;
+    box-shadow: none;
+    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* top ve height değerlerinin burada OLMADIĞINDAN emin olun */
+}
 
     .nav-menu.active {
         right: 0;
+        bottom: 30;
     }
 
     .nav-item {
@@ -713,4 +715,23 @@
         /* Logo ve sağdaki ikonların kenarlara yapışmaması için iç boşluk ekliyoruz */
         padding: 0 25px;
     }
+}
+
+
+
+
+/* YENİ: Hamburger menü 'X' animasyonu için CSS */
+.mobile-menu-btn.open span:nth-child(1) {
+    /* Üst çizgiyi ortaya kaydır ve 45 derece döndür */
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-btn.open span:nth-child(2) {
+    /* Orta çizgiyi gizle */
+    opacity: 0;
+}
+
+.mobile-menu-btn.open span:nth-child(3) {
+    /* Alt çizgiyi ortaya kaydır ve -45 derece döndür */
+    transform: translateY(-8px) rotate(-45deg);
 }

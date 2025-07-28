@@ -29,6 +29,11 @@
     let progressBar = null;
     let prevPreview = null;
     let nextPreview = null;
+    
+    // *** YENİ: Kaydırma ve fare durumu için değişkenler ***
+    let isScrolling = false;
+    let scrollTimeout = null;
+
 
     // Touch/Swipe variables
     let touchStartX = 0;
@@ -77,6 +82,9 @@
 
         // Setup event listeners
         setupEventListeners();
+        
+        // Scroll listener'ı ayarla
+        setupScrollListener();
 
         // Start autoplay
         startAutoPlay();
@@ -86,29 +94,36 @@
 
         console.log('Hero slider initialization complete');
     }
+    
+    // Sayfa kaydırma olayını dinler
+    function setupScrollListener() {
+        window.addEventListener('scroll', () => {
+            isScrolling = true;
+            clearTimeout(scrollTimeout);
+            // Kaydırma durduktan 150ms sonra 'isScrolling' bayrağını false yap
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false;
+            }, 150); 
+        }, { passive: true });
+    }
+
 
     function setupSlides() {
         console.log('Setting up slides');
 
         slides.forEach((slide, index) => {
-            // Set background images
             const bgImage = slide.getAttribute('data-bg');
             if (bgImage) {
                 slide.style.backgroundImage = `url(${bgImage})`;
             }
 
-            // Ensure only first slide is active
             if (index === 0) {
                 slide.classList.add('active');
             } else {
                 slide.classList.remove('active');
             }
-
-            // Add slide animations
             setupSlideAnimations(slide, index);
         });
-
-        // Update pagination
         updatePagination();
     }
 
@@ -123,12 +138,11 @@
     function setupEventListeners() {
         console.log('Setting up event listeners');
 
-        // Navigation buttons
         if (prevBtn) {
             prevBtn.addEventListener('click', () => {
                 console.log('Previous button clicked');
                 previousSlide();
-                resetAutoPlay(); // ZAMANLAYICIYI SIFIRLA
+                resetAutoPlay();
                 setTimeout(() => {
                     updatePreview('prev');
                     updatePreview('next');
@@ -140,7 +154,7 @@
             nextBtn.addEventListener('click', () => {
                 console.log('Next button clicked');
                 nextSlide();
-                resetAutoPlay(); // ZAMANLAYICIYI SIFIRLA
+                resetAutoPlay();
                 setTimeout(() => {
                     updatePreview('prev');
                     updatePreview('next');
@@ -148,39 +162,35 @@
             });
         }
 
-        // Pagination dots
         paginationDots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 console.log(`Pagination dot ${index} clicked`);
                 goToSlide(index);
-                resetAutoPlay(); // ZAMANLAYICIYI SIFIRLA
+                resetAutoPlay();
             });
         });
 
-        // Keyboard navigation
         document.addEventListener('keydown', handleKeyboard);
-
-        // Touch/Swipe events
         slider.addEventListener('touchstart', handleTouchStart, { passive: true });
         slider.addEventListener('touchmove', handleTouchMove, { passive: true });
         slider.addEventListener('touchend', handleTouchEnd);
-
-        // Mouse events for desktop swipe simulation
         slider.addEventListener('mousedown', handleMouseDown);
         slider.addEventListener('mousemove', handleMouseMove);
         slider.addEventListener('mouseup', handleMouseUp);
         slider.addEventListener('mouseleave', handleMouseUp);
 
-        // Pause on hover (if enabled)
         if (config.pauseOnHover) {
-            slider.addEventListener('mouseenter', pauseAutoPlay);
+            // *** GÜNCELLENMİŞ MOUSEENTER VE MOUSELEAVE OLAYLARI ***
+            slider.addEventListener('mouseenter', () => {
+                // Sadece sayfa kaydırılmıyorsa duraklat
+                if (!isScrolling) {
+                    pauseAutoPlay();
+                }
+            });
             slider.addEventListener('mouseleave', resumeAutoPlay);
         }
 
-        // Window resize
         window.addEventListener('resize', handleResize);
-
-        // Visibility change (pause when tab is not active)
         document.addEventListener('visibilitychange', handleVisibilityChange);
     }
 
@@ -203,10 +213,8 @@
 
         console.log(`Going to slide ${index}`);
         isTransitioning = true;
-
         const previousSlide = currentSlide;
         currentSlide = index;
-
         slides[previousSlide].classList.remove('active');
 
         setTimeout(() => {
@@ -218,26 +226,14 @@
         }, 50);
 
         updatePagination();
-        
-        // Sadece progress bar'ı sıfırla, autoplay timer'ı değil.
         resetProgress();
     }
 
     function setupNavigationPreviews() {
         console.log('Setting up navigation previews');
-
-        if (!prevPreview || !nextPreview) {
-            console.log('Preview elements not found');
-            return;
-        }
-
-        if (prevBtn) {
-            prevBtn.addEventListener('mouseenter', () => updatePreview('prev'));
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('mouseenter', () => updatePreview('next'));
-        }
+        if (!prevPreview || !nextPreview) return;
+        if (prevBtn) prevBtn.addEventListener('mouseenter', () => updatePreview('prev'));
+        if (nextBtn) nextBtn.addEventListener('mouseenter', () => updatePreview('next'));
     }
 
     function updatePreview(direction) {
@@ -246,7 +242,6 @@
             (currentSlide === 0 ? totalSlides - 1 : currentSlide - 1) :
             (currentSlide + 1) % totalSlides;
         const targetSlide = slides[targetSlideIndex];
-
         if (!targetSlide || !previewElement) return;
 
         const bgImage = targetSlide.getAttribute('data-bg');
@@ -267,8 +262,6 @@
         if (previewSubtitle) {
             previewSubtitle.textContent = subtitle || 'Nova Arsa Projesi';
         }
-
-        console.log(`Updated ${direction} preview for slide ${targetSlideIndex}`);
     }
 
     function resetSlideAnimations(slide) {
@@ -287,8 +280,7 @@
     }
 
     function startAutoPlay() {
-        if (totalSlides <= 1 || autoPlayTimer) return; // Zaten çalışan bir timer varsa yenisini başlatma
-
+        if (totalSlides <= 1 || autoPlayTimer) return;
         console.log('Starting autoplay');
         autoPlayTimer = setInterval(() => {
             if (!isTransitioning && !document.hidden) {
@@ -300,7 +292,7 @@
             startProgress();
         }
     }
-
+    
     function pauseAutoPlay() {
         console.log('Pausing autoplay');
         clearInterval(autoPlayTimer);
@@ -318,17 +310,14 @@
     function resetAutoPlay() {
         pauseAutoPlay();
         if (totalSlides > 1) {
-            // Küçük bir gecikme ile başlatarak olası çakışmaları önle
             setTimeout(startAutoPlay, 100);
         }
     }
 
     function startProgress() {
         if (!progressBar) return;
-
         progressBar.style.transition = 'none';
         progressBar.style.width = '0%';
-
         setTimeout(() => {
             progressBar.style.transition = `width ${config.autoPlayDelay}ms linear`;
             progressBar.style.width = '100%';
@@ -349,7 +338,6 @@
         progressBar.style.transition = 'none';
         progressBar.style.width = '0%';
         if (config.progressBarAnimation && totalSlides > 1 && autoPlayTimer) {
-             // Sadece çalışan bir autoplay varsa progress bar'ı tekrar başlat
             setTimeout(startProgress, 100);
         }
     }
@@ -368,7 +356,6 @@
 
     function handleTouchEnd(e) {
         if (!touchStartX || !touchEndX) return;
-
         const deltaX = touchEndX - touchStartX;
         const deltaY = touchEndY - touchStartY;
         const absDeltaX = Math.abs(deltaX);
@@ -405,12 +392,11 @@
     }
 
     function handleMouseMove(e) {
-        // Bu fonksiyonu boş bırakabiliriz, eylem mouseup'ta olacak
+        // Empty
     }
 
     function handleMouseUp(e) {
         if (!isMouseDown) return;
-        
         isMouseDown = false;
         slider.style.cursor = '';
         mouseEndX = e.clientX;
@@ -425,16 +411,15 @@
             }
             swiped = true;
         }
-        
+
         if (swiped) {
             resetAutoPlay();
         } else {
             resumeAutoPlay();
         }
-        
         mouseStartX = mouseEndX = 0;
     }
-    
+
     function handleKeyboard(e) {
         let userInteracted = false;
         switch (e.key) {
@@ -457,7 +442,7 @@
                 pauseAutoPlay();
                 break;
         }
-        if(userInteracted){
+        if (userInteracted) {
             resetAutoPlay();
         }
     }
