@@ -1,0 +1,12 @@
+<krpano>
+	<preview url="pano5.tiles/preview.jpg"/>
+	<image prealign="0|0.0|0">
+		<cube url="pano5.tiles/%s/l%l/%0v/l%l_%s_%0v_%0h.jpg" multires="512,1024,2048,3840,7680"/>
+	</image>
+	<hotspot name="hv1" style="havaspot" sapma="-99.97" ath="-42.3914172002077" atv="-2.50521920668058" ongit="tn4"/>
+	<hotspot name="hv2" style="havaspot" sapma="-52.09" ath="-110.915383284305" atv="-2.94363256784969" ongit="tn2"/>
+	<hotspot name="hv3" style="havaspot" sapma="126.72" ath="-82.5090846167157" atv="-2.81837160751564" ongit="tn3"/>
+	<hotspot name="h1" style="hotts" rotate="90" sapma="177.48" ath="-79.3920595533499" atv="16.6153846153846" ongit="tn6"/>
+	<hotspot name="h2" style="hotts" rotate="90" sapma="55.49" ath="-71.9625195210828" atv="33.8324607329843" ongit="tn7"/>
+	<hotspot name="h3" style="hotts" rotate="90" sapma="-10.65" ath="-63.0428482715794" atv="15.1217988757027" ongit="tn8"/>
+</krpano>
