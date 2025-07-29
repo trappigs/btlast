@@ -113,8 +113,9 @@
 }
 
 .btn-primary:hover {
-    background-color: #0b5ed7;
-    border-color: #0b5ed7;
+    background-color: white;
+    color: #045129;
+    border-color: #045129;
 }
 
 /* "Form Doldurun" Butonu (Yeşil, Kenarlıklı) */

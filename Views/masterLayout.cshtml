@@ -2,6 +2,19 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
     Layout = null;
+     // --- SEO ve Sosyal Medya Değişkenleri ---
+    // SEO Başlığı: Önce özel alana bakar, yoksa sayfa başlığını alır.
+    var seoTitle = Model.HasValue("seoTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("seoTitle"))
+        ? Model.Value<string>("seoTitle")
+        : (ViewBag.Title ?? Model.Name);
+
+    // SEO Açıklaması: Özel alandan alır.
+    var seoDescription = Model.Value<string>("seoDescription");
+
+    // Paylaşım Görseli (Open Graph): Özel alana bakar, yoksa projenin öne çıkan görselini alır, o da yoksa varsayılan bir logo kullanır.
+    var ogImage = Model.Value<IPublishedContent>("ogImage")?.Url(mode: UrlMode.Absolute) ?? 
+                  Model.Value<IPublishedContent>("featuredImage")?.Url(mode: UrlMode.Absolute) ?? 
+                  "/media/lq2jzklk/download-1.svg"; // Varsayılan logo yolu
 }
 
 <!DOCTYPE html>
@@ -26,6 +39,9 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Erica+One&family=Manrope:wght@200..800&family=Sora:wght@278&display=swap" rel="stylesheet">
     @await RenderSectionAsync("Scripts", required: false)
+
+
+    
 </head>
 <body class="bg-beige">
 

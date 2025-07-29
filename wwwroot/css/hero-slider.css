@@ -173,7 +173,7 @@
     left: 100%;
 }
 
-.btn-primary {
+.hero-slider.btn-primary {
     background: linear-gradient(135deg, #7ba05b, #89b3a8);
     color: white;
     box-shadow: 0 4px 15px rgba(123, 160, 91, 0.3);
