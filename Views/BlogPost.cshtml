@@ -3,6 +3,18 @@
     Layout = "masterLayout.cshtml";
     ViewBag.Title = Model.Value("pageTitle");
 
+//
+    var author = Model.HasValue("author") ? Model.Value<string>("author") : "Bereketli Topraklar";
+    var excerpt = Model.Value<string>("excerpt");
+    var pageTitle = Model.HasValue("pageTitle") ? Model.Value<string>("pageTitle") : Model.Name;
+    var metaDescription = Model.HasValue("metaDescription") ? Model.Value<string>("metaDescription") : excerpt;
+
+        // URL oluşturma - düzeltilmiş
+    var currentUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}";
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+//
+
+
     var featuredImage = Model.Value<IPublishedContent>("featuredImage");
 
     var postDate = Model.Value<DateTime>("postDate");
@@ -138,3 +150,67 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* --- START: CORRECTED JSON-LD SCRIPT --- *@
+<script type="application/ld+json">
+{
+ "@@context": "https://schema.org",
+ "@@type": "Article",
+ "headline": "@Html.Raw(pageTitle?.Replace("\"", "\\\""))",
+ "description": "@Html.Raw(metaDescription?.Replace("\"", "\\\""))",
+ @if (featuredImage != null)
+ {
+   <text>"image": [
+     "@featuredImage.Url()?width=1200&height=630&quality=85",
+     "@featuredImage.Url()?width=800&height=600&quality=85",
+     "@featuredImage.Url()?width=400&height=300&quality=85"
+   ],</text>
+ }
+ "author": {
+   "@@type": "Person",
+   "name": "@Html.Raw(author?.Replace("\"", "\\\""))",
+   "url": "@siteUrl"
+ },
+ "publisher": {
+   "@@type": "Organization",
+   "name": "Bereketli Topraklar",
+   "url": "@siteUrl",
+   "logo": {
+     "@@type": "ImageObject",
+     "url": "@siteUrl/media/lq2jzklk/download-1.svg",
+     "width": 180,
+     "height": 45
+   }
+ },
+ "datePublished": "@postDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")",
+ "dateModified": "@Model.UpdateDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")",
+ "mainEntityOfPage": {
+   "@@type": "WebPage",
+   "@@id": "@currentUrl"
+ },
+ "articleSection": "Blog",
+ "keywords": "@Html.Raw((Model.HasValue("tags") ? Model.Value<string>("tags") : "emlak, arsa, villa, yatırım")?.Replace("\"", "\\\""))",
+ "wordCount": @(Model.HasValue("postContent") ? (Model.Value<string>("postContent")?.Length ?? 500) / 5 : 500),
+ "inLanguage": "tr-TR",
+ "isAccessibleForFree": true,
+ "about": {
+   "@@type": "Organization",
+   "name": "Bereketli Topraklar"
+ }
+}
+</script>
+@* --- END: CORRECTED JSON-LD SCRIPT --- *@
+

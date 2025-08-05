@@ -1,8 +1,9 @@
-/* Hero Section */
+
+/* Hero Section - Efekt kaldırılmış */
 .project-hero {
     height: 60vh;
-    background: linear-gradient(135deg, rgba(46, 125, 50, 0.8), rgba(76, 175, 80, 0.6)), 
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f0f8f0" width="1200" height="600"/><polygon fill="%23e8f5e8" points="0,300 300,200 600,350 900,150 1200,250 1200,600 0,600"/></svg>');
+    /* Varsayılan arka plan (efekt olmadan) */
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f0f8f0" width="1200" height="600"/><polygon fill="%23e8f5e8" points="0,300 300,200 600,350 900,150 1200,250 1200,600 0,600"/></svg>');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -14,6 +15,14 @@
     text-align: center;
 }
 
+/* Eğer dinamik görsel varsa, bu stil uygulanacak (efekt olmadan) */
+.project-hero[style*="background-image"] {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Hero içeriği için text-shadow (okunabilirlik için) */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -419,6 +428,10 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .project-hero {
+        background-attachment: scroll;
+        height: 50vh;
+    }
     .container {
         max-width: 100% !important;
         padding: 0 1rem;

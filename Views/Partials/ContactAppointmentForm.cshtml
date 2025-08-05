@@ -125,7 +125,7 @@
                     <input type="checkbox" id="kvkkConsent" name="KvkkConsent" value="true" class="form-checkbox" required />
                     <span class="checkmark"></span>
                     <span class="checkbox-text">
-                        Sitenizde yer alan <a href="#" class="kvkk-link">Aydınlatma Metni'ni</a> okudum ve kabul ediyorum. *
+                        Sitenizde yer alan <a href="/kvkk-aydinlatma-metni/" target="_blank" rel="noopener noreferrer" class="kvkk-link">Aydınlatma Metni'ni</a> okudum ve kabul ediyorum. *
                     </span>
                 </label>
                 <label class="checkbox-label">
@@ -187,33 +187,4 @@ function closeKvkkModal() {
     document.getElementById('kvkkModal').classList.remove('show');
     document.body.style.overflow = 'auto';
 }
-
-// KVKK Link Click
-document.addEventListener('DOMContentLoaded', function() {
-    const kvkkLink = document.querySelector('.kvkk-link');
-    if (kvkkLink) {
-        kvkkLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            openKvkkModal();
-        });
-    }
-    
-    const closeBtn = document.querySelector('.kvkk-modal-close');
-    if(closeBtn) {
-        closeBtn.addEventListener('click', closeKvkkModal);
-    }
-
-    const kvkkModal = document.getElementById('kvkkModal');
-    kvkkModal.addEventListener('click', function(e) {
-        if (e.target === kvkkModal) {
-            closeKvkkModal();
-        }
-    });
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && kvkkModal.classList.contains('show')) {
-            closeKvkkModal();
-        }
-    });
-});
 </script>

@@ -735,3 +735,61 @@
     /* Alt çizgiyi ortaya kaydır ve -45 derece döndür */
     transform: translateY(-8px) rotate(-45deg);
 }
+
+
+
+
+/* YENİ KOD - 16" ve altı laptoplar için: */
+@media (min-width: 769px) and (max-width: 1600px) {
+    .modern-nav {
+        padding: 20px 0; /* 15px → 20px */
+    }
+
+    .nav-container {
+        min-height: 75px; /* 65px → 75px */
+    }
+
+    .logo-image {
+        height: 50px; /* 45px → 50px */
+    }
+
+    .nav-menu {
+        gap: 40px; /* 35px → 40px */
+    }
+
+    .nav-item {
+        font-size: 15px; /* 14px → 15px */
+        padding: 10px 0; /* 8px → 10px */
+    }
+
+    .phone-link {
+        font-size: 17px; /* 16px → 17px */
+        padding: 14px 22px; /* 12px 20px → 14px 22px */
+    }
+}
+
+
+/* YENİ KOD - 16" ve altı için oval navbar ayarı: */
+@media (min-width: 769px) and (max-width: 1600px) {
+    .modern-nav:not(.scrolled) {
+        top: 15px; /* 20px → 15px */
+        left: 200px; /* 275px → 200px */
+        right: 200px; /* 275px → 200px */
+    }
+}
+
+/* YENİ KOD - 16" ve altı için call button: */
+@media (min-width: 769px) and (max-width: 1600px) {
+    .fixed-call-btn {
+        top: 90px; /* 100px → 90px */
+        font-size: 1.1rem; /* 1rem → 1.1rem */
+        padding: 20px 28px; /* 18px 25px → 20px 28px */
+    }
+}
+
+/* YENİ KOD - 16" ve altı için scroll sonrası padding: */
+@media (min-width: 769px) and (max-width: 1600px) {
+    body.scrolled-nav {
+        padding-top: 105px; /* 95px → 105px */
+    }
+}

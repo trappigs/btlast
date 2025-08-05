@@ -8,7 +8,7 @@
 @* ProjectCards partial'ını çağırırken "IsProjectListPage" parametresini true olarak gönderiyoruz *@
 @await Html.PartialAsync("ProjectCards", Model, new ViewDataDictionary(ViewData) { { "IsProjectListPage", true } })
 
-
+@await Html.PartialAsync("schemaScript")
 @*
     Yalnızca bu sayfaya özel bir stil ekleyerek ProjectCards'ın
     üst kısmına fazladan boşluk ekliyoruz.
@@ -25,3 +25,4 @@
         padding-top: 140px !important; 
     }
 </style>
+

@@ -1,0 +1,13 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<HataSayfasi>
+@{
+    // En önemli adım: Ana yerleşim planını (layout) belirtiyoruz.
+    Layout = "masterLayout.cshtml";
+}
+
+<div class="container my-5 py-5 text-center">
+    <h1 class="display-1 fw-bold">@Model.Value("sayfaBasligi", fallback: Fallback.ToDefaultValue, defaultValue: "404 - Sayfa Bulunamadı")</h1>
+    <div class="lead">
+        @Model.Value("sayfaIcerigi", fallback: Fallback.ToDefaultValue, defaultValue: "<p>Aradığınız sayfa kaldırılmış veya adresi değiştirilmiş olabilir.</p><p><a href=\"/\" class=\"btn btn-primary mt-3\">Ana Sayfaya Dön</a></p>")
+    </div>
+</div>

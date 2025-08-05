@@ -7,10 +7,10 @@
                      .OrderByDescending(x => x.Value<DateTime>("postDate"));
 }
 <link rel="stylesheet" href="/css/contact-page.css">
-
+@await Html.PartialAsync("schemaScript")
 <section class="contact-hero"> @* Sınıfı contact-hero olarak değiştirdik *@
     <div class="container text-center">
-        <span class="contact-hero-subtitle">BLOG</span> @* Yeni alt başlık eklendi *@
+        <span class="contact-hero-subtitle">@Model.Value("altBaslik")</span> @* Yeni alt başlık eklendi *@
         <h1 class="contact-hero-title">@Model.Value("pageTitle")</h1> @* Sınıf contact-hero-title olarak değiştirildi *@
         <p class="contact-hero-text">@Model.Value("pageDescription")</p> @* Sınıf contact-hero-text olarak değiştirildi *@
     </div>
