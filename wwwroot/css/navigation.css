@@ -753,7 +753,7 @@
     }
 }
 
-/* --- 16" VE ALTI LAPTOPLAR İÇİN (MEVCUT) --- */
+/* --- 16" VE ALTI LAPTOPLAR İÇİN (GÜNCELLENDİ) --- */
 @media (min-width: 769px) and (max-width: 1600px) {
     .modern-nav {
         padding: 20px 0;
@@ -768,7 +768,8 @@
     }
 
     .nav-menu {
-        gap: 40px;
+        /* DEĞİŞİKLİK: Menü öğeleri arasındaki boşluk azaltıldı (40px -> 25px) */
+        gap: 15px; 
     }
 
     .nav-item {
@@ -780,19 +781,37 @@
         font-size: 17px;
         padding: 14px 22px;
     }
+    
+    /* GÜNCELLENEN BÖLÜM */
+    .modern-nav:not(.scrolled) {
+        top: 15px;
+        /* DEĞİŞİKLİK: Kenar boşlukları azaltılarak navbar genişletildi (200px -> 80px) */
+        left: 80px;
+        right: 80px;
+    }
+
+    .fixed-call-btn {
+        top: 90px;
+        font-size: 1.1rem;
+        padding: 20px 28px;
+    }
+
+    body.scrolled-nav {
+        padding-top: 105px;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1600px) {
     .modern-nav:not(.scrolled) {
         top: 15px;
-        left: 200px;
-        right: 200px;
+        left: 150px;
+        right: 150px;
     }
 }
 
 @media (min-width: 769px) and (max-width: 1600px) {
     .fixed-call-btn {
-        top: 90px;
+        top: 200px;
         font-size: 1.1rem;
         padding: 20px 28px;
     }
