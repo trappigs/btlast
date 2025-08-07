@@ -43,7 +43,7 @@
                         <a href="@post.Url()" class="blog-card-title">@post.Name</a>
                         @if (!string.IsNullOrWhiteSpace(excerpt))
                         {
-                            <p class="blog-card-excerpt">@excerpt</p>
+                            @Html.Raw(excerpt)
                         }
                         <div class="blog-card-author">
                             Yazar: @(post.HasValue("author") ? post.Value("author") : "Bereketli Topraklar")

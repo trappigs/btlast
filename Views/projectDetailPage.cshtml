@@ -12,19 +12,19 @@
 
     // Hero background image
     // Hero background image - projectImage alanından çekilecek
-var heroBackground = "";
-if (Model.HasValue("projectImage"))
-{
-    var heroBgImage = Model.Value<IPublishedContent>("projectImage");
-    heroBackground = heroBgImage.Url();
-}
+    var heroBackground = "";
+    if (Model.HasValue("projectImage"))
+    {
+        var heroBgImage = Model.Value<IPublishedContent>("projectImage");
+        heroBackground = heroBgImage.Url();
+    }
 
-// Alternatif olarak heroBackground alanı da kontrol edilebilir (yedek)
-if (string.IsNullOrEmpty(heroBackground) && Model.HasValue("heroBackground"))
-{
-    var heroBgImage = Model.Value<IPublishedContent>("heroBackground");
-    heroBackground = heroBgImage.Url();
-}
+    // Alternatif olarak heroBackground alanı da kontrol edilebilir (yedek)
+    if (string.IsNullOrEmpty(heroBackground) && Model.HasValue("heroBackground"))
+    {
+        var heroBgImage = Model.Value<IPublishedContent>("heroBackground");
+        heroBackground = heroBgImage.Url();
+    }
 
     // --- YENİ EKLENEN KOD BAŞLANGICI ---
     // Slugify fonksiyonu (ProjectCards.cshtml'den kopyalandı)
@@ -68,11 +68,104 @@ if (string.IsNullOrEmpty(heroBackground) && Model.HasValue("heroBackground"))
     // Mevcut proje hariç diğer projeleri filtrele ve rastgele 6 tane seç
     var otherProjects = allProjects.Where(p => p.Name != currentProjectName).OrderBy(x => Guid.NewGuid()).Take(6);
     // --- YENİ EKLENEN KOD SONU ---
+
+    // --- YAPI_LANDIRILMIŞ VERİ İÇİN GEREKLİ DEĞİŞKENLER ---
+    // Temel Proje Bilgileri
+    var projectName = Model.Value<string>("projectName")?.Replace("\"", "\\\"");
+    var projectDescription = Model.Value<string>("projectDescription")?.StripHtml().ToString().Replace("\"", "\\\"");
+
+    // Proje Görselleri
+    var imageList = new List<string>();
+    var mainImage = Model.Value<IPublishedContent>("projectImage");
+    if (mainImage != null)
+    {
+        imageList.Add($"\"{mainImage.Url(mode: UrlMode.Absolute)}\"");
+    }
+    var galleryImages = Model.Value<IEnumerable<IPublishedContent>>("projectGallery");
+    if (galleryImages != null)
+    {
+        foreach (var galleryImage in galleryImages.Where(i => i.ContentType.Alias != "video")) // Videoları hariç tut
+        {
+            imageList.Add($"\"{galleryImage.Url(mode: UrlMode.Absolute)}\"");
+        }
+    }
+
+    // Proje Özellikleri (İmarlı, Müstakil Tapulu vb.)
+    var featuresList = new List<string>();
+    // Bu özelliklerin sabit olduğunu varsayarak manuel ekliyoruz.
+    // Eğer bunlar da CMS'ten geliyorsa, döngü ile eklenebilir.
+    featuresList.Add(@"{ ""@type"": ""PropertyValue"", ""name"": ""İmar Durumu"", ""value"": ""İmarlı, Altyapısı Tamamlanmış"" }");
+    featuresList.Add(@"{ ""@type"": ""PropertyValue"", ""name"": ""Tapu Durumu"", ""value"": ""Müstakil Tapulu"" }");
+    featuresList.Add(@"{ ""@type"": ""PropertyValue"", ""name"": ""Teslimat"", ""value"": ""Hemen Teslim"" }");
+    featuresList.Add(@"{ ""@type"": ""PropertyValue"", ""name"": ""Ödeme Planı"", ""value"": ""24 Aya Varan Taksit"" }");
+
+    // Proje Videosu
+    var videoUrl = "";
+    if (galleryImages != null)
+    {
+        var videoItem = galleryImages.FirstOrDefault(item => item.ContentType.Alias == "video" || item.Url().EndsWith(".mp4"));
+        if (videoItem != null)
+        {
+            videoUrl = videoItem.Url(mode: UrlMode.Absolute);
+        }
+    }
 }
+
+@* --- SEO İÇİN YAPILANDIRILMIŞ VERİ (JSON-LD) - ÜRÜN ŞEMASI --- *@
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "Product",
+    "name": "@projectName",
+    "description": "@Html.Raw(projectDescription)",
+    "url": "@currentUrl",
+    "sku": "@Model.Id", // Her proje için benzersiz bir kod olarak Umbraco ID'sini kullanıyoruz.
+    "image": [@Html.Raw(string.Join(",", imageList))],
+    "brand": {
+        "@@type": "Organization",
+        "name": "Bereketli Topraklar"
+    },
+    @if (!string.IsNullOrEmpty(videoUrl))
+    {
+        <text>
+        "video": {
+            "@@type": "VideoObject",
+            "name": "@(projectName) Tanıtım Videosu",
+            "description": "@Html.Raw(projectDescription)",
+            "thumbnailUrl": "@(mainImage?.Url(mode: UrlMode.Absolute))",
+            "contentUrl": "@videoUrl",
+            "uploadDate": "@Model.CreateDate.ToString("yyyy-MM-dd")"
+        },
+        </text>
+    }
+    "offers": {
+        "@@type": "Offer",
+        "url": "@currentUrl",
+        "priceCurrency": "TRY",
+        "availability": "https://schema.org/InStock", // Proje satışta olduğu sürece
+        "seller": {
+            "@@type": "Organization",
+            "name": "Bereketli Topraklar",
+            "url": "@siteUrl"
+        }
+    },
+    "additionalProperty": [
+        @Html.Raw(string.Join(",", featuresList))
+    ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
 <link rel="stylesheet" href="/css/projectDetail.css">
 <link rel="stylesheet" href="/css/project-cards.css">
-
-@await Html.PartialAsync("schemaScript")
 
 @section Scripts {
     @if(Model.HasValue("virtualTourPath") && !string.IsNullOrEmpty(Model.Value<string>("virtualTourPath")))
@@ -267,15 +360,16 @@ if (string.IsNullOrEmpty(heroBackground) && Model.HasValue("heroBackground"))
                             @foreach (var item in sortedItems)
                             {
                                 var isVideo = item.ContentType.Alias == "video" ||
-                                              item.Url().EndsWith(".mp4") || 
-                                             item.Url().EndsWith(".webm") || 
-                                             item.Url().EndsWith(".ogg") ||
-                                             item.Url().EndsWith(".mov") ||
-                                             item.Url().EndsWith(".avi");
+                                              item.Url().EndsWith(".mp4") ||
+                                              item.Url().EndsWith(".webm") ||
+                                              item.Url().EndsWith(".ogg") ||
+                                              item.Url().EndsWith(".mov") ||
+                                              item.Url().EndsWith(".avi");
                                 
                                 <div class="gallery-item @(isVideo ? "video-item" : "")" data-index="@currentIndex" onclick="changeMainMedia('@item.Url()', '@Model.Value("projectName")', @currentIndex, @isVideo.ToString().ToLower())">
                                     @if (isVideo)
                                     {
+                                        // Video içeriği olduğu gibi kalıyor...
                                         <video class="gallery-video" muted playsinline>
                                             <source src="@item.Url()" type="video/mp4">
                                         </video>
@@ -285,7 +379,16 @@ if (string.IsNullOrEmpty(heroBackground) && Model.HasValue("heroBackground"))
                                     }
                                     else
                                     {
-                                        <img src="@item.Url()" alt="@Model.Value("projectName")" class="gallery-image">
+                                            var altText = item.Value<string>("umbracoAltText");
+                                            
+                                            if (string.IsNullOrWhiteSpace(altText))
+                                            {
+                                                altText = item.Name;
+                                            }
+                                        
+                                        
+                                        // 3. Temiz ve basit değişkeni alt etiketine yazdır.
+                                        <img src="@item.Url()" alt="@altText" class="gallery-image">
                                     }
                                 </div>
                                 currentIndex++;

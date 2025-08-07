@@ -3,30 +3,33 @@
 @{
     Layout = "masterLayout.cshtml";
     ViewBag.Title = "Hakkımızda";
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
 }
 
 <link rel="stylesheet" href="/css/about.css">
+
+
 @await Html.PartialAsync("schemaScript")
+
+
 <!-- Hero Section - We Build For People -->
 <section class="about-hero">
     <div class="hero-container">
         <div class="hero-content">
             <div class="hero-text">
                 <span class="hero-subtitle">HAKKIMIZDA</span>
-                <h1 class="hero-title">İnsanlar İçin İnşa Ediyoruz</h1>
+                <h1 class="hero-title">İnsanlar İçin Değer Yaratıyoruz</h1>
                 
                 <div class="hero-description">
                     <p>
-                        Bu alan, işletme veya marka hakkında daha fazla bilgi paylaşmak için bir alandır. 
-                        Arkasında kim olduğunu, ne yaptığını ve bu sitenin sunduklarını kısaca açıklayın. 
-                        Bu, işletmenin arkasındaki hikayeyi anlatma veya sunduğu özel bir hizmeti ya da 
-                        ürünü tanımlama fırsatıdır.
+                        Bereketli Topraklar olarak bizim mottomuz, yapılar inşa etmek değil, üzerine hayallerin inşa edileceği sağlam zeminler sunmaktır. Biz, insanların gelecekteki yuvalarını kurabilmeleri için onlara en değerli başlangıç noktasını, yani toprağın kendisini hazırlıyoruz.
+                        Hikayemiz, bir arsanın sadece bir yatırım aracı değil, aynı zamanda nesiller boyu sürecek bir mirasın ve huzurun temeli olduğu inancıyla başladı. Bu inançla, Türkiye’nin en değerli ve en verimli arazilerini titizlikle seçiyor; altyapısı tamamlanmış, yasal tüm süreçleri şeffaflıkla yönetilmiş, üzerine hemen hayalinizdeki yapıyı kurabileceğiniz imarlı arsalar sunuyoruz.
+                        Sunduğumuz her bir parsel, sadece metrekarelerden ibaret değil; ailenizin geleceğinin kök salacağı, umutlarınızın yeşereceği bir başlangıç noktasıdır. 
                     </p>
                     
                     <p>
-                        Yazının kendisi için konuşmasına izin verin. Web sitesi boyunca tutarlı bir 
-                        ton ve ses tutarak marka imajına sadık kalın ve ziyaretçilere şirketin 
-                        değerleri ve kişiliğinin tadını verin.
+                        Doğaya saygılı, sürdürülebilir ve insana değer katan bir anlayışla, size sadece kârlı bir yatırım değil, aynı zamanda aileniz için bırakabileceğiniz en kalıcı mirasın zeminini vaat ediyoruz.
+                        Bereketli Topraklar, hayallerinizin temelini atacağınız güvenilir bir yol arkadaşınızdır. Gelin, geleceğinize birlikte zemin hazırlayalım.
                     </p>
                 </div>
             </div>
@@ -44,27 +47,28 @@
         <div class="service-card">
             <h3 class="card-title">HİZMETLERİMİZ</h3>
             <p class="card-description">
-                Bu alan, ziyaretçileri işletme veya markaya tanıtmak için bir alandır. 
-                Arkasında kim olduğunu, ne yaptığını ve onu benzersiz kılan şeyleri kısaca açıklayın. 
-                Temel değerlerini ve bu sitenin sunduklarını paylaşın.
+                Biz sadece arsa satışı yapmıyoruz; sizin için en doğru yatırımın temelini atıyoruz. 
+                Potansiyeli yüksek arazileri belirliyor, detaylı fizibilite çalışmaları yapıyor, hukuki ve imar süreçlerini titizlikle yönetiyoruz.
+                Size, sadece tapusunu alıp hayallerinize başlamanın kalacağı, anahtar teslim yatırım fırsatları sunuyoruz.
             </p>
         </div>
         
         <div class="service-card">
             <h3 class="card-title">DENEYİMİMİZ</h3>
             <p class="card-description">
-                Bu alan, ziyaretçileri işletme veya markaya tanıtmak için bir alandır. 
-                Arkasında kim olduğunu, ne yaptığını ve onu benzersiz kılan şeyleri kısaca açıklayın. 
-                Temel değerlerini ve bu sitenin sunduklarını paylaşın.
+                Toprağın dilini anlayan; gayrimenkul, ziraat ve hukuk alanlarında uzmanlaşmış bir ekibe sahibiz. 
+                Yıllara dayanan sektör tecrübemizle, bir arazinin bugünkü durumunu değil, gelecekteki potansiyelini görüyoruz. 
+                Bugüne dek yüzlerce yatırımcının doğru kararlar almasına rehberlik eden deneyimimiz, en büyük güvencenizdir.
             </p>
         </div>
         
         <div class="service-card">
             <h3 class="card-title">GÜVENİLİRLİK</h3>
             <p class="card-description">
-                Bu alan, ziyaretçileri işletme veya markaya tanıtmak için bir alandır. 
-                Arkasında kim olduğunu, ne yaptığını ve onu benzersiz kılan şeyleri kısaca açıklayın. 
-                Temel değerlerini ve bu sitenin sunduklarını paylaşın.
+                Arsa yatırımının en önemli temelinin güven olduğunu biliyoruz. 
+                Bu yüzden tüm süreçlerimizde tam şeffaflık ilkesiyle hareket ediyoruz. 
+                Tüm projelerimiz, hukuki güvence altında, pürüzsüz bir tapu devri vaadiyle sunulur. 
+                Bizim için siz bir müşteri değil, geleceğe birlikte yürüdüğümüz bir yatırım ortağısınız.
             </p>
         </div>
     </div>
@@ -82,11 +86,10 @@
                     <span>★ ★ ★ ★ ★</span>
                 </div>
                 <p class="testimonial-text">
-                    Bu alan, işletmenin müşterilerinden veya müşterilerinden birinin incelemesini 
-                    paylaşmak için bir alandır.
+                    Sıradan emlakçı şişirmelerini yapmadan, abartmadan ve azaltmadan sattıkları ürünü olduğu gibi anlatıp yerinde gösteriyorlar. Piyasaya göre makul fiyatlarda herkesin bütçesine göre muhtelif arsalar var. Ben hiç sorun yaşamadan Yenişehir'de arsa sahibi oldum. Semih ve Bilal beye ilgi ve sabırlar ı için teşekkür ediyorum.
                 </p>
                 <div class="testimonial-author">
-                    <strong>MEHMET ÖZKAN</strong>
+                    <strong>MURAT ÇELİK</strong>
                     <span>İstanbul, Türkiye</span>
                 </div>
             </div>
@@ -96,11 +99,10 @@
                     <span>★ ★ ★ ★ ★</span>
                 </div>
                 <p class="testimonial-text">
-                    Bu alan, işletmenin müşterilerinden veya müşterilerinden birinin incelemesini 
-                    paylaşmak için bir alandır.
+                    Merhabalar. Yaklaşık bir yıldan bu yana sahil kasabalarının köylerinde bir arsa arayış içerisindeydim. Bu arada Bereketi Topraklar firması ile tanıştım tam hayal ettiğim arsayı onların vesilesiyle aldım. Bütçemi biraz aşmasına rağmen firma sahibi Bilal Aktaş Bey ödemelerde kolaylık sağladı, kendisine çok teşekkür ederim. Tüm işlemler sırasında merak ettiğim bütün konuları en açık bir şekilde ve dürüstçe aydınlattığı için, özellikle çalışanlardan Semih Aygün kardeşimize Çok teşekkür ederim. Bu tür yatırım yapmak isteyen herkese önce Bereketli Topraklar'a danışmasını tavsiye ederim
                 </p>
                 <div class="testimonial-author">
-                    <strong>AYŞE YILMAZ</strong>
+                    <strong>NURİ İMAMOĞLU</strong>
                     <span>Ankara, Türkiye</span>
                 </div>
             </div>
@@ -110,11 +112,10 @@
                     <span>★ ★ ★ ★ ★</span>
                 </div>
                 <p class="testimonial-text">
-                    Bu alan, işletmenin müşterilerinden veya müşterilerinden birinin incelemesini 
-                    paylaşmak için bir alandır.
+                    Babamla birlikte Bereketli Topraklar sayesinde Susurluk Söve’den arsa sahibi olduk. Bizlerle ilgilenen  Hakan Bey ve Hayati Bey’e emeklerinden dolayı, Bilal Bey’e de misafirperverliğinden dolayı çok teşekkür ederiz. Başarılar ve kolaylıklar diliyorum. Bereketi bol olsun.
                 </p>
                 <div class="testimonial-author">
-                    <strong>ALİ KAYA</strong>
+                    <strong>Ebru Öztürk</strong>
                     <span>İzmir, Türkiye</span>
                 </div>
             </div>
@@ -132,16 +133,11 @@
                 
                 <div class="mission-description">
                     <p>
-                        Bu alan, işletme hakkında daha fazla bilgi paylaşmak için bir alandır: 
-                        arkasında kim olduğu, ne yaptığı ve bu sitenin sunduklarını. Bu, işletmenin 
-                        arkasındaki hikayeyi anlatma veya sunduğu özel bir hizmeti ya da ürünü 
-                        tanımlama fırsatıdır.
+                        Misyonumuz, sadece bir arsa satışı yapmanın ötesinde, üzerine kurulacak yaşamlar için kalıcı değerler yaratmaktır. Bizim için "sürdürülebilir bir gelecek", toprağa, çevreye ve insana duyduğumuz derin saygıyla, nesiller boyu devam edecek bir refahın temellerini atmak anlamına gelir.
                     </p>
                     
                     <p>
-                        Yazının kendisi için konuşmasına izin verin. Web sitesi boyunca tutarlı bir 
-                        ton ve ses tutarak marka imajına sadık kalın ve ziyaretçilere şirketin 
-                        değerleri ve kişiliğinin tadını verin.
+                        Bu misyon doğrultusunda, her projemizi ekolojik dengeyi gözeten, doğal kaynakları koruyan ve yerel dokuyla uyumlu bir anlayışla geliştiriyoruz. Sunduğumuz her bir arazi, sadece yasal ve finansal açıdan güvenli bir yatırım değil, aynı zamanda geleceğin daha yeşil ve daha yaşanılır dünyasına yapılmış bir katkıdır. Yatırımcılarımıza sadece bir mülk değil, çocuklarına bırakabilecekleri değerli bir miras ve üzerine kendi hikayelerini yazabilecekleri temiz bir sayfa sunuyoruz.
                     </p>
                 </div>
             </div>
@@ -164,3 +160,5 @@
     }
 }
 </style>
+
+

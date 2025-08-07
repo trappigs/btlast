@@ -1,20 +1,20 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using System.Text.RegularExpressions
 @{
     Layout = "masterLayout.cshtml";
     ViewBag.Title = Model.Value("pageTitle");
 
 //
-    var author = Model.HasValue("author") ? Model.Value<string>("author") : "Bereketli Topraklar";
+    var author = Model.HasValue("articleAuthor") ? Model.Value<string>("articleAuthor") : "Bereketli Topraklar";
     var excerpt = Model.Value<string>("excerpt");
     var pageTitle = Model.HasValue("pageTitle") ? Model.Value<string>("pageTitle") : Model.Name;
     var metaDescription = Model.HasValue("metaDescription") ? Model.Value<string>("metaDescription") : excerpt;
+    var articleAuthor = Model.HasValue("articleAuthor") ? Model.Value<string>("articleAuthor") : "Bereketli Topraklar";
 
         // URL oluşturma - düzeltilmiş
     var currentUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}";
     var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
 //
-
-
     var featuredImage = Model.Value<IPublishedContent>("featuredImage");
 
     var postDate = Model.Value<DateTime>("postDate");
@@ -44,7 +44,7 @@
             <div class="blog-post-meta">
                 <span>@formattedDate</span>
                 &bull;
-                <span>Yazar: @(Model.HasValue("author") ? Model.Value("author") : "Bereketli Topraklar")</span>
+                <span>Yazar: @(Model.HasValue("articleAuthor") ? Model.Value("articleAuthor") : "Bereketli Topraklar")</span>
             </div>
         </header>
 
@@ -96,10 +96,10 @@
                                         <a href="@post.Url()" class="blog-card-title">@post.Name</a>
                                         @if (!string.IsNullOrWhiteSpace(otherExcerpt))
                                         {
-                                            <p class="blog-card-excerpt">@otherExcerpt</p>
+                                            @Html.Raw(otherExcerpt)
                                         }
                                         <div class="blog-card-author">
-                                            Yazar: @(post.HasValue("author") ? post.Value("author") : "Bereketli Topraklar")
+                                            Yazar: @(post.HasValue("articleAuthor") ? post.Value("articleAuthor") : "Bereketli Topraklar")
                                         </div>
                                     </div>
                                 </div>
@@ -153,24 +153,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 @* --- START: CORRECTED JSON-LD SCRIPT --- *@
 <script type="application/ld+json">
 {
  "@@context": "https://schema.org",
  "@@type": "Article",
  "headline": "@Html.Raw(pageTitle?.Replace("\"", "\\\""))",
- "description": "@Html.Raw(metaDescription?.Replace("\"", "\\\""))",
+ "description": "@Html.Raw(Regex.Replace(metaDescription ?? "", "<.*?>", string.Empty).Replace("\"", "\\\""))",
  @if (featuredImage != null)
  {
    <text>"image": [
@@ -181,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
  }
  "author": {
    "@@type": "Person",
-   "name": "@Html.Raw(author?.Replace("\"", "\\\""))",
+   "name": "@Html.Raw(articleAuthor?.Replace("\"", "\\\""))",
    "url": "@siteUrl"
  },
  "publisher": {

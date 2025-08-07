@@ -774,7 +774,7 @@
 
     .nav-item {
         font-size: 15px;
-        padding: 10px 0;
+        padding: 10px 10px;
     }
 
     .phone-link {
@@ -804,8 +804,8 @@
 @media (min-width: 769px) and (max-width: 1600px) {
     .modern-nav:not(.scrolled) {
         top: 15px;
-        left: 150px;
-        right: 150px;
+        left: 75px;
+        right: 75px;
     }
 }
 

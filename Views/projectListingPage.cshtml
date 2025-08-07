@@ -1,21 +1,72 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Web
 @{
     Layout = "masterLayout.cshtml";
     ViewBag.Title = "Projelerimiz";
+
+    // --- YAPI_LANDIRILMIŞ VERİ İÇİN HAZIRLIK ---
+    // Projeler, bu sayfanın altındaki görünür sayfalardır varsayımı
+    var projects = Model.Children().Where(x => x.IsVisible()).ToList();
+
+    var itemListElements = new List<string>();
+    var position = 1;
+
+    foreach (var project in projects)
+    {
+        var projectUrl = project.Url(mode: UrlMode.Absolute);
+        var projectName = project.Name.Replace("\"", "\\\"");
+        var projectDescription = project.Value<string>("metaDescription")?.Replace("\"", "\\\""); // Proje özeti alanı varsayımı
+        var projectImage = project.Value<IPublishedContent>("projectImage"); // Proje görseli alanı varsayımı
+        var projectImageUrl = projectImage?.Url(mode: UrlMode.Absolute);
+
+        // Her bir proje (ürün) için JSON metnini oluştur
+        var listItemJson = $@"{{
+            ""@type"": ""ListItem"",
+            ""position"": {position},
+            ""item"": {{
+                ""@type"": ""Product"",
+                ""@id"": ""{projectUrl}"",
+                ""name"": ""{projectName}"",
+                ""url"": ""{projectUrl}"",
+                ""description"": ""{projectDescription}"",
+                ""image"": ""{projectImageUrl}"",
+                ""brand"": {{
+                    ""@type"": ""Organization"",
+                    ""name"": ""Bereketli Topraklar""
+                }}
+            }}
+        }}";
+
+        itemListElements.Add(listItemJson);
+        position++;
+    }
 }
+
+@* --- SEO İÇİN YAPILANDIRILMIŞ VERİ (JSON-LD) --- *@
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "CollectionPage",
+    "name": "Projelerimiz | Bereketli Topraklar",
+    "description": "@Html.Raw(Model.Value<string>("metaDescription")?.Replace("\"", "\\\""))",
+    "url": "@Model.Url(mode: UrlMode.Absolute)",
+    "mainEntity": {
+        "@@type": "ItemList",
+        "numberOfItems": @projects.Count(),
+        "itemListElement": [
+            @Html.Raw(string.Join(",", itemListElements))
+        ]
+    }
+}
+</script>
 
 @* ProjectCards partial'ını çağırırken "IsProjectListPage" parametresini true olarak gönderiyoruz *@
 @await Html.PartialAsync("ProjectCards", Model, new ViewDataDictionary(ViewData) { { "IsProjectListPage", true } })
 
-@await Html.PartialAsync("schemaScript")
-@*
-    Yalnızca bu sayfaya özel bir stil ekleyerek ProjectCards'ın
-    üst kısmına fazladan boşluk ekliyoruz.
-    Bu, anasayfadaki
-    görünümünü etkilemeden, sadece projeler sayfasında
-    içeriği doğru konuma kaydırır.
-*@
+
+
 <style>
     /* .projects-section, ProjectCards.cshtml partial'ının ana taşıyıcısıdır.
     */

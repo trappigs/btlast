@@ -5,7 +5,82 @@
     var posts = Model.Children()
                      .Where(x => x.IsVisible())
                      .OrderByDescending(x => x.Value<DateTime>("postDate"));
+
+
+    // --- YAPI_LANDIRILMIŞ VERİ İÇİN HAZIRLIK (GÜNCELLENMİŞ MANTIK) ---
+    var itemListElements = new List<string>();
+    var position = 1;
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+
+    foreach (var post in posts)
+    {
+        string postUrl; // Nihai URL'i tutacak değişken
+
+        // 1. Öncelik: Yazının kendi içindeki özel canonical link alanını kontrol et.
+        var customCanonical = post.Value<string>("canonicalLink");
+        if (!string.IsNullOrWhiteSpace(customCanonical))
+        {
+            // Eğer özel canonical link varsa onu kullan.
+            // Not: Bu alanın tam URL (https://...) içerdiği varsayılır.
+            postUrl = siteUrl+"/"+customCanonical;
+        }
+        else
+        {
+            // 2. Öncelik: Özel canonical yoksa, Umbraco'nun varsayılan mutlak URL'ini kullan.
+            postUrl = post.Url(mode: UrlMode.Absolute);
+        }
+
+        var postTitle = post.Name.Replace("\"", "\\\"");
+
+        var listItemJson = $@"{{
+            ""@type"": ""ListItem"",
+            ""position"": {position},
+            ""item"": {{
+                ""@type"": ""BlogPosting"",
+                ""@id"": ""{postUrl}"",
+                ""name"": ""{postTitle}"",
+                ""url"": ""{postUrl}""
+            }}
+        }}";
+
+        itemListElements.Add(listItemJson);
+        position++;
+    }
 }
+
+@* --- SEO İÇİN YAPILANDIRILMIŞ VERİ (JSON-LD) --- *@
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "CollectionPage",
+    "name": "@Html.Raw(Model.Value<string>("pageTitle")?.Replace("\"", "\\\""))",
+    "description": "@Html.Raw(Model.Value<string>("metaDescription")?.Replace("\"", "\\\""))",
+    "url": "@Model.Url(mode: UrlMode.Absolute)",
+    "mainEntity": {
+        "@@type": "ItemList",
+        "numberOfItems": @posts.Count(),
+        "itemListElement": [
+            @Html.Raw(string.Join(",", itemListElements))
+        ]
+    }
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <link rel="stylesheet" href="/css/contact-page.css">
 @await Html.PartialAsync("schemaScript")
 <section class="contact-hero"> @* Sınıfı contact-hero olarak değiştirdik *@
@@ -45,11 +120,11 @@
                         
                         @if (!string.IsNullOrWhiteSpace(excerpt))
                         {
-                            <p class="blog-card-excerpt">@excerpt</p>
+                            @Html.Raw(excerpt)
                         }
                       
                         <div class="blog-card-author">
-                           Yazar: @(post.HasValue("author") ? post.Value("author") : "Bereketli Topraklar")
+                           Yazar: @(post.HasValue("articleAuthor") ? post.Value("articleAuthor") : "Bereketli Topraklar")
                         </div>
                     </div>
                 </div>

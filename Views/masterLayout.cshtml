@@ -2,6 +2,12 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
     Layout = null;
+    var image = Model.Value<IPublishedContent>("ogImage");
+    var ttImage = Model.Value<IPublishedContent>("ttImage");
+
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+    var safariPinnedURL="/media/1epptvlp/safari-pinned-tab.svg";
+
 }
 
 <!DOCTYPE html>
@@ -10,32 +16,187 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @* Meta Description *@
-    @if(Model.HasValue("metaDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("metaDescription")))
-    {
-        <meta name="description" content="@Model.Value("metaDescription")">
+    @{
+    // Açıklama içeriğini tutacak bir değişken oluştur.
+        string descriptionContent = string.Empty;
+
+        // 1. Öncelik: metaDescription alanını kontrol et.
+        if (Model.HasValue("metaDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("metaDescription")))
+        {
+            descriptionContent = Model.Value<string>("metaDescription");
+        }
+        // 2. Öncelik: Eğer metaDescription boşsa, ogDescription alanını kontrol et.
+        else if (Model.HasValue("ogDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogDescription")))
+        {
+            descriptionContent = Model.Value<string>("ogDescription");
+        }
     }
-    else if(!string.IsNullOrWhiteSpace(ViewBag.MetaDescription))
+
+    @* Sadece descriptionContent değişkeni doluysa meta etiketini yazdır. *@
+    @if (!string.IsNullOrWhiteSpace(descriptionContent))
     {
-        <meta name="description" content="@ViewBag.MetaDescription">
+        <meta name="description" content="@descriptionContent">
     }
+
+    @if(Model.HasValue("author") && !string.IsNullOrWhiteSpace(Model.Value<string>("author")))
+    {
+        <meta name="author" content="@Model.Value("author")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.author))
+    {
+        <meta name="author" content="@ViewBag.author">
+    }
+    else
+    {
+        <meta name="author" content="Bereketli Topraklar">
+    }
+
+    @{
+        // 1. Varsayılan değeri ata.
+        string robotsContent = "index, follow";
+
+        // 2. Umbraco'daki "robots" alanını kontrol et.
+        //    Eğer doluysa, varsayılan değeri onunla değiştir.
+        if (Model.HasValue("robots") && !string.IsNullOrWhiteSpace(Model.Value<string>("robots")))
+        {
+            robotsContent = Model.Value<string>("robots");
+        }
+        // 3. Alan boşsa, değişken "index, follow" olarak kalır.
+    }
+    
+    <meta name="robots" content="@robotsContent">
+
+    @if (Model.HasValue("canonicalLink") && !string.IsNullOrWhiteSpace(Model.Value<string>("canonicalLink")))
+    {
+        <link rel="canonical" href="@Model.Value("canonicalLink")">
+    }
+    else
+    {
+        <link rel="canonical" href="@Model.Url(mode: UrlMode.Absolute)">
+    }
+
+
+    @if(Model.HasValue("ogTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogTitle")))
+    {
+        <meta property="og:title" content="@Model.Value("ogTitle")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.ogTitle))
+    {
+        <meta property="og:title" content="@ViewBag.ogTitle">
+    }
+    
+
+    @if(Model.HasValue("ogDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogDescription")))
+    {
+        <meta property="og:description" content="@Model.Value("ogDescription")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.ogDescription))
+    {
+        <meta property="og:description" content="@ViewBag.ogDescription">
+    }
+    
+    @if (image != null)
+    {
+        string imageUrl = image.Url(mode: UrlMode.Absolute);
+        <meta property="og:image" content="@imageUrl">
+    }
+    else
+    {
+        <meta property="og:image" content="@($"{siteUrl}{"/media/lq2jzklk/download-1.svg"}")">
+    }
+    
+    @if(Model.HasValue("ogUrl") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogUrl")))
+    {
+        <meta property="og:url" content="@Model.Value("ogUrl")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.ogUrl))
+    {
+        <meta property="og:url" content="@ViewBag.ogUrl">
+    }
+
+    @{
+        // 1. Varsayılan değeri ata.
+        string ogTypeValue = "website";
+
+        // 2. Umbraco'daki "ogType" alanını kontrol et (en yüksek öncelik).
+        if (Model.HasValue("ogType") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogType")))
+        {
+            ogTypeValue = Model.Value<string>("ogType");
+        }
+        // 3. Model boşsa ViewBag'i kontrol et.
+        else if (!string.IsNullOrWhiteSpace(ViewBag.ogType))
+        {
+            ogTypeValue = ViewBag.ogType;
+        }
+        // 4. Her ikisi de boşsa, değişken "website" olarak kalır.
+    }
+
+    <meta property="og:type" content="@ogTypeValue">
+
+    
+
+    @if(Model.HasValue("ttTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("ttTitle")))
+    {
+        <meta name="twitter:title" content="@Model.Value("ttTitle")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.ttTitle))
+    {
+        <meta name="twitter:title" content="@ViewBag.ttTitle">
+    }
+
+    @if(Model.HasValue("ttDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("ttDescription")))
+    {
+        <meta name="twitter:description" content="@Model.Value("ttDescription")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.ttDescription))
+    {
+        <meta name="twitter:description" content="@ViewBag.ttDescription">
+    }
+    
+
+    @if (ttImage != null)
+    {
+        string imageUrl2 = ttImage.Url(mode: UrlMode.Absolute);
+        <meta name="twitter:image" content="siteUrl@imageUrl2">
+    }
+
+    @if(Model.HasValue("ttImageAlt") && !string.IsNullOrWhiteSpace(Model.Value<string>("ttImageAlt")))
+    {
+        <meta name="twitter:image:alt" content="@Model.Value("ttImageAlt")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.ttImageAlt))
+    {
+        <meta name="twitter:image:alt" content="@ViewBag.ttImageAlt">
+    }
+
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:site_name" content="Bereketli Topraklar">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#045129">
+    <meta name="twitter:site" content="@@bereketilarsa">
+
+    <link rel="mask-icon" href="@($"{siteUrl}{safariPinnedURL}")" color="#5bbad5">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
 
 
     <title>@(Model.HasValue("pageTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("pageTitle")) ? Model.Value<string>("pageTitle") : ViewBag.Title)</title>
     <!-- Bootstrap 5.3.7 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link href="/css/site.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="/css/blog.css" rel="stylesheet">
     
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Erica+One&family=Manrope:wght@200..800&family=Sora:wght@278&display=swap" rel="stylesheet">
     @await RenderSectionAsync("Scripts", required: false)
+    
+
     
 </head>
 <body class="bg-beige">
